@@ -87,14 +87,14 @@ lc_bridge
 
 	{
 	    "style": {
-	        "bgcolor": "#ff82bac9",
-	        "fontcolor": "#ffffffff"
+	        "backgroundColor": "#ff82bac9",
+	        "color": "#ffffffff"
 	    },
 	    "title": {
 	        "id": "title",
 	        "style": {
-	            "bgcolor": "#ff82bac9",
-	            "fontcolor": "#ffffffff"
+	            "backgroundColor": "#ff82bac9",
+	            "color": "#ffffffff"
 	        },	        
 			"text": [
 	            {
@@ -115,7 +115,7 @@ lc_bridge
 	            "bgcolor": "#ff82bac9",
 	            "fontcolor": "#ffffffff"
 	        },
-	        "button": [
+	        "items": [
 	            {
 	                "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_zx.png",
 	                "text": "咨询",
@@ -156,7 +156,7 @@ lc_bridge
 	    },
 	    "menu": {
 	        "type": "list",
-	        "button": [
+	        "items": [
 	            {
 	                "text": "微信好友",
 	                "image": "local_bdsocialshare_weixin_friend",
@@ -181,3 +181,116 @@ lc_bridge
 	        ]
 	    }
 	}
+
+# BlendUI2 API
+
+## BlendUI2 概要
+
+blendui2 api是基于百度框的js-ui框架，通过使用blendui2 api,可以让HTML5应用通过Native来渲染组件，通过使用Gallery、Dialog等组件，可以让用户应用功能更加丰富和完善，体验更加完美。页面通讯机制，可以让应用的不同页面通过简单的事件机制来进行消息的传递和同步。
+
+
+## 事件机制 
+
+###1. 事件注册
+
+	Blend.ui.on(customEvent, callback);
+
+###2. 事件取消
+
+	Blend.ui.off(customEvent);
+
+###3. 事件触发
+
+	Blend.ui.fire(customEvent);
+
+## Widget
+
+### 初始化页面uix配置
+
+	Blend.ui.init(config)
+
+参数说明：
+
+config: {JSON} uix配置文件
+
+
+## 下拉刷新
+
+blendui2 api支持本地下拉刷新
+
+	Blend.ui.pullRefresh({
+		"bound":
+		"pullText": "下拉可以刷新⊙０⊙",
+        "loadingText": "更新中，请等待...",
+        "releaseText": "释放更新⊙０⊙",
+		"onScroll": function(){},
+		"onBound": function(){},
+		"onRelease": function(){}
+	});
+
+
+### 页面titlebar对象
+
+	Blend.ui.titlebar
+
+- 方法说明
+	
+	setTitle(items)
+
+### 页面toolbar对象
+
+	Blend.ui.toolbar
+
+### 页面社会化分享组件对象
+
+	Blend.ui.socialShare
+
+### 页面导航对象
+
+	Blend.ui.navigation
+
+### 页面tabbar对象
+
+	Blend.ui.tabbar
+
+### 列表组件
+
+	Blend.ui.list
+
+### 嵌套列表组件
+
+	Blend.ui.nestedList
+
+### 页面form
+
+	Blend.ui.form
+
+### 循环展示组件，支持对象上下、左右活动
+
+	Blend.ui.carousel
+
+### gallery图片展示组件
+
+	Blend.ui.gallery
+
+### 页面对话框
+
+	Blend.ui.dialog
+
+### 选择器
+
+	Blend.ui.picker
+
+### 日期选择器
+
+	Blend.ui.date
+
+### 行为列表组件
+
+	Blend.ui.actionSheet
+
+
+
+
+
+	
