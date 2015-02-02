@@ -1,7 +1,5 @@
-#UIX接口文档
+##UIX接口
 
-
-##接口API;
 
 ###UIXSetDecoration
 
@@ -81,7 +79,7 @@ UIX的渲染和绘制按照数据来定义，如下数据格式：
     	},
 		"title":{
 			"id": "title",
-        	"text": [{
+        	"center": [{
                 "text": "峨眉山"
             }],
 	        "style": {
@@ -100,24 +98,10 @@ UIX的渲染和绘制按照数据来定义，如下数据格式：
 
 主要包括：
 
-- Widget组件: Btn, title, tab, toolbar, menu
+- Widget组件:  title, tab, toolbar, menu
 - Component组件: search, dialog, gallery, navi
 
 ##组件数据描述
-(待补充)
+见文档: uix-widget
 
-
-##action
-
-每个组件的元素有一些操作行为，比如按钮点击，这个用action来描述，如：
-`"action": "loadurl(http://www.baidu.com)"`就是代表点击后打开一个页面；
-
-action主要有如下行为：
-
-- loadurl(URL地址)：载入URL地址；
-- action (动作名)： 目前支持back返回、search搜索、share分享；
-- uievent：向webview注入js数据，通过UIXClick事件接收；
-- js(js数据): 向webview注入原生js数据
-- menu (id): 根据id显示对应menu菜单
-- share(分享项):weixin_friend weixin_timeline qqfriend qqweibo sinaweibo qqdenglu baiduhi others 
 
