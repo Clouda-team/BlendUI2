@@ -2,7 +2,7 @@
 
 **基本元素**
 
-基本元素我们称为一个button, 数据格式如下：
+基本元素我们称为一个item, 数据格式如下：
 
 	{
 		style:{}
@@ -28,13 +28,13 @@ action如存表示操作此元素所产生的行为,如下：
 		color:"xxxx" //字体颜色，格式同上
 	}
 
-button+样式组合成了一个widget,一个widget可以有多个button,widget可以设置整体样式;
+item+样式组合成了一个widget,一个widget可以有多个item,widget可以设置整体样式;
 
 现在支持的widget如下：
 
 ###title
 
-title分三部分，左、中和右，每一部分都是一个button组合；
+title分三部分，左、中和右，每一部分都是一个item组合；
  
 
 	{
@@ -71,7 +71,7 @@ title分三部分，左、中和右，每一部分都是一个button组合；
 		style:{
 			
 		},
-		button:[ 
+		items:[ 
 			{
 				style:{
 				},
@@ -92,7 +92,7 @@ title分三部分，左、中和右，每一部分都是一个button组合；
 
 	{
 		id:"xxxx",
-		button:[
+		items:[
 			{
 				"text":"",
 				"image":"",
@@ -112,7 +112,7 @@ title分三部分，左、中和右，每一部分都是一个button组合；
 
 	{
 		id:"xxxx",
-		button:[
+		items:[
 			{
 				"text":"微信好友",
 				"image":"local_bdsocialshare_weixin_friend",
@@ -131,7 +131,7 @@ title分三部分，左、中和右，每一部分都是一个button组合；
 
 	{
 		id:"xxxx",
-		button:[
+		items:[
 			{
 				"text":"",
 				"image":"",
@@ -151,7 +151,7 @@ title分三部分，左、中和右，每一部分都是一个button组合；
 ###tabbar
 	{
 		id:"xxxx",
-		button:[
+		items:[
 			{
 				"text":"",
 				"image":"",
