@@ -148,3 +148,31 @@ Blend2 提供 UI 和 Api两大功能：在UI上，提供应用页面间的流畅
 - addRight()
 - addCenter()
 
+### TabBar、ToolBar
+
+底部导航
+
+**继承**：Widget
+
+**方法**
+
+- removeItem()
+- addItem()
+- active()
+
+### Navigation
+
+导航
+
+**继承**：Widget
+
+**方法**
+
+- removeItem()
+- addItem()
+
+## 组件的创建
+
+	Blend.ui.create(component, config);
+
+组件创建工厂类
