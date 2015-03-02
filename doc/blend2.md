@@ -2,79 +2,8 @@
 
 ## blend2简介
 
-为了让应用更快接入，提供了Blend2。 Blend2是现有最简单的接入百度框和直达号的方式。
+Blend2提供快速接入Naitve组件的接口方法；
 
-Blend2 基于手机百度和轻工厂环境下的HTML5 转换为流畅的Native应用的
-
-Blend2 提供 UI 和 Api两大功能：在UI上，提供应用页面间的流畅切换能力，下拉刷新，丰富的Native组件，相对于HTML5组件而言，响应更及时，体验更流畅。除此之外，开发者还能通过Blend2来调用Native API。是开发者轻松的使用Web开发技术在手机百度和轻工厂的环境下开发出一款媲美Native应用的产品。
-
-## Blend2 API图示
-
-![api](./img/UIX.png)
-
-## Blend2概述
-
-<table>
-	<thead>
-		<tr><th>分组名称</th><th>API接口</th><th>功能说明</th></tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td rowspan="6">Blend UI Widget</td>
-			<td>Blend.ui.Titlebar</td>
-			<td>页面titlebar</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.Toolbar</td>
-			<td>页面底部导航组件</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.Tabbar</td>
-			<td>页面Tab导航组件</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.Tab</td>
-			<td>页面Tab导航</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.Sliderbar</td>
-			<td>页面slider边栏导航组件</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.List</td>
-			<td>页面List列表组件</td>
-		</tr>
-
-		<tr>
-			<td rowspan="3">Blend UI Component</td>
-			<td>Blend.ui.Gallery</td>
-			<td>页面图片浏览组件</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.Dialog</td>
-			<td>页面Dialog组件</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.finish</td>
-			<td>销毁当前页面</td>
-		</tr>
-
-		<tr>
-			<td rowspan="3">Blend2 事件机制</td>
-			<td>Blend.ui.on</td>
-			<td>事件绑定</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.off</td>
-			<td>事件解绑</td>
-		</tr>
-		<tr>
-			<td>Blend.ui.fire</td>
-			<td>事件触发</td>
-		</tr>
-	
-	</tbody>
-</table>
 
 ## Blend2 API
 
@@ -111,68 +40,85 @@ Blend2 提供 UI 和 Api两大功能：在UI上，提供应用页面间的流畅
 - customEvent: 自定义事件类型;
 - handler: 事件监听器
 
-### Widget
+### create
 
-组件基类
+创建组件
 
-	Blend.ui.Widget
+	Blend.ui.create(widgetName,options);
 
-**方法**
+参数：
 
-- render()
-- setStyle(style)
-- destory()
+- widgetName： widget名字
+- options: 组件配置
 
-#### render
-	
-	render()
 
-**功能描述**
+返回widget对象；
 
-渲染组件
+## Widget对象
 
-**参数说明**
+用户调用Blend.ui.create('对象名字'，{配置项})；创建独立的widget对象；
 
-- 无
 
-### TitleBar
+### titlebar
 
 顶部导航组件
 
-**继承**：Widget
+方法：
 
-**方法**
+ - setTitle：设置标题
+ - addLeftItem：增加左部按钮
+ - addRightItem：增加右部按钮
+ - setOptions： 修改配置项
+ - destory：销毁
 
-- setTitle(text)
-- addLeft()
-- addRight()
-- addCenter()
+### tabbar
+底部Tab切换工具栏
 
-### TabBar、ToolBar
+方法：
 
-底部导航
+- show：显示
+- hide: 隐藏
+- active: 激活相应项
+- addItem： 增加按钮
+- removeItem: 删除按钮
+- destory： 销毁
 
-**继承**：Widget
+### toolbar 
 
-**方法**
+底部工具栏
 
-- removeItem()
-- addItem()
-- active()
+方法：
 
-### Navigation
+- show：显示
+- hide：隐藏
+- addTip: 怎加tip标识
+- destory：销毁 
 
-导航
+###slider
+局部幻灯片
 
-**继承**：Widget
+方法：
 
-**方法**
+- show: 显示
+- hide: 隐藏
+- slideTo：滚动到所指示的序列
+- addItem: 增加项
+- removeItem: 删除项
+- next: 滚动到下一个项
+- pre: 滚动到上一个序列
+- destory：销毁
 
-- removeItem()
-- addItem()
+### 
 
-## 组件的创建
+### alert
 
-	Blend.ui.create(component, config);
+弹出提示框
 
-组件创建工厂类
+### confirm
+
+弹出确认框
+
+### toast
+
+消息提示
+
