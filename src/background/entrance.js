@@ -1,7 +1,6 @@
 /**
 * 背景页面入口引导,用来管理WebView,为应用页面间通讯做代理
 */
-
 (function(window){
     //辅助类和方法
     Array.prototype.indexOf = function(val) {
@@ -21,7 +20,7 @@
     //系统管理器
     var Boost = function(config){
         return new Boost.prototype.init(config);
-    }
+    };
 
     var webviews = {
         ids: [],
@@ -139,22 +138,18 @@
     window.$app = window.Boost = Boost;
 
     //模块化支持
+    if(typeof define !== undefined && typeof define.amd !== undefined){
+        define(function(){
+            return Boost;
+        });
+    }
 
-    // define(function(){
-    //     return Boost;
-    // })
+    //启动服务
+    var config = {
+        version: 1.0
+    };
+
+    $app(config).run();
+
 
 })(this);
-
-
-//启动服务
-var config = {
-    version: 1.0,
-    default: "http://www.baidu.com",
-    background: {
-        scripts: [""]
-    },
-    modules:[]
-};
-
-$app(config).run();
