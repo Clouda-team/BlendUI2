@@ -2,13 +2,13 @@
  * @class TitleBar
  * @singleton
  */
-define(["Blend.ui.Widget"], function(Widget){
+define(["../core/Blend"], function(Widget){
 
-    Blend.createClass("Blend.ui.TitleBar", {
+    Blend.createClass("TitleBar", {
 
-        extend: ["Blend.ui.Widget"],
+        extend: ["Blend.Widget"],
 
-        static: {
+        config: {
             leftItems: [],
             centerItems: [],
             rightItems: [],
