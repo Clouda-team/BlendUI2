@@ -1,4 +1,4 @@
-define(["./widgets/Title", "./widgets/Tab", "./widgets/Navigation", "./widgets/Toolbar"], function(Title, Tab, Navigation, ToolBar){
+define(["./widgets/Title", "./widgets/Tab", "./widgets/Navigation", "./widgets/Toolbar"], function(Title, Tab, Navigation, Toolbar){
 
     var widgets = {};
     
