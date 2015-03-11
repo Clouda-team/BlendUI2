@@ -1,62 +1,135 @@
-define({
+/**
+ * @class TitleBar
+ * @singleton
+ */
+define(["../core/Class","../core/native","../core/lib"], function(Class, nativeApi,lib) {
 
-    id: '',
+    var Widget = Class({
 
-    config: {},
+        init: function(options) {
+            this.setStyle(options);
+            this.setConfig(options);
+            this.render();
+        },
 
-    style: {},
+        type: '',
 
-    /**
-     * 创建组件Item对象
-     * @returns {{text: string, image: string, action: string}}
-     */
-    generateItem: function(){
-        return {
-            text: '',
-            image: '',
-            action: ''
-        };
-    },
+        statics: {
+            //全局组件配置文件
+            configs: {
+                debug: true
+            },
+            //初始化组件渲染状态,保证所有组件一次性完成渲染
+            renderReady: false,
 
-    /**
-     * 创建样式对象
-     * @param {string} backgroundColor 背景色:#ffccddee
-     * @param {string} color 前景色:#ffffffff
-     * @returns {{backgroundColor: *, color: *}}
-     */
-    generateStyle: function(backgroundColor, color){
-        return {
-            backgroundColor: backgroundColor,
-            color: color
-        };
-    },
+            //异步渲染组件方法
+            render: function(configs){
+                var timer = setTimeout(function(){
+                    nativeApi.render(configs);
+                    clearTimeout(timer);
+                    Widget.renderReady = false;
+                });
+                Widget.renderReady = true;
+            }
+        },
 
-    /**
-     * 添加组件
-     * @param type
-     * @param config
-     */
-    addWidget: function(type, config){
-        var types = this.types;
+        /**
+         * 解析配置中的样式属性
+         * @param data 样式 {backgroundColor:'#cccccc', color: '#ffffffff', opacity:1}
+         * @private
+         */
+        _parseStyle: function(data) {
+            var opacity = data.opacity || 1,
+                backgroundColor = data.backgroundColor || '#000000',
+                color = data.color || '#ffffffff';
 
-        if(type in types){
-            this.config[type] = config;
+            //alert("style");
+            opacity = Math.ceil(opacity * 0xff);
+            prefix = opacity.toString(16);
+            backgroundColor = '#' + prefix + backgroundColor.substr(1);
+            return {
+                backgroundColor: backgroundColor,
+                color: color
+            };
+        },
+
+        /**
+         * 解析配置中的Action属性
+         * @private
+         */
+        _parseAction: function(action){
+            var loadUrl = /^https:\/\/|^http:\/\/|^geo:|^tel:/,
+                actions = /^back$|^search$|^share$|^navi$/,
+                share = /^share\(.*\)/;
+
+            if(typeof action === "string"){
+                if(loadUrl.test(action)){
+                    return "loadurl(" + action + ")";
+                } else if(actions.test(action)){
+                    return "action(" + action + ")";
+                } else if(share.test(action)){
+                    return "share("+ action + ")";
+                } else {
+                    return action;
+                }
+            }else{
+                //操作页面的js代码
+                var scope = function(){
+                    return action;
+                }, code;
+                code = "(" + scope.toString() + ")()";
+                return "js(" + code + ")";
+            }
+        },
+
+        _parseItem: function(item){
+            var action = item.action || '';
+            if(item.action){
+                item.action = this._parseAction(action);
+            }
+        },
+
+        addItem: function(items, item){
+            items = items || [];
+            this._parseItem(item);
+            items.push(item);
+        },
+
+        setStyle: function(options){
+            this.config.style = this._parseStyle(options);
+        },
+
+        /**
+         * 初始化配置
+         * @param {object} options
+         */
+        setConfig: function(options){
+            var config = this.config,
+                name, style;
+
+            options.style = options.style || this._parseStyle(options);
+
+            for(name in options){
+                if(config.hasOwnProperty(name)){
+                    config[name] = options[name];
+                }
+            }
+        },
+
+        /**
+         * 渲染组件
+         */
+        render: function() {
+            var configs = Widget.configs,
+                config = this.config;
+
+            configs[this.type] = config;
+
+            if(!Widget.renderReady){
+                Widget.render(configs);
+            }
         }
-    },
+    });
 
-    registerType: function(type){
-        var types = this.types;
-
-        if(type && !(type in this.types)){
-            this.types.push(type);
-        }
-    },
-
-    render: function(){
-
-    },
-
-    destroy: function(){
-        delete this.config;
-    }
+    return Widget;
 });

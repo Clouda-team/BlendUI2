@@ -1,29 +1,38 @@
 define(function(){
 
-    var Lib = {};
+    var lib = {};
 
     /**
      * 复制配置到指定的对象.
-     * @param {Object} object 属性的继承者
-     * @param {Object} config 属性的来源
+     * @param {Object} receiver 属性的继承者
+     * @param {Object} supplier 属性的来源
      * @return {Object} returns obj
      */
-    Lib.apply = function(object, config) {
+    lib.extend = function(receiver, supplier) {
 
-        if (object && config && typeof config === 'object') {
-            var i, j, k;
-
-            for (i in config) {
-                object[i] = config[i];
+        for (var property in supplier) {
+            if (supplier.hasOwnProperty(property)) {
+                receiver[property] = supplier[property];
             }
         }
-        return object;
+        return receiver;
 
     };
 
-    Lib.apply(Lib, {
-        emptyFn: function(){}
-    });
+    // 空函数
+    lib.noop = function(){};
 
-    return Lib;
+    // each方法
+
+    lib.each = function(object, fn, scope) {
+        for (var property in object) {
+            if (object.hasOwnProperty(property)) {
+                if (fn.call(scope || object, property, object[property], object) === false) {
+                    return;
+                }
+            }
+        }
+    };
+
+    return lib;
 });

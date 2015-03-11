@@ -1,14 +1,34 @@
 /**
- * @class Navigation
+ * @class TitleBar
  * @singleton
  */
-Blend.define("Blend.UI.Navigation", {
-    extend: "Blend.UI.Widget",
-    static: {
-        items: []
-    },
+define(["../core/Class","./Widget"], function(Class,Widget){
 
-    addItem: function(item){
-        this.items.push(item);
-    }
+    var Navigation = Class({
+
+        extend: Widget,
+
+        type: 'navi',
+        
+        config: {
+            "id": {},
+            "items": []
+        },
+
+        setConfig: function(options){
+            var items = options.items || [],
+                i;
+            for(i in items){
+                this.addItem(items[i]);
+            }
+        },
+
+        addItem: function(item){
+            this.Super.addItem(this.config.items, item);
+            return this;
+        }
+
+    });
+
+    return Navigation;
 });
