@@ -1,14 +1,17 @@
 /**
+ * @file 组件基类定义
  * @class TitleBar
  * @singleton
  */
-define(["../core/Class","../core/native","../core/lib"], function(Class, nativeApi,lib) {
+define(['../core/Class','../core/native','../core/lib'], function(Class, nativeApi,lib) {
 
     var Widget = Class({
 
         init: function(options) {
-            this.setStyle(options);
-            this.setConfig(options);
+            if(options){
+                this.setStyle(options);
+                this.setConfig(options);
+            }
             this.render();
         },
 
@@ -43,7 +46,6 @@ define(["../core/Class","../core/native","../core/lib"], function(Class, nativeA
                 backgroundColor = data.backgroundColor || '#000000',
                 color = data.color || '#ffffffff';
 
-            //alert("style");
             opacity = Math.ceil(opacity * 0xff);
             prefix = opacity.toString(16);
             backgroundColor = '#' + prefix + backgroundColor.substr(1);
@@ -54,34 +56,40 @@ define(["../core/Class","../core/native","../core/lib"], function(Class, nativeA
         },
 
         /**
-         * 解析配置中的Action属性
+         * 解析配置对象中的Action属性
          * @private
          */
         _parseAction: function(action){
-            var loadUrl = /^https:\/\/|^http:\/\/|^geo:|^tel:/,
-                actions = /^back$|^search$|^share$|^navi$/,
-                share = /^share\(.*\)/;
 
-            if(typeof action === "string"){
-                if(loadUrl.test(action)){
-                    return "loadurl(" + action + ")";
-                } else if(actions.test(action)){
-                    return "action(" + action + ")";
-                } else if(share.test(action)){
-                    return "share("+ action + ")";
-                } else {
-                    return action;
+            var code, fn;
+
+            if(typeof action === "object"){
+                if(action.hasOwnProperty("url")){
+                    return "loadurl(" + action.url + ")";
+                } else if(action.hasOwnProperty("callback")){
+                    //操作页面的js代码
+                    fn = function(){
+                        return action.callback;
+                    };
+                    code = "(" + fn().toString() + ")()";
+                    return "js(" + code + ")";
+                } else if(action.hasOwnProperty("share")){
+                    return "share("+ action.share + ")";
+                } else if(action.hasOwnProperty("operator")){
+                    return "action(" + action.operator + ")";
+                }else{
+                    return '';
                 }
-            }else{
-                //操作页面的js代码
-                var scope = function(){
-                    return action;
-                }, code;
-                code = "(" + scope.toString() + ")()";
-                return "js(" + code + ")";
+            } else{
+                return '';
             }
         },
 
+        /**
+         * 解析配置对象中的item
+         * @param item
+         * @private
+         */
         _parseItem: function(item){
             var action = item.action || '';
             if(item.action){
@@ -89,12 +97,21 @@ define(["../core/Class","../core/native","../core/lib"], function(Class, nativeA
             }
         },
 
+        /**
+         * 向items数组中添加item对象
+         * @param {Array} items
+         * @param {object} item
+         */
         addItem: function(items, item){
             items = items || [];
             this._parseItem(item);
             items.push(item);
         },
 
+        /**
+         * 设置组件样式
+         * @param {object} options
+         */
         setStyle: function(options){
             this.config.style = this._parseStyle(options);
         },
@@ -119,11 +136,25 @@ define(["../core/Class","../core/native","../core/lib"], function(Class, nativeA
         /**
          * 渲染组件
          */
-        render: function() {
+        render: function(){
             var configs = Widget.configs,
                 config = this.config;
 
             configs[this.type] = config;
+
+            if(!Widget.renderReady){
+                Widget.render(configs);
+            }
+        },
+
+        /**
+         * 销毁组件
+         */
+        destroy: function(){
+            var configs = Widget.configs;
+
+            delete this.config;
+            delete configs[this.type];
 
             if(!Widget.renderReady){
                 Widget.render(configs);
