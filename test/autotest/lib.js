@@ -1,6 +1,6 @@
 
 // src/core/lib类工具函数
-define(['../../_src/core/lib'],function(lib){
+define(['../../src/core/lib'],function(lib){
     var expect = chai.expect;
     describe('lib工具类', function(){
         it('存在extend,noop', function () {
