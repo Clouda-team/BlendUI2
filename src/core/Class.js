@@ -1,4 +1,4 @@
-define(['core/lib'], function (lib) {
+define(['./lib'], function (lib) {
 
     var noop    = lib.noop,
         extend   = lib.extend;
