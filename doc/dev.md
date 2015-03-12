@@ -290,6 +290,42 @@ blendui2 api支持本地下拉刷新
 	Blend.ui.actionSheet
 
 
+### item配置对象
+
+    {
+        text: "",
+        image: "",
+        action: {}            //item行为类型
+    }
+action 详细类型
+### action配置对象
+    //scheme解析
+    {
+        link: [http://|https://|geo:|tel:]
+    }
+
+    //向页面注入事件或执行js代码
+    {
+        callback: function(){}
+    }
+
+    //触发页面的UIXClick事件,通过事件机制实现Native
+    {
+        event: "UIXClick"
+    }
+
+    //执行Native组件操作
+    {
+        native: [back| search | share]
+    }
+
+    //社会化分享调用
+
+    {
+        share: [weixin_friend | weixin_timeline | qqfriend | qqweibo | sinaweibo | qqdenglu | baiduhi | others]
+    }
+
+
 
 
 

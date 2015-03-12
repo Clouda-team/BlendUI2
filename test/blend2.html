@@ -19,21 +19,12 @@
     });
     require(['blend'], function (blend) {
 
-        var title = blend.create('title',{
-            backgroundColor:'#666666',
-            color: '#ffffffff',
-            opacity:1,
-                text:'blend2组件',
-            image:'http://fedev.baidu.com/~gaotianyi/emeishan/public/images/top_user.png',
-            right:{
-                image:'http://fedev.baidu.com/~gaotianyi/emeishan/public/images/top_user.png',
-                action: 'navi'
-            }
-        }).addLeftItem({
+        var title = blend.create('title').addLeftItem({
             text: '返回1',
             action: 'back'
         });
 
+        title.destroy();
 
         var tab = blend.create('tab', {
             "id": "tab",
@@ -43,17 +34,23 @@
             "items": [
                 {
                     text: "峨眉山",
-                    action: "http://fedev.baidu.com/~gaotianyi/emeishan/intro.html"
+                    action: {
+                        url: "http://fedev.baidu.com/~gaotianyi/emeishan/intro.html"
+                    }
                 },
                 {
                     text: "个人中心",
-                    action: "http://fedev.baidu.com/~gaotianyi/emeishan/profile"
+                    action: {
+                        url: "http://fedev.baidu.com/~gaotianyi/emeishan/profile"
+                    }
                 }
             ]
         }).addItem(
                 {
                     text: "组件用例",
-                    action: "http://172.22.149.81:8080/Blend/BlendUI2/test/samples.html"
+                    action: {
+                        url: "http://172.22.149.81:8080/Blend/BlendUI2/test/samples.html"
+                    }
                 }
         );
 
@@ -66,13 +63,19 @@
             "items": [
                 {
                     "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_zx.png",
-                    "text": "测试1",
-                    "action": "http://fedev.baidu.com/~gaotianyi/emeishan/ticket.html"
+                    "text": "JS注入",
+                    "action": {
+                        callback: function(){
+                            alert("获取页面cookie:" + document.cookie || '无');
+                        }
+                    }
                 },
                 {
                     "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_dy.png",
-                    "text": "测试2",
-                    "action": "http://fedev.baidu.com/~gaotianyi/emeishan/ticket.html"
+                    "text": "加载页面",
+                    "action": {
+                        url: "http://fedev.baidu.com/~gaotianyi/emeishan/ticket.html"
+                    }
                 },
                 {
                     "style": {
@@ -80,18 +83,24 @@
                         "color": "#ffffffff"
                     },
                     "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_home.png",
-                    "action": "navi"
+                    "action": {
+                        operator: "navi"
+                    }
                 },
                 {
                     "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_pj.png",
-                    "text": "评价",
+                    "text": "分享到微信",
                     "badge": 99,
-                    "action": "http://openapi.baidu.com/widget/social/comment/list?app_id=3481507&third_source_id=d714ecb4bd52aa8f15f2e586f732b584&url=http%3A%2F%2F51youhui.baidu.com%2Femeishan%2F%3Fappid%3D0&return_url=http%3A%2F%2F51youhui.baidu.com%2Femeishan%2F%3Fappid%3D0&state=list"
+                    "action": {
+                        share: "weixin_timeline"
+                    }
                 },
                 {
                     "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_share.png",
-                    "text": "分享",
-                    "action": "share"
+                    "text": "分享菜单",
+                    "action": {
+                        operator: "share"
+                    }
                 }
             ]
         });
