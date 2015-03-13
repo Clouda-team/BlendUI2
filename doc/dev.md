@@ -316,7 +316,7 @@ action 详细类型
 
     //执行Native组件操作
     {
-        native: [back| search | share]
+        operator: [back| search | share]
     }
 
     //社会化分享调用
@@ -324,6 +324,26 @@ action 详细类型
     {
         share: [weixin_friend | weixin_timeline | qqfriend | qqweibo | sinaweibo | qqdenglu | baiduhi | others]
     }
+
+### 事件机制
+
+Blend事件机制on、off、fire方法实现事件的注册、删除和触发
+
+绑定事件
+
+Blend.on(customEvent, data, callback);
+
+Blend.off(customEvent, callback); //删除事件
+
+Blend.fire(customEvent, data);
+
+事件机制核心上基于Native lc_bridge 的postMessage方法
+
+-webViewId {string} 页面id
+-type {string} 事件类型
+-data {string} 数据
+
+
 
 
 

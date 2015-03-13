@@ -31,7 +31,7 @@ define(function(){
         if(typeof options !== 'string'){
             options = JSON.stringify(options);
         }
-        Bridge.UIXShow(type, options);
+        bridge.UIXShow(type, options);
     };
 
     /**
@@ -43,7 +43,7 @@ define(function(){
         if(typeof options !== 'string'){
             options = JSON.stringify(options);
         }
-        Bridge.UIXSetProperty(id, options);
+        bridge.UIXSetProperty(id, options);
     };
 
     /**
@@ -52,11 +52,21 @@ define(function(){
      * @param {string} type
      * @param {object | string} message
      */
-     nativeApi.postMessage = function(webViewId, type, message){
-        if(typeof message !== 'string'){
-            message = JSON.stringify(message);
-        }
-        Bridge.postMessage(webViewId, type, message);
+     nativeApi.postMessage = function (webViewId, type, message) {
+         if (!message) {
+             message = type;
+             type = webViewId;
+             webViewId = null;
+             if (typeof message !== 'string'){
+                 message =  JSON.stringify(message);
+             }
+             alert("触发事件类型:" + type + '|' + message);
+             bridge.postMessage(type, message);
+         }
+         else {
+             message = JSON.stringify(message);
+             bridge.postMessage(webViewId, type, message);
+         }
      };
 
     /**
@@ -65,7 +75,7 @@ define(function(){
      * @param {string} script js脚本
      */
     nativeApi.execScript = function(webViewId, script){
-        Bridge.exeJsRemote(webviewid, script);
+        bridge.exeJsRemote(webviewid, script);
     };
     return nativeApi;
 });

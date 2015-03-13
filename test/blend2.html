@@ -24,7 +24,7 @@
             action: 'back'
         });
 
-        title.destroy();
+        // title.destroy();
 
         var tab = blend.create('tab', {
             "id": "tab",
@@ -150,6 +150,13 @@
                 }
             ]
         });
+
+        //自定义事件机制测试
+        blend.on("test", function (event) {
+            alert(JSON.stringify(event));
+        });
+
+        blend.fire("test", "123123");
     });
 
 </script>

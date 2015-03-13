@@ -3,12 +3,12 @@
  * @class TitleBar
  * @singleton
  */
-define(['../core/Class','../core/native','../core/lib'], function(Class, nativeApi,lib) {
+define(['../core/Class', '../core/native', '../core/lib'], function (Class, nativeApi) {
 
-    var Widget = Class({
+    var Widget = Class( {
 
-        init: function(options) {
-            if(options){
+        init: function (options) {
+            if (options) {
                 this.setStyle(options);
                 this.setConfig(options);
             }
@@ -25,8 +25,11 @@ define(['../core/Class','../core/native','../core/lib'], function(Class, nativeA
             //初始化组件渲染状态,保证所有组件一次性完成渲染
             renderReady: false,
 
-            //异步渲染组件方法
-            render: function(configs){
+            /**
+             * 渲染uix组件
+             * @param {object} configs uix配置
+             */
+            render: function (configs) {
                 var timer = setTimeout(function(){
                     nativeApi.render(configs);
                     clearTimeout(timer);
@@ -41,14 +44,14 @@ define(['../core/Class','../core/native','../core/lib'], function(Class, nativeA
          * @param data 样式 {backgroundColor:'#cccccc', color: '#ffffffff', opacity:1}
          * @private
          */
-        _parseStyle: function(data) {
-            var opacity = data.opacity || 1,
-                backgroundColor = data.backgroundColor || '#000000',
-                color = data.color || '#ffffffff';
+        _parseStyle: function (data) {
 
+            var opacity = data.opacity || 1;
             opacity = Math.ceil(opacity * 0xff);
             prefix = opacity.toString(16);
+            var backgroundColor = data.backgroundColor || '#000000';
             backgroundColor = '#' + prefix + backgroundColor.substr(1);
+            var color = data.color || '#ffffffff';
             return {
                 backgroundColor: backgroundColor,
                 color: color
@@ -59,28 +62,29 @@ define(['../core/Class','../core/native','../core/lib'], function(Class, nativeA
          * 解析配置对象中的Action属性
          * @private
          */
-        _parseAction: function(action){
+        _parseAction: function (action) {
 
-            var code, fn;
+            var code;
+            var fn;
 
-            if(typeof action === "object"){
-                if(action.hasOwnProperty("url")){
-                    return "loadurl(" + action.url + ")";
-                } else if(action.hasOwnProperty("callback")){
+            if(typeof action === 'object'){
+                if (action.hasOwnProperty('url')){
+                    return 'loadurl(' + action.url + ')';
+                }else if (action.hasOwnProperty('callback')){
                     //操作页面的js代码
                     fn = function(){
                         return action.callback;
                     };
-                    code = "(" + fn().toString() + ")()";
-                    return "js(" + code + ")";
-                } else if(action.hasOwnProperty("share")){
-                    return "share("+ action.share + ")";
-                } else if(action.hasOwnProperty("operator")){
-                    return "action(" + action.operator + ")";
-                }else{
+                    code = '(' + fn().toString() + ')()';
+                    return 'js(' + code + ')';
+                }else if (action.hasOwnProperty('share')){
+                    return 'share('+ action.share + ')';
+                }else if (action.hasOwnProperty('operator')){
+                    return 'action(' + action.operator + ')';
+                }else {
                     return '';
                 }
-            } else{
+            }else {
                 return '';
             }
         },
@@ -90,9 +94,9 @@ define(['../core/Class','../core/native','../core/lib'], function(Class, nativeA
          * @param item
          * @private
          */
-        _parseItem: function(item){
+        _parseItem: function (item) {
             var action = item.action || '';
-            if(item.action){
+            if (item.action) {
                 item.action = this._parseAction(action);
             }
         },
@@ -102,7 +106,7 @@ define(['../core/Class','../core/native','../core/lib'], function(Class, nativeA
          * @param {Array} items
          * @param {object} item
          */
-        addItem: function(items, item){
+        addItem: function (items, item){
             items = items || [];
             this._parseItem(item);
             items.push(item);
@@ -120,13 +124,13 @@ define(['../core/Class','../core/native','../core/lib'], function(Class, nativeA
          * 初始化配置
          * @param {object} options
          */
-        setConfig: function(options){
+        setConfig: function (options) {
             var config = this.config,
                 name, style;
 
             options.style = options.style || this._parseStyle(options);
 
-            for(name in options){
+            for (name in options) {
                 if(config.hasOwnProperty(name)){
                     config[name] = options[name];
                 }
@@ -136,7 +140,7 @@ define(['../core/Class','../core/native','../core/lib'], function(Class, nativeA
         /**
          * 渲染组件
          */
-        render: function(){
+        render: function () {
             var configs = Widget.configs,
                 config = this.config;
 
@@ -150,7 +154,7 @@ define(['../core/Class','../core/native','../core/lib'], function(Class, nativeA
         /**
          * 销毁组件
          */
-        destroy: function(){
+        destroy: function () {
             var configs = Widget.configs;
 
             delete this.config;
