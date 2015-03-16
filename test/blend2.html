@@ -49,7 +49,7 @@
                 {
                     text: "组件用例",
                     action: {
-                        url: "http://172.22.149.81:8080/Blend/BlendUI2/test/samples.html"
+                        url: "http://172.22.132.40:8080/Blend/BlendUI2/test/samples.html"
                     }
                 }
         );
@@ -151,12 +151,19 @@
             ]
         });
 
-        //自定义事件机制测试
+        // 自定义事件机制测试
         blend.on("test", function (event) {
-            alert(JSON.stringify(event));
+            alert("事件执行ok");
+            alert('为什么没有event对象');
         });
 
-        blend.fire("test", "123123");
+        // 自定义事件机制测试
+        blend.on("test2", function (event) {
+            alert("事件2执行ok");
+            alert(JSON.stringify(event.data));
+        });
+        // blend.fire("test", "123123");
+        blend.fire("test2", "345");
     });
 
 </script>
