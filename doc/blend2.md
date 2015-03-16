@@ -73,6 +73,16 @@ Blend2是提供给web开发人员，快速接入Naitve组件的接口方法;
 - customEvent: 自定义事件类型;
 - handler: 事件监听器
 
+### ready
+
+对Naitve ready的监听封装，调用组件必须在此回调中才能正确执行;
+    
+    Blend.ui.ready(callback);
+
+参数：
+
+- callback: 监听触发函数;
+
 
 
 ## Widget对象

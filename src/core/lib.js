@@ -23,7 +23,6 @@ define(function(){
     lib.noop = function(){};
 
     // each方法
-
     lib.each = function(object, fn, scope) {
         for (var property in object) {
             if (object.hasOwnProperty(property)) {
@@ -32,6 +31,11 @@ define(function(){
                 }
             }
         }
+    };
+
+    // 判断是不是类函数
+    lib.isClass = function(o) {
+        return typeof o === 'function' && (o.prototype && o === o.prototype.constructor);
     };
 
     return lib;
