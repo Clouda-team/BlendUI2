@@ -48,24 +48,28 @@ define(function(){
 
     /**
      * 向指定的页面发送消息
-     * @param {string} webViewId
-     * @param {string} type
-     * @param {object | string} message
+     * @param {string} webViewId 页面应用id
+     * @param {string} type 事件类型
+     * @param {object | string} message 消息数据
      */
      nativeApi.postMessage = function (webViewId, type, message) {
+         var data;
          if (!message) {
              message = type;
              type = webViewId;
              webViewId = null;
-             if (typeof message !== 'string'){
-                 message =  JSON.stringify(message);
-             }
-             alert("触发事件类型:" + type + '|' + message);
-             bridge.postMessage(type, message);
+             data =  JSON.stringify({
+                 type: type,
+                 message: message
+             });
+             bridge.postMessage(type, data);
          }
          else {
-             message = JSON.stringify(message);
-             bridge.postMessage(webViewId, type, message);
+             data = JSON.stringify({
+                 type: type,
+                 message: message
+             });
+             bridge.postMessage(webViewId, type, data);
          }
      };
 
@@ -77,5 +81,17 @@ define(function(){
     nativeApi.execScript = function(webViewId, script){
         bridge.exeJsRemote(webviewid, script);
     };
+
+    /**
+     * 判断是否是uix native环境
+     * @returns {boolean}
+     */
+    nativeApi.isEnv = function () {
+        if (bridge) {
+            return true;
+        }
+        return false;
+    };
+
     return nativeApi;
 });

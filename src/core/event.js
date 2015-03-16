@@ -13,19 +13,65 @@ define(['./native'], function (native) {
     var _types = ['uixready', 'webview_register', 'webview_unregister', 'UIXClick'];
 
     /**
+     * blend添加事件监听的方法
+     * @param {string} type 事件类型
+     * @param {Function} callback 事件监听器
+     * @param {boolean} useCapture 是否捕获类型
+     */
+    var addEventListener = (function () {
+        if (native.isEnv()) {
+            return function (type, callback, useCapture) {
+                native.postMessage('event_register', type);
+                document.addEventListener('message', callback, useCapture);
+            };
+        }
+        return function (type, callback, useCapture) {
+            document.addEventListener(type, callback, useCapture);
+        };
+    })();
+
+    var removeEventListener = (function () {
+        if (native.isEnv()) {
+            return function (type, callback, useCapture) {
+                native.postMessage('event_unregister', type);
+                document.addEventListener('message', callback, useCapture);
+            };
+        }
+        return function (type, callback, useCapture) {
+            document.removeEventListener(type, callback, useCapture);
+        };
+    })();
+
+    var fire = (function (){
+        if (native.isEnv()) {
+            return function (type, message) {
+                var data = {
+                    type: type,
+                    message: message
+                };
+                native.postMessage('delegate', data);
+            };
+        }
+        return function (type, message) {
+            var event = document.createEvent('Event');
+            event.initEvent(type, true, true);
+            document.dispatchEvent(event, message);
+        };
+    })();
+
+    /**
      * 事件绑定
      * @param {string} type 事件类型
      * @param {Function} handler 事件监听处理器
      */
     event.on = function (type, handler) {
         if (handlers[type]) {
-            native.postMessage('event_register', type);
             handlers[type].listener.push({
                 callback: handler,
                 context: null
             });
             if (!handlers[type].listened) {
-                document.addEventListener(type, handlers[type].callback, false);
+                addEventListener(type, handlers[type].callback, false);
                 handlers[type].listened = true;
             }
         }
@@ -52,7 +98,7 @@ define(['./native'], function (native) {
         context = context || this;
         if (handlers[type]) {
             if (!handler) {
-                document.removeEventListener(type, handlers[type].callback);
+                removeEventListener(type, handlers[type].callback, false);
                 handlers[type].listened = false;
                 handlers[type].listener.length = 0;
             }
@@ -62,8 +108,7 @@ define(['./native'], function (native) {
                 index = listeners.indexOf(handler);
                 listeners.splice(index, 1);
                 if (listeners.length === 0 && handlers[type].listened) {
-                    document.removeEventListener(type, handlers[type].callback);
-                    native.postMessage('event_unregister', type);
+                    removeEventListener(type, handlers[type].callback);
                     handlers[type].listened = false;
                 }
             }
@@ -76,15 +121,7 @@ define(['./native'], function (native) {
      * @param {Object} data 触发事件传递的data数据
      */
     event.fire = function (type, data) {
-        if (typeof data !== 'object') {
-            data = {data: data};
-        }
-        if (handlers[type] || _types.indexOf(type) > 0) {
-            data.type = type;
-            setTimeout(function () {
-                native.postMessage('delegate', data);
-            });
-        }
+        fire(type, data);
     };
 
     return event;
