@@ -28,7 +28,7 @@
     // 注册页面要监听的事件
     var events = {};
     document.addEventListener('event_register', function (event) {
-        var data = JSON.stringify(event.data);
+        var data = JSON.parse(event.data);
         var type = data.type;
         var origin = event.origin;
         if (events[type]) {
@@ -53,11 +53,13 @@
         var data = JSON.parse(event.data);
         var type = data.type;
         var message = JSON.stringify(data.message);
+        console.log('terry' + '-------delegate---------' + message);
+        console.log(type);
         if (events[type]) {
-            for (var i in events[type]) {
-                if (events.hasOwnProperty(i)) {
-                    bridge.postMessage(events[type][i], data.type, message);
-                }
+            console.log(events[type]);
+            for (var i = 0, len = events[type].length; i < len;i++) {
+                console.log(events[type]);
+                bridge.postMessage(events[type][i], data.type, message);
             }
         }
     }, false);

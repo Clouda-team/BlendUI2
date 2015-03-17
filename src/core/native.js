@@ -52,24 +52,15 @@ define(function(){
      * @param {string} type 事件类型
      * @param {object | string} message 消息数据
      */
-     nativeApi.postMessage = function (webViewId, type, message) {
-         var data;
+    nativeApi.postMessage = function (webViewId, type, message) {
          if (!message) {
              message = type;
              type = webViewId;
              webViewId = null;
-             data =  JSON.stringify({
-                 type: type,
-                 message: message
-             });
-             bridge.postMessage(type, data);
+             bridge.postMessage(type, message);
          }
          else {
-             data = JSON.stringify({
-                 type: type,
-                 message: message
-             });
-             bridge.postMessage(webViewId, type, data);
+             bridge.postMessage(webViewId, type, message);
          }
      };
 

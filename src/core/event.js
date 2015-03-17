@@ -21,7 +21,10 @@ define(['./native'], function (native) {
     var addEventListener = (function () {
         if (native.isEnv()) {
             return function (type, callback, useCapture) {
-                native.postMessage('event_register', type);
+                var data = {
+                    type: type
+                };
+                native.postMessage('event_register', data);
                 document.addEventListener('message', callback, useCapture);
             };
         }
@@ -53,7 +56,7 @@ define(['./native'], function (native) {
             };
         }
         return function (type, message) {
-            var event = document.createEvent('Event');
+            var event = document.createEvent('HTMLEvents');
             event.initEvent(type, true, true);
             event.data = message;
             document.dispatchEvent(event, message);
