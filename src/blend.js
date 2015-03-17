@@ -1,5 +1,5 @@
 /**
- * @file event.js
+ * @file blend.js
  * @desc Blend api;
  * @author clouda-team(https://github.com/clouda-team)
  * @param {Object} lib 系统静态方法
@@ -31,9 +31,9 @@ define(['./core/lib', './widget', './core/event'], function (lib, widgets, event
      * runtime ready事件,是对native ready事件的封装
      * @param {Function} callback ready之后触发函数
      */
-    blend.ready = function(callback) {
+    blend.ready = function (callback) {
         var outTimeFun;
-        var handler = function() {
+        var handler = function () {
             outTimeFun && clearTimeout(outTimeFun);
             if (/complete|loaded|interactive/i.test(document.readyState)) {
                 callback(blend);
@@ -56,9 +56,11 @@ define(['./core/lib', './widget', './core/event'], function (lib, widgets, event
         }
     };
 
+    lib.extend(blend, event);
+
     // 如果文件后加载uixready可能触发不了, 检测变量形式触发
     // @todo需要向naitve接口同学确认是否window.lc_bridge如果为真侧naitve接口就可以用了;
-    if(window.lc_bridge){
+    if (window.lc_bridge) {
         blend.readyState = true;
     }
 
