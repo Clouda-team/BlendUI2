@@ -53,13 +53,9 @@
         var data = JSON.parse(event.data);
         var type = data.type;
         var message = JSON.stringify(data.message);
-        console.log('terry' + '-------delegate---------' + message);
-        console.log(type);
         if (events[type]) {
-            console.log(events[type]);
-            for (var i = 0, len = events[type].length; i < len;i++) {
-                console.log(events[type]);
-                bridge.postMessage(events[type][i], data.type, message);
+            for (var i = 0, len = events[type].length; i < len; i++) {
+                bridge.postMessage(events[type][i], type, message);
             }
         }
     }, false);

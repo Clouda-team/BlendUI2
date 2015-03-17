@@ -41,6 +41,14 @@
                 }
             });
         });
+
+        // 自定义事件机制测试
+        blend.on("test", function (event) {
+            alert("事件执行ok");
+            alert(event.origin);
+        });
+
+        blend.fire("test", "你好啊");
     });
 
 </script>

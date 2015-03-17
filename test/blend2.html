@@ -21,7 +21,9 @@
 
         var title = blend.create('title').addLeftItem({
             text: '返回1',
-            action: 'back'
+            action: {
+                operator: 'back'
+            }
         });
 
         // title.destroy();

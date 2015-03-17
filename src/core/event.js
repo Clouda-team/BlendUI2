@@ -25,7 +25,7 @@ define(['./native'], function (native) {
                     type: type
                 };
                 native.postMessage('event_register', data);
-                document.addEventListener('message', callback, useCapture);
+                document.addEventListener(type, callback, useCapture);
             };
         }
         return function (type, callback, useCapture) {
@@ -36,8 +36,11 @@ define(['./native'], function (native) {
     var removeEventListener = (function () {
         if (native.isEnv()) {
             return function (type, callback, useCapture) {
-                native.postMessage('event_unregister', type);
-                document.addEventListener('message', callback, useCapture);
+                var data = {
+                    type: type
+                };
+                native.postMessage('event_unregister', data);
+                document.removeEventListener(type, callback, useCapture);
             };
         }
         return function (type, callback, useCapture) {
@@ -56,7 +59,7 @@ define(['./native'], function (native) {
             };
         }
         return function (type, message) {
-            var event = document.createEvent('HTMLEvents');
+            var event = document.createEvent('Event');
             event.initEvent(type, true, true);
             event.data = message;
             document.dispatchEvent(event, message);
