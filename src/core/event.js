@@ -42,7 +42,7 @@ define(['./native'], function (native) {
         };
     })();
 
-    var fire = (function (){
+    var fire = (function () {
         if (native.isEnv()) {
             return function (type, message) {
                 var data = {
@@ -55,6 +55,7 @@ define(['./native'], function (native) {
         return function (type, message) {
             var event = document.createEvent('Event');
             event.initEvent(type, true, true);
+            event.data = message;
             document.dispatchEvent(event, message);
         };
     })();
