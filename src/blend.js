@@ -22,8 +22,17 @@ define(['./core/lib', './widget', './core/event'], function (lib, widgets, event
      * @return {Object} 组件对象
      */
     blend.create = function (name, options) {
-        if (widgets[name]) {
-            return new widgets[name](options);
+        var widget = widgets[name];
+        if (widget) {
+            if (lib.isClass(widget)) {
+                return new widget(options);
+            }
+            else {
+                widget(options);
+            }
+        }
+        else {
+            console.log("要创建widget不存在");
         }
     };
 

@@ -38,5 +38,12 @@ define(function(){
         return typeof o === 'function' && (o.prototype && o === o.prototype.constructor);
     };
 
+    // 生成唯一的id
+    var idCounter = 0;
+    lib.uniqueId = function(prefix) {
+         var id = '_' + (++idCounter);
+        return (prefix||'UNIQUEID') + id;
+    };
+
     return lib;
 });
