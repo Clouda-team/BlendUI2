@@ -25,7 +25,11 @@ define(['./lib'], function (lib) {
         
         // 初始化函数
         function Constructor() {
+            var target = arguments[0];
             this.config = extend({},config);
+            if(typeof target == "object" && typeof target.fn == "object"){
+                extend(this,target.fn);
+            }
             this.init&&this.init.apply(this, arguments);
         }
 
