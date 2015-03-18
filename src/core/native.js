@@ -6,20 +6,30 @@
 
 define(function(){
     var nativeApi = {};
-    var bridge = window.lc_bridge;
+
+    var _initApi = function(method, args){
+        try {
+            var api = window.lc_bridge;
+            return api[method].apply(api, args);
+        }
+        catch (e) {
+            console.log('Api_Error:' + method);
+            console.log(e);
+        }
+    }
 
     /**
      * 渲染组件方法
      * @param options
      */
     nativeApi.render = function(options) {
-        if(options.debug){
+        if(options.debug) {
             console.log(JSON.stringify(options));
         }
         if(typeof options !== 'string'){
             options = JSON.stringify(options);
         }
-        bridge.UIXSetDecoration(options);
+        _initApi('UIXSetDecoration',[options]);
     };
 
     /**
@@ -28,10 +38,10 @@ define(function(){
      * @param {object | string} options
      */
     nativeApi.widget = function(type, options){
-        if(typeof options !== 'string'){
+        if (typeof options !== 'string') {
             options = JSON.stringify(options);
         }
-        bridge.UIXShow(type, options);
+        _initApi('UIXShow',[type, options]);
     };
 
     /**
@@ -43,7 +53,7 @@ define(function(){
         if(typeof options !== 'string'){
             options = JSON.stringify(options);
         }
-        bridge.UIXSetProperty(id, options);
+        _initApi('UIXSetProperty',[id, options]);
     };
 
     /**
@@ -57,10 +67,10 @@ define(function(){
              message = type;
              type = webViewId;
              webViewId = null;
-             bridge.postMessage(type, message);
+             _initApi('postMessage',[type, message]);
          }
          else {
-             bridge.postMessage(webViewId, type, message);
+            _initApi('postMessage',[webViewId, type, message]);
          }
      };
 
@@ -70,18 +80,7 @@ define(function(){
      * @param {string} script js脚本
      */
     nativeApi.execScript = function(webViewId, script){
-        bridge.exeJsRemote(webviewid, script);
-    };
-
-    /**
-     * 判断是否是uix native环境
-     * @returns {boolean}
-     */
-    nativeApi.isEnv = function () {
-        if (bridge) {
-            return true;
-        }
-        return false;
+        _initApi('exeJsRemote',[webviewid, script]);
     };
 
     return nativeApi;

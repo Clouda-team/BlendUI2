@@ -45,5 +45,29 @@ define(function(){
         return (prefix||'UNIQUEID') + id;
     };
 
+    // 环境判断
+    var ua = navigator.userAgent.toLowerCase();
+    var isAndroid = ua.indexOf("android") !== -1;
+    var isIphone = ua.indexOf("iphone")!== -1;
+    var isUix = function(){
+        var v = ua.match(/uix\/(\d+\.\d+\.\d+\.\d+)/);
+        return v?v[1] : "";
+    }();
+
+    lib.ready = function(fn) {
+        if (isUix) {
+            if(window.lc_bridge){
+                fn();
+            }else{
+                document.addEventListener('uixready', fn, false);
+            }
+        }
+        else {
+            fn();
+            console.log('非Naitve Uix环境');
+        }
+    };
+    lib.isUix = isUix;
+
     return lib;
 });

@@ -37,28 +37,10 @@ define(['./core/lib', './widget', './core/event'], function (lib, widgets, event
     };
 
     // uix ready事件
-    var ua = navigator.userAgent.toLowerCase();
-    var isAndroid = ua.indexOf("android") !== -1;
-    var isIphone = ua.indexOf("iphone")!== -1;
-    var isUix = function(){
-        var v = ua.match(/uix\/(\d+\.\d+\.\d+\.\d+)/);
-        return v?v[1]:"";
-    }();
+    
     var startTime = 1* new Date();
-    var _ready = function(fn) {
-        if(isUix){
-            if(window.lc_bridge){
-                fn();
-            }else{
-                document.addEventListener('uixready', fn, false);
-            }
-        }else{
-            fn();
-            console.log('非uix环境');
-        }
-    };
     var _readyFn = [];
-    _ready(function(){
+    lib.ready(function(){
         blend.readyState = true;
         blend.initTime = (1* new Date())-startTime;
         _readyFn.forEach(function(v,k){
@@ -78,7 +60,7 @@ define(['./core/lib', './widget', './core/event'], function (lib, widgets, event
         }
     };
     // 判断是否是naitve环境
-    blend.isUix = isUix;
+    blend.isUix = lib.isUix;
 
     lib.extend(blend, event);
 

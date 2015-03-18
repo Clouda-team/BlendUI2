@@ -2,7 +2,7 @@
  * @file event.js
  * @author clouda-team
  */
-define(['./native'], function (native) {
+define(['./lib','./native'], function (lib, native) {
 
     /**
      * 事件机制
@@ -19,7 +19,7 @@ define(['./native'], function (native) {
      * @param {boolean} useCapture 是否捕获类型
      */
     var addEventListener = (function () {
-        if (native.isEnv()) {
+        if (lib.isUix) {
             return function (type, callback, useCapture) {
                 var data = {
                     type: type
@@ -34,7 +34,7 @@ define(['./native'], function (native) {
     })();
 
     var removeEventListener = (function () {
-        if (native.isEnv()) {
+        if (lib.isUix) {
             return function (type, callback, useCapture) {
                 var data = {
                     type: type
@@ -49,7 +49,7 @@ define(['./native'], function (native) {
     })();
 
     var fire = (function () {
-        if (native.isEnv()) {
+        if (lib.isUix) {
             return function (type, message) {
                 var data = {
                     type: type,
