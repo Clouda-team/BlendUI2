@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Blend2测试用例</title>
+    <link rel="stylesheet" href="" >
+    <style>
+        *{line-height: 180%;}
+    </style>
+    <script src="../third_party/zepto.js"></script>
+    <script src="../third_party/require.js"></script>
+</head>
+<body>
+    <div style="margin-top:100px;">
+        <button id="title">修改title名称</button>
+    </div>
+</body>
+</html>
+<script>
+    require.config({
+        baseUrl:"../src/",
+        urlArgs: "bust=" +  (new Date()).getTime()
+    });
+    require(['blend'], function (blend) {
+
+        $("#title").click(function(){
+            var title = blend.create('title',{
+                backgroundColor:'#666666',
+                color: '#ffffffff',
+                opacity:1,
+                text:'blend2组件',
+                image:'http://fedev.baidu.com/~gaotianyi/emeishan/public/images/top_user.png',
+                left:{
+                    text: '返回',
+                    action: 'back'
+                },
+                right:{
+                    image:'http://fedev.baidu.com/~gaotianyi/emeishan/public/images/top_user.png',
+                    action: 'navi'
+                }
+            });
+        });
+    });
+
+</script>
