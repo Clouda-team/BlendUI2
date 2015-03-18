@@ -36,42 +36,54 @@ define(['./core/lib', './widget', './core/event'], function (lib, widgets, event
         }
     };
 
+    // uix ready事件
+    var ua = navigator.userAgent.toLowerCase();
+    var isAndroid = ua.indexOf("android") !== -1;
+    var isIphone = ua.indexOf("iphone")!== -1;
+    var isUix = function(){
+        var v = ua.match(/uix\/(\d+\.\d+\.\d+\.\d+)/);
+        return v?v[1]:"";
+    }();
+    var startTime = 1* new Date();
+    var _ready = function(fn) {
+        if(isUix){
+            if(window.lc_bridge){
+                fn();
+            }else{
+                document.addEventListener('uixready', fn, false);
+            }
+        }else{
+            fn();
+            console.log('非uix环境');
+        }
+    };
+    var _readyFn = [];
+    _ready(function(){
+        blend.readyState = true;
+        blend.initTime = (1* new Date())-startTime;
+        _readyFn.forEach(function(v,k){
+            v();
+        });
+        _readyFn = [];
+    });
     /**
      * runtime ready事件,是对native ready事件的封装
      * @param {Function} callback ready之后触发函数
      */
     blend.ready = function (callback) {
-        var outTimeFun;
-        var handler = function () {
-            outTimeFun && clearTimeout(outTimeFun);
-            if (/complete|loaded|interactive/i.test(document.readyState)) {
-                callback(blend);
-            }
-            else {
-                document.addEventListener('DOMContentLoaded', function() {
-                    callback(blend);
-                }, false);
-            }
-            document.removeEventListener('uixready', handler);
-            blend.readyState = true;
-        };
-        if (blend.readyState ||  window.lc_bridge) {
-            handler();
-        }
-        else {
-            // 有的手机无法触发
-            outTimeFun = setTimeout(handler, 200000);
-            document.addEventListener('uixready', handler, false);
+        if(blend.readyState){
+            callback();
+        }else{
+            _readyFn.push(callback);
         }
     };
+    // 判断是否是naitve环境
+    blend.isUix = isUix;
 
     lib.extend(blend, event);
 
     // 如果文件后加载uixready可能触发不了, 检测变量形式触发
     // @todo需要向naitve接口同学确认是否window.lc_bridge如果为真侧naitve接口就可以用了;
-    if (window.lc_bridge) {
-        blend.readyState = true;
-    }
-
+    
     return blend;
 });

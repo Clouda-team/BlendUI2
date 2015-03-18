@@ -18,7 +18,7 @@
         urlArgs: "bust=" +  (new Date()).getTime()
     });
     require(['blend'], function (blend) {
-
+        window.blend = blend;
         var title = blend.create('title').addLeftItem({
             text: '返回1',
             action: {
