@@ -56,7 +56,7 @@ define(['../core/Class',
          * @param {Array} options 图片元数据数组
          * @return {Gallery} gallery gallery对象
          */
-        setImages: function (options) {
+        addImages: function (options) {
             var images;
             if (typeof options === 'object' && options.constructor === Array) {
                 images = options;
@@ -71,7 +71,7 @@ define(['../core/Class',
          * @param {number} index
          * @return {Gallery} gallery gallery对象
          */
-        setPosition: function (index) {
+        setIndex: function (index) {
             this.config.index = index;
             return this;
         },
