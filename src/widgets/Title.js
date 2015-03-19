@@ -38,10 +38,21 @@ define(["../core/Class","./Widget"], function(Class,Widget){
             return this;
         },
 
+        // @todo
+        removeLeftItem: function() {
+
+        },
+
+        
         addRightItem: function(item){
             this.addItem(this.config.right, item);
             return this;
-        }
+        },
+        
+        // @todo
+        removeRightItem: function() {
+
+        },
     });
 
     return Title;

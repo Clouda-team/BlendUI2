@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>case测试</title>
+    <link rel="stylesheet" href="" >
+    <style>
+        *{line-height: 180%;}
+    </style>
+    <script src="../../third_party/zepto.js"></script>
+    <script src="../../third_party/require.js"></script>
+</head>
+<body>
+<button type="button" id="create">创建navigation</button><br/>
+<button type="button" id="show">显示show</button><br/>
+<button type="button" id="hide">隐藏hide</button><br/>
+<button type="button" id="addItem">增加导航项</button><br/>
+<button type="button" id="destroy">销毁</button><br/>
+<script>
+    require.config({
+        baseUrl:"../../src/",
+        urlArgs: "bust=" +  (new Date()).getTime()
+    });
+    require(['blend'], function (blend) {
+        var tab;
+        var _eval = {
+            "create" : function(){
+                navigation = blend.create('navigation',{
+                    "id": "navigation",
+                    "backgroundColor": "#324324",
+                    "opacity": 0.9,
+                    "color": "#ffffffff",
+                    "items": [
+                        {
+                            text: "百度",
+                            action: {
+                                url: "http://www.baidu.com"
+                            }
+                        },
+                        {
+                            text: "网易",
+                            action: {
+                                url: "http://163.com"
+                            }
+                        }
+                    ]
+                });
+            },
+            "hide" : function(){
+                
+            },
+            "show" : function(){
+                
+            },
+            "addItem" : function(){
+                
+            },
+            "destroy" : function(){
+                
+            }
+        }
+        $('input[type=button],button').click(function(e){
+            var id = this.id;
+            console.log(id+"=============="+id);
+            if(_eval[id]){
+                _eval[id].call(_eval);
+            }else{
+                alert('没有此case')
+            }
+        });
+    });
+</script>
+</body>
+</html>

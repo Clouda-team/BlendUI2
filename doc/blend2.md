@@ -136,10 +136,21 @@ Blend2是提供给web开发人员，快速接入Naitve组件的接口方法;
 
 方法：
 
-- show：显示
-- hide：隐藏
 - active: tab切换
+- addItem: 增加某项
+- removeItem: 删除某项
 - destory：销毁 
+
+### navigation
+全局组件
+
+方法:
+
+- show: 显示
+- hide: 隐藏
+- addItem: 增加项
+- removeItem: 删除项
+- destory: 销毁
 
 ### alert
 
