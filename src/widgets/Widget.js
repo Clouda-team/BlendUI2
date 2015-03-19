@@ -118,6 +118,7 @@ define(['../core/Class', '../core/native', '../core/lib'], function (Class, nati
          */
         setStyle: function(options){
             this.config.style = this._parseStyle(options);
+            return this;
         },
 
         /**

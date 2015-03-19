@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>case测试</title>
+    <link rel="stylesheet" href="" >
+    <style>
+        *{line-height: 180%;}
+    </style>
+    <script src="../../third_party/zepto.js"></script>
+    <script src="../../third_party/require.js"></script>
+</head>
+<body>
+<button type="button" id="title">基本标题组件</button><br/>
+
+<button type="button" id="color">改变背景色和字体颜色</button><br/>
+<button type="button" id="left">增加左边按钮</button><br/>
+<button type="button" id="right">增加右边按钮</button><br/>
+<script>
+    require.config({
+        baseUrl:"../../src/",
+        urlArgs: "bust=" +  (new Date()).getTime()
+    });
+    require(['blend'], function (blend) {
+        var titleBar;
+        var _eval = {
+            "title" : function(){
+                titleBar = blend.create('title',{
+                    text:'标题标题标题'
+                });
+            },
+            "color" : function(){
+                titleBar.setStyle({
+                    backgroundColor:"#ff0000",
+                    color:"#cccccc",
+                }).render();
+            },
+            "left" : function(){
+                titleBar.addLeftItem({
+                    text: '444',
+                    action: {
+                        operator: 'back'
+                    }
+                }).render();
+            },
+            "right" : function(){
+                titleBar.addRightItem({
+                    text:'菜單'
+                }).render();
+            }
+        }
+        $('input[type=button],button').click(function(e){
+            var id = this.id;
+            console.log(id+"=============="+id);
+            if(_eval[id]){
+                _eval[id].call(_eval);
+            }else{
+                alert('没有此case')
+            }
+        });
+    });
+</script>
+</body>
+</html>
