@@ -68,7 +68,7 @@ define(function(){
         Bridge.exeJsRemote(webviewid, script);
     };
 
-    
+
     /**
      * @ method nativeApi.getWidgetList
      * @param   no parameter
@@ -77,5 +77,6 @@ define(function(){
         var widgetList = ["title","tab","navigation","toolbar"];
         return Bridge.UIXGetWidgetList?Bridge.UIXGetWidgetList():widgetList;  
     };
+    
     return nativeApi;
 });
