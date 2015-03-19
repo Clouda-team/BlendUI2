@@ -23,9 +23,9 @@ define(['../core/Class',
                 var timer = setTimeout(function(){
                     native.widget(type, configs);
                     clearTimeout(timer);
-                    this.ready = false;
+                    Gallery.ready = false;
                 });
-                this.ready = true;
+                Gallery.ready = true;
             }
         },
 
