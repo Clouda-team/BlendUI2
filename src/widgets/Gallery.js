@@ -17,7 +17,16 @@ define(['../core/Class',
         },
 
         statics: {
-            ready: false
+            ready: false,
+            configs: {},
+            render: function (type, configs) {
+                var timer = setTimeout(function(){
+                    native.widget(type, configs);
+                    clearTimeout(timer);
+                    this.ready = false;
+                });
+                this.ready = true;
+            }
         },
 
         type: 'gallery',
@@ -27,16 +36,20 @@ define(['../core/Class',
          * @param {object} options 配置信息
          */
         init: function (options) {
-            this.setGallery(options);
+            this.id = Gallery.generateId();
+            this.setImages(options);
             this.render();
+            return this;
         },
 
         onNext: function (callback) {
-            this.config.pre = 'js(' + callback.toString() + ')()';
+            this.config.next = 'js(' + callback.toString() + ')()';
+            return this;
         },
 
         onPre: function (callback) {
             this.config.pre = 'js(' + callback.toString() + ')()';
+            return this;
         },
 
         /**
@@ -44,8 +57,13 @@ define(['../core/Class',
          * @param {Array} options 图片元数据数组
          * @return {Gallery} gallery gallery对象
          */
-        setGallery: function (options) {
-            this.config.gallery = options;
+        setImages: function (options) {
+            var images;
+            if (typeof options === 'object' && options.constructor === Array) {
+                images = options;
+            }
+            images = options.images || [];
+            this.config.gallery = images;
             return this;
         },
 
@@ -54,7 +72,7 @@ define(['../core/Class',
          * @param {number} index
          * @return {Gallery} gallery gallery对象
          */
-        setIndex: function (index) {
+        setPosition: function (index) {
             this.config.index = index;
             return this;
         },
@@ -63,13 +81,12 @@ define(['../core/Class',
          * 渲染gallery组件
          */
         render: function () {
+            var configs = Gallery.configs;
+            var config = this.config;
             var type = this.type;
-            var config = JSON.stringify(this.config);
-            if (!Gallery.ready) {
-                setTimeout(function () {
-                    native.widget(type, config);
-                }, 0);
-                Gallery.ready = true;
+            configs[this.id] = config;
+            if(!Gallery.ready){
+                Gallery.render(type, config);
             }
         }
     });
