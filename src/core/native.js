@@ -6,20 +6,30 @@
 
 define(function(){
     var nativeApi = {};
-    var bridge = window.lc_bridge;
+
+    var _initApi = function(method, args){
+        try {
+            var api = window.lc_bridge;
+            return api[method].apply(api, args);
+        }
+        catch (e) {
+            console.log('Api_Error:' + method);
+            console.log(e);
+        }
+    }
 
     /**
      * 渲染组件方法
      * @param options
      */
     nativeApi.render = function(options) {
-        if(options.debug){
+        if(options.debug) {
             console.log(JSON.stringify(options));
         }
         if(typeof options !== 'string'){
             options = JSON.stringify(options);
         }
-        bridge.UIXSetDecoration(options);
+        _initApi('UIXSetDecoration',[options]);
     };
 
     /**
@@ -28,10 +38,10 @@ define(function(){
      * @param {object | string} options
      */
     nativeApi.widget = function(type, options){
-        if(typeof options !== 'string'){
+        if (typeof options !== 'string') {
             options = JSON.stringify(options);
         }
-        Bridge.UIXShow(type, options);
+        _initApi('UIXShow',[type, options]);
     };
 
     /**
@@ -43,20 +53,25 @@ define(function(){
         if(typeof options !== 'string'){
             options = JSON.stringify(options);
         }
-        Bridge.UIXSetProperty(id, options);
+        _initApi('UIXSetProperty',[id, options]);
     };
 
     /**
      * 向指定的页面发送消息
-     * @param {string} webViewId
-     * @param {string} type
-     * @param {object | string} message
+     * @param {string} webViewId 页面应用id
+     * @param {string} type 事件类型
+     * @param {object | string} message 消息数据
      */
-     nativeApi.postMessage = function(webViewId, type, message){
-        if(typeof message !== 'string'){
-            message = JSON.stringify(message);
-        }
-        Bridge.postMessage(webViewId, type, message);
+    nativeApi.postMessage = function (webViewId, type, message) {
+         if (!message) {
+             message = type;
+             type = webViewId;
+             webViewId = null;
+             _initApi('postMessage',[type, message]);
+         }
+         else {
+            _initApi('postMessage',[webViewId, type, message]);
+         }
      };
 
     /**
@@ -65,7 +80,7 @@ define(function(){
      * @param {string} script js脚本
      */
     nativeApi.execScript = function(webViewId, script){
-        Bridge.exeJsRemote(webviewid, script);
+        _initApi('exeJsRemote',[webviewid, script]);
     };
 
 

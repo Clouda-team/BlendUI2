@@ -15,12 +15,26 @@ define(['./lib'], function (lib) {
         };
     }
 
-
+    /**
+     * 类生成系统方法;
+     * @param {object} data 组件配置数据
+     * {
+        statics:{},生成系统静态属性或者方法
+        events:{
+            'type':callback
+        },生成系统的事件,
+        config:{},系统的动态属性
+        ......, 系统的动态方法
+     }
+     * @returns {function}
+     */
     var createClass = function( data ){
         var parent = data.extend || noop,
             config = data.config || {},
+            events = data.events || [],
             statics = data.statics || {};
         delete data.config;
+        delete data.events;
         delete data.statics;
         
         // 初始化函数
@@ -30,6 +44,7 @@ define(['./lib'], function (lib) {
             if(typeof target == "object" && typeof target.fn == "object"){
                 extend(this,target.fn);
             }
+            this.id = this.get('id')||lib.uniqueId('CLASSID');
             this.init&&this.init.apply(this, arguments);
         }
 
@@ -42,6 +57,15 @@ define(['./lib'], function (lib) {
 
         // 处理静态属性
         extend(Constructor, statics);
+
+        // 处理events参数
+        if(events.length){
+            for(var k in events){
+                proto._listener[k] = events[k];
+            }
+        }
+        // 处理config动态属性
+        proto.config = extend({}, config);
 
         // data中剩余属性或者方法
         extend(proto, data);
