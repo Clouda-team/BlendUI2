@@ -29,7 +29,7 @@ define(function(){
         if(typeof options !== 'string'){
             options = JSON.stringify(options);
         }
-        _initApi('UIXSetDecoration',[options]);
+        _initApi('UIXSetDecoration',[options,false]);
     };
 
     /**
@@ -85,7 +85,7 @@ define(function(){
 
 
     /**
-     * @ method nativeApi.getWidgetList
+     * @method nativeApi.getWidgetList
      * @param   no parameter
      */
     nativeApi.getWidgetList = function(){

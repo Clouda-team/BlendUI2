@@ -18,11 +18,19 @@
         urlArgs: "bust=" +  (new Date()).getTime()
     });
     require(['blend'], function (blend) {
-        window.blend = blend;
-        var title = blend.create('title').addLeftItem({
-            text: '返回1',
+        var title = blend.create('title',{
+            text:'555555'+(1*new Date()),
+            backgroundColor:'#ff0000',
+            color:'#cccccc',
+        }).addLeftItem({
+            text: '444',
             action: {
                 operator: 'back'
+            }
+        }).addRightItem({
+            text:'菜單',
+            action:{
+                operator:'navi'
             }
         });
 
