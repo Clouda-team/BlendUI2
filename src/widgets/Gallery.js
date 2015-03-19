@@ -36,7 +36,6 @@ define(['../core/Class',
          * @param {object} options 配置信息
          */
         init: function (options) {
-            this.id = Gallery.generateId();
             this.setImages(options);
             this.render();
             return this;
