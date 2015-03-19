@@ -8,8 +8,9 @@ define([
     "./widgets/Title",
     "./widgets/Tab",
     "./widgets/Navigation",
-    "./widgets/Toolbar"
-], function(Title, Tab, Navigation, Toolbar) {
+    "./widgets/Toolbar",
+    "./widgets/Gallery"
+], function(Title, Tab, Navigation, Toolbar, Gallery) {
     var widgets = {};
 
     widgets['title'] = Title;
@@ -19,6 +20,8 @@ define([
     widgets['navigation'] = Navigation;
 
     widgets['toolbar'] = Toolbar;
+
+    widgets['gallery'] = Gallery;
 
     /* @method widgets.extend
      * @args object

@@ -32,11 +32,11 @@ define(['../core/Class',
         },
 
         onNext: function (callback) {
-            this.config.pre = '(' + callback.toString() + ')()';
+            this.config.pre = 'js(' + callback.toString() + ')()';
         },
 
         onPre: function (callback) {
-            this.config.pre = '(' + callback.toString() + ')()';
+            this.config.pre = 'js(' + callback.toString() + ')()';
         },
 
         /**
