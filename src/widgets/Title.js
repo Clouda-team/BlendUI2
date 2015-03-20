@@ -49,7 +49,7 @@ define(["../core/Class","./Widget"], function(Class,Widget){
             return this;
         },
 
-        removeRightItem: function() {
+        removeRightItem: function (index) {
             this.config.left.splice(index, 1);
             return this;
         }
