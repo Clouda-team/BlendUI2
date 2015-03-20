@@ -30,12 +30,13 @@ define(["../core/Class","./Widget"], function(Class,Widget){
 
         // @todo
         removeItem: function(index) {
-
+            this.config.items.splice(index, 1);
+            return this;
         },
 
         // @todo
         show: function(){
-
+            
         },
 
         // @todo

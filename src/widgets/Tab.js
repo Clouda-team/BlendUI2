@@ -28,12 +28,12 @@ define(["../core/Class","./Widget"], function(Class,Widget){
             return this;
         },
 
-        // @todo删除某项
+        // 删除某项
         removeItem: function(index) {
-
+            this.config.items.splice(index, 1);
         },
 
-        // @todo激活某项
+        // 激活某项
         active: function(item){
 
         }

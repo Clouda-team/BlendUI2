@@ -17,7 +17,7 @@ define(["../core/Class","./Widget"], function(Class,Widget){
             "right": []
         },
 
-        setConfig: function(options){
+        setConfig: function (options) {
             var title = options.text || '',
                 leftItem = options.left || {},
                 rightItem = options.right || {};
@@ -26,33 +26,33 @@ define(["../core/Class","./Widget"], function(Class,Widget){
             this.addRightItem(rightItem);
         },
 
-        setTitle: function(title){
+        setTitle: function (title) {
             this.config.center = [{
                 text: title
             }];
             return this;
         },
 
-        addLeftItem: function(item){
-            this.addItem(this.config.left, item);
+        addLeftItem: function (item, index) {
+            this.addItem(this.config.left, item, index);
             return this;
         },
 
-        // @todo
-        removeLeftItem: function() {
-
-        },
-
-        
-        addRightItem: function(item){
-            this.addItem(this.config.right, item);
+        removeLeftItem: function(index) {
+            this.config.left.splice(index, 1);
             return this;
         },
+
         
-        // @todo
+        addRightItem: function (item, index) {
+            this.addItem(this.config.right, item, index);
+            return this;
+        },
+
         removeRightItem: function() {
-
-        },
+            this.config.left.splice(index, 1);
+            return this;
+        }
     });
 
     return Title;
