@@ -106,10 +106,11 @@ define(['../core/Class', '../core/native', '../core/lib'], function (Class, nati
          * @param {Array} items
          * @param {object} item
          */
-        addItem: function (items, item){
+        addItem: function (items, item, index){
             items = items || [];
             this._parseItem(item);
-            items.push(item);
+            var index = index || items.length;
+            items.splice(index, 0, item);
         },
 
         /**

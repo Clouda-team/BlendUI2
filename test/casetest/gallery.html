@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>case测试</title>
+    <link rel="stylesheet" href="" >
+    <style>
+        *{line-height: 180%;}
+    </style>
+    <script src="../../third_party/zepto.js"></script>
+    <script src="../../third_party/require.js"></script>
+</head>
+<body>
+<button type="button" id="gallery">创建Gallery</button><br/>
+
+<button type="button" id="index">显示第三张图片</button><br/>
+<script>
+    require.config({
+        baseUrl:"../../src/",
+        urlArgs: "bust=" +  (new Date()).getTime()
+    });
+    require(['blend'], function (blend) {
+        var gallery;
+        var _eval = {
+            "gallery" : function(){
+                gallery = blend.create('gallery', {
+                    'images': [
+                    {
+                         'text': '标题1',
+                        'image': 'http://images.haiwainet.cn/2015/0319/20150319120344959.jpg',
+                        'description': '图片描述1'
+                    },
+                    {
+                         'text': '标题2',
+                        'image': 'http://images.haiwainet.cn/2015/0319/20150319120344822.jpg',
+                        'description': '图片描述2'
+                    },
+                    {
+                         'text': '标题3',
+                        'image': 'http://images.china.cn/attachement/jpg/site1000/20150319/7427ea210c5416745d551d.jpg',
+                        'description': '图片描述3'
+                    }]
+                }).onNext(function () {
+                    alert('next');
+                }).onPre(function () {
+                    alert('pre');
+                });
+            },
+            "index" : function(){
+                gallery.setIndex(3).render();
+            }
+        }
+        $('input[type=button],button').click(function(e){
+            var id = this.id;
+            console.log(id+"=============="+id);
+            if(_eval[id]){
+                _eval[id].call(_eval);
+            }else{
+                alert('没有此case')
+            }
+        });
+    });
+</script>
+</body>
+</html>

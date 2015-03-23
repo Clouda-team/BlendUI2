@@ -26,6 +26,22 @@ define(["../core/Class","./Widget"], function(Class,Widget){
         addItem: function(item){
             this.Super.addItem(this.config.items, item);
             return this;
+        },
+
+        // @todo
+        removeItem: function(index) {
+            this.config.items.splice(index, 1);
+            return this;
+        },
+
+        // @todo
+        show: function(){
+            
+        },
+
+        // @todo
+        hide: function(){
+
         }
 
     });
