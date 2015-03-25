@@ -89,8 +89,9 @@ define(function(){
      * @param   no parameter
      */
     nativeApi.getWidgetList = function(){
-        var widgetList = ["title","tab","navigation","toolbar"];
-        return Bridge.UIXGetWidgetList?Bridge.UIXGetWidgetList():widgetList;  
+        var widgetList = ["title","tab","navigation","toolbar"],
+            api = window.lc_bridge;
+        return api.getWidgetList?api.getWidgetList():widgetList;
     };
     
     return nativeApi;

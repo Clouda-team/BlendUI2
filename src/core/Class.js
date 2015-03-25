@@ -1,4 +1,4 @@
-define(['./lib'], function (lib) {
+define(['./lib','./style'], function (lib,style) {
 
     var noop    = lib.noop,
         extend   = lib.extend;
@@ -117,6 +117,9 @@ define(['./lib'], function (lib) {
                 if (!events.length) {
                     delete this._listener[type];
                 }
+            },
+            style:function(options){
+                style.init(this,options);
             }
         });
         return Constructor;

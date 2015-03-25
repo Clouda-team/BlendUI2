@@ -16,7 +16,7 @@ define(['../core/Class', '../core/native', '../core/lib'], function (Class, nati
         },
 
         type: '',
-
+        
         statics: {
             //全局组件配置文件
             configs: {
