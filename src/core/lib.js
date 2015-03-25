@@ -8,7 +8,7 @@ define(function(){
      * @param {Object} supplier 属性的来源
      * @return {Object} returns obj
      */
-    lib.extend = function(receiver, supplier) {
+    lib.extend = function (receiver, supplier) {
 
         for (var property in supplier) {
             if (supplier.hasOwnProperty(property)) {
@@ -20,10 +20,10 @@ define(function(){
     };
 
     // 空函数
-    lib.noop = function(){};
+    lib.noop = function () {};
 
     // each方法
-    lib.each = function(object, fn, scope) {
+    lib.each = function (object, fn, scope) {
         for (var property in object) {
             if (object.hasOwnProperty(property)) {
                 if (fn.call(scope || object, property, object[property], object) === false) {
@@ -34,8 +34,24 @@ define(function(){
     };
 
     // 判断是不是类函数
-    lib.isClass = function(o) {
+    lib.isClass = function (o) {
         return typeof o === 'function' && (o.prototype && o === o.prototype.constructor);
+    };
+
+    // 把字符串中杠「-」转为驼峰abc-d转化为abcD;
+    lib.toCamel = function (str) {
+        str = str || '';
+        str = str.replace(/-([a-z])/g, function (a, s) {
+            return s.toUpperCase();
+        });
+        return str;
+    };
+
+    // 把字符串中杠「-」转为Pascal风格；
+    lib.toPascal = function (str) {
+        str = lib.toCamel(str);
+        str = str.charAt(0).toUpperCase() + str.slice(1);
+        return str;
     };
 
     // 生成唯一的id

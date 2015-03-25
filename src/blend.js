@@ -11,7 +11,7 @@ define([
     './core/lib',
     './widget',
     './core/event'
-], function(lib, widgets, event) {
+], function (lib, widgets, event) {
     /**
      * Blend模块声明
      * @module blend
@@ -24,25 +24,23 @@ define([
      * @param {Object} options 组件初始化参数
      * @return {Object} 组件对象
      */
-    blend.create = function(name, options) {
+    blend.create = function (name, options) {
         var widget = widgets[name];
         if (widget) {
             if (lib.isClass(widget)) {
                 return new widget(options);
             }
-            else {
-                return widget(options);
-            }
+            return widget(options);
         }
     };
 
     // uix ready事件
     var startTime = 1 * new Date();
     var _readyFn = [];
-    lib.ready(function() {
+    lib.ready(function () {
         blend.readyState = true;
         blend.initTime = (1 * new Date()) - startTime;
-        _readyFn.forEach(function(v, k) {
+        _readyFn.forEach(function (v, k) {
             v();
         });
         _readyFn = [];
@@ -52,7 +50,7 @@ define([
      * runtime ready事件,是对native ready事件的封装
      * @param {Function} callback ready之后触发函数
      */
-    blend.ready = function(callback) {
+    blend.ready = function (callback) {
         if (blend.readyState) {
             callback();
         }
