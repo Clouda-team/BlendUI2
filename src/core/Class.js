@@ -71,7 +71,11 @@ define([
         // 添加类中公共方法
         extend(proto, {
             set: function (key, val) {
-                if (this.attributes[key] !== val) {
+                if(this["_set"+lib.toPascal(key)]){
+                    var opt ={};
+                    opt[key] = val;
+                    this["_set"+lib.toPascal(key)](opt);
+                } else if (this.attributes[key] !== val) {
                     this._previousAttributes = extend({}, this.attributes);
                     if (typeof this.attributes[key] === 'object') {
                         extend(this.attributes[key], val);

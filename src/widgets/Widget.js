@@ -13,11 +13,10 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
                 data:options.style?options.style:{}
             });
             if (options) {
-                this.setConfig(options);
+                this._setConfig(options);
             }
             this.render();
         },
-
         itemList:{},
 
         type: '',
@@ -60,6 +59,27 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             }
         },
 
+
+        /**
+         * 初始化配置
+         * @param {object} options
+         */
+        _setConfig: function (options) {
+            var config = this.config,
+                name;
+            for (name in options) {
+                if(this.attributesList.indexOf(name)!=-1){
+                    this.set(name,options[name]);
+                }
+            }
+        },
+        /**
+         * 创建item
+         * @param {object} options
+         */
+        create: function(){
+            return new Item(this);    
+        },
         /**
          * 向items数组中添加item对象
          * @param {object} item
@@ -96,21 +116,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             this.styleInstance.update(options.style?options.style:{});
             return this;
         },
-        /**
-         * 初始化配置
-         * @param {object} options
-         */
-        setConfig: function (options) {
-            console.log(options);
-            var config = this.config,
-                name, style;
-            for (name in options) {
-                if(this.attributesList.indexOf(name)!=-1){
-                    this.set(name,options[name]);
-                }
-            }
-        },
-
+       
         /**
          * 渲染组件
          */
@@ -135,15 +141,9 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             if(!Widget.renderReady){
                 Widget.render(configs);
             }
-        },
-
-        /**
-         * 创建item
-         * @param {object} options
-         */
-        create:function(options){
-            return new Item(this);    
         }
+
+      
     });
 
     return Widget;
