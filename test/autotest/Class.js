@@ -9,10 +9,10 @@ define(['../../src/core/Class'],function(Class){
                 expect(Class).to.be.instanceof(Function);
             });
         });
-        
+
         describe('创建类',function(){
             var classA = Class({
-                config : {
+                attributes : {
                     "title":"11",
                     "doctitle":"22"
                 },
@@ -36,21 +36,27 @@ define(['../../src/core/Class'],function(Class){
                 objClasA.otherMethod();
                 expect(objClasA.get('title')).to.equal('33');
             });
-            
+
             var classB = Class({
                 extend: classA,
                 otherMethod1 : function(){
                     this.set("title","44");
                 }
             });
-            
+
             var objClasB = new classB();
-            it('继承类', function () {
+            it('类的继承', function () {
                 expect(objClasB).to.be.instanceof(classB);
                 expect(classB.Parent).to.be.instanceof(Function);
                 expect(objClasB.Super.constructor).to.be.instanceof(Function);
                 expect(objClasB.constructor).to.equal(classB);
                 expect(objClasB.Super.constructor).to.equal(classA);
+                objClasA.set('title','11');
+                expect(objClasA.get('title')).to.equal('11');
+                expect(objClasB.get('title')).to.not.equal('11');
+                objClasB.set('title','22');
+                console.log(objClasB);
+                expect(objClasB.get('title')).to.equal('22');
                 objClasB.otherMethod1();
                 expect(objClasB.get('title')).to.equal('44');
             });

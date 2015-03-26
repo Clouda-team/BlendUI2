@@ -31,9 +31,9 @@ define([
         statics:{},生成系统静态属性或者方法
         events:{
             'type':callback
-        },生成系统的事件,
-        attributes:{},系统的动态属性
-        ......, 系统的动态方法
+        },生成对象事件,
+        attributes:{},动态属性
+        method: function(){}, 系统的动态方法
      }
      * @return {Function}
      */
@@ -45,6 +45,7 @@ define([
         delete data.attributes;
         delete data.events;
         delete data.statics;
+        delete data.extend;
 
         // 初始化函数
         function Constructor(options) {
@@ -52,7 +53,19 @@ define([
             // if (typeof target === 'object' && typeof target.fn === 'object') {
             //     extend(this, target.fn);
             // }
-            this.id = options.id || lib.uniqueId('CLASSID');
+            this._listener = [];
+            // 把事件复制到实例中；
+            if (events.length) {
+                for (var k in events) {
+                    if (events.hasOwnProperty(k)) {
+                        this._listener[k] = [];
+                        this._listener[k].push(events[k]);
+                    }
+                }
+            }
+            // 把基类的 attributes 复制到实例中；
+            this.attributes = extend({}, attributes);
+            this.id = (options && options.id) || lib.uniqueId('CLASSID');
             this.init && this.init.apply(this, arguments);
         }
 
@@ -61,30 +74,12 @@ define([
         proto.constructor = Constructor;
         proto.Super = Constructor.Super = parent.prototype;
         Constructor.Parent = parent;
-        proto._listener = [];
-
-        // 处理静态属性
-        extend(Constructor, statics);
-
-        // 处理events参数
-        if (events.length) {
-            for (var k in events) {
-                proto._listener[k] = [];
-                proto._listener[k].push(events[k]);
-            }
-        }
-        // 处理attributes动态属性
-        proto.attributes = extend({}, attributes);
-
-        // data中剩余属性或者方法
-        extend(proto, data);
-
         // 添加类中公共方法
         extend(proto, {
             set: function (key, val) {
                 if (this.attributes[key] !== val) {
                     this._previousAttributes = extend({}, this.attributes);
-                    if(typeof this.attributes[key] === 'object'){
+                    if (typeof this.attributes[key] === 'object') {
                         extend(this.attributes[key], val);
                     }
                     this.attributes[key] = val;
@@ -122,6 +117,11 @@ define([
             },
             off: function (type, callback) {
                 var events = this._listener[type];
+                // 如果 type=== all,删除类下面全部事件；
+                if (type === 'all') {
+                    this._listener = [];
+                    return;
+                }
                 if (!events) {
                     return;
                 }
@@ -136,6 +136,12 @@ define([
             }
 
         });
+
+        // 类的静态属性和方法;
+        extend(Constructor, statics);
+        // data中剩余属性或者方法
+        extend(proto, data);
+
         return Constructor;
     };
 
