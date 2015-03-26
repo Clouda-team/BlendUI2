@@ -1,7 +1,15 @@
-define(['./lib'], function (lib) {
+/**
+ * @file Class.js
+ * @desc 类工厂方法;
+ * @author clouda-team(https://github.com/clouda-team)
+ * @return {Function} 工程类函数
+ */
 
-    var noop    = lib.noop,
-        extend   = lib.extend;
+define([
+    './lib'
+], function (lib) {
+    var noop = lib.noop;
+    var extend = lib.extend;
 
     // Object.create
     if (!Object.create) {
@@ -9,7 +17,8 @@ define(['./lib'], function (lib) {
             if (arguments.length > 1) {
                 throw new Error('Object.create implementation only accepts the first parameter.');
             }
-            function F() {}
+            function F() {
+            }
             F.prototype = o;
             return new F();
         };
@@ -17,35 +26,34 @@ define(['./lib'], function (lib) {
 
     /**
      * 类生成系统方法;
-     * @param {object} data 组件配置数据
+     * @param {Object} data 组件配置数据
      * {
         statics:{},生成系统静态属性或者方法
         events:{
             'type':callback
         },生成系统的事件,
-        config:{},系统的动态属性
+        attributes:{},系统的动态属性
         ......, 系统的动态方法
      }
-     * @returns {function}
+     * @return {Function}
      */
-    var createClass = function( data ){
-        var parent = data.extend || noop,
-            config = data.config || {},
-            events = data.events || [],
-            statics = data.statics || {};
-        delete data.config;
+    var createClass = function (data) {
+        var parent = data.extend || noop;
+        var attributes = data.attributes || {};
+        var events = data.events || [];
+        var statics = data.statics || {};
+        delete data.attributes;
         delete data.events;
         delete data.statics;
-        
+
         // 初始化函数
-        function Constructor() {
-            var target = arguments[0];
-            this.config = extend({},config);
-            if(typeof target == "object" && typeof target.fn == "object"){
-                extend(this,target.fn);
-            }
-            this.id = this.get('id')||lib.uniqueId('CLASSID');
-            this.init&&this.init.apply(this, arguments);
+        function Constructor(options) {
+            // var target = arguments[0];
+            // if (typeof target === 'object' && typeof target.fn === 'object') {
+            //     extend(this, target.fn);
+            // }
+            this.id = options.id || lib.uniqueId('CLASSID');
+            this.init && this.init.apply(this, arguments);
         }
 
         // 原型链继承
@@ -59,38 +67,46 @@ define(['./lib'], function (lib) {
         extend(Constructor, statics);
 
         // 处理events参数
-        if(events.length){
-            for(var k in events){
-                proto._listener[k] = events[k];
+        if (events.length) {
+            for (var k in events) {
+                proto._listener[k] = [];
+                proto._listener[k].push(events[k]);
             }
         }
-        // 处理config动态属性
-        proto.config = extend({}, config);
+        // 处理attributes动态属性
+        proto.attributes = extend({}, attributes);
 
         // data中剩余属性或者方法
         extend(proto, data);
 
         // 添加类中公共方法
         extend(proto, {
-            set : function(key,val){
-                if(this.config[key]!==val){
-                    this._previousConfig = extend({},this.config);
-                    this.config[key] = val;
-                    this.fire('change:'+key,[key]);
-                    this.fire('changeConfig',[key]);
+            set: function (key, val) {
+                if (this.attributes[key] !== val) {
+                    this._previousAttributes = extend({}, this.attributes);
+                    if(typeof this.attributes[key] === 'object'){
+                        extend(this.attributes[key], val);
+                    }
+                    this.attributes[key] = val;
+                    this.fire('change:' + key, [
+                        key
+                    ]);
+                    this.fire('change', [
+                        key
+                    ]);
                 }
             },
-            get : function(key){
-                return this.config[key]
+            get: function (key) {
+                return this.attributes[key];
             },
-            on : function(type, callback){
+            on: function (type, callback) {
                 var t = this;
                 if (!t._listener[type]) {
                     t._listener[type] = [];
                 }
                 t._listener[type].push(callback);
             },
-            fire : function(type, argAry, context){
+            fire: function (type, argAry, context) {
                 var events = this._listener[type];
                 var i;
                 var len;
@@ -104,7 +120,7 @@ define(['./lib'], function (lib) {
                     }
                 }
             },
-            off : function(type, callback){
+            off: function (type, callback) {
                 var events = this._listener[type];
                 if (!events) {
                     return;
@@ -118,9 +134,10 @@ define(['./lib'], function (lib) {
                     delete this._listener[type];
                 }
             }
+
         });
         return Constructor;
-    }
+    };
 
     return createClass;
 });
