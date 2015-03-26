@@ -49,10 +49,6 @@ define([
 
         // 初始化函数
         function Constructor(options) {
-            // var target = arguments[0];
-            // if (typeof target === 'object' && typeof target.fn === 'object') {
-            //     extend(this, target.fn);
-            // }
             this._listener = [];
             // 把事件复制到实例中；
             if (events.length) {

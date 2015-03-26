@@ -117,7 +117,7 @@ define([
         /**
          * 更新 style的数据;
          */
-        update： function (data) {
+        update:function (data) {
             data = data || {};
             for(var k in data){
                 if (data.hasOwnProperty(k)) {
