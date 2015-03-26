@@ -158,10 +158,10 @@ define([
          * @return {Class} item对象；
          */
         appendTo: function (itemsAry, index) {
+            this.inited = true;
             this.items = itemsAry;
             this.index = index || itemsAry.length;
             this.set('index', this.index);
-            this.inited = true;
             return this;
         },
 
