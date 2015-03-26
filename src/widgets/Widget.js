@@ -55,8 +55,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
 
          // 暂时不支持set item
         events: {
-            change: function (key) {
-                var 
+            change: function (key) { 
                 if (typeof(this[key]) == 'function') {
                     this[key](this.get(key));
                 } else {
