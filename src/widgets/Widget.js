@@ -7,6 +7,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
     
     var Widget = Class( {
         init: function (options) {
+            this.itemList = {};
             this.config = {};
             this.styleInstance = new Style({
                 instance:this,
@@ -17,7 +18,6 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             }
             this.render();
         },
-        itemList:{},
 
         type: '',
 
@@ -50,8 +50,10 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
                 if (typeof(this[key]) == 'function') {
                     this[key](this.get(key));
                 }else if(this.itemTypes && this.itemTypes.indexOf(key)!=-1){
-                    item = this.create(this.get(key));
-                    this.append(item,key);
+                    for(var i=0;i< this.get(key).length;i++) {
+                        item = this.create(this.get(key)[i]);
+                        this.append(item,key);
+                    }
                 }else if(this.attributesList && this.attributesList.indexOf(key)!=-1){
                     this.config[key] = this.get(key);
                 }
@@ -77,13 +79,18 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
          * 创建item
          * @param {object} options
          */
-        create: function(){
-            return new Item(this);    
+        create: function (options) {
+            console.log(options);
+            var opt = {
+                 instance: this,
+                 data:options
+            };
+            return new Item(opt);    
         },
         /**
          * 向items数组中添加item对象
          * @param {object} item
-         * @param {object} type item的类型
+         * @param type item的类型
          */
         append: function (item,type){
             type = type?type:"items";
@@ -123,6 +130,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
         render: function () {
             var configs = Widget.configs,
                 config = this.config;
+            console.log(config);
             configs[this.type] = config;
             if(!Widget.renderReady){
                 Widget.render(configs);

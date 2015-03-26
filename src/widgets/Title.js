@@ -12,7 +12,7 @@ define(["../core/Class","./Widget"], function(Class,Widget){
 
         itemTypes: ['center','left','right'],
 
-        attributesList:['image'],
+        attributesList:[],
 
 
         /**
@@ -28,20 +28,37 @@ define(["../core/Class","./Widget"], function(Class,Widget){
         },
 
          /**
-         * 重写setTitle
-         * @aram {object} options
+         * title需要特殊处理
+         * @param {object} options
          */
          _setTitle: function(options){
-            var title = options.title,
-                image = options.image,
-                item,
-                opts = {};
-            if(title)  
-                opts["text"]= title;
-            if(image)
-                opts["image"]= image;
-            item = this.create(opts);
-            this.append(item,"center"); 
+             var title = options.title,
+                opts = {
+                    'text':title
+                };
+            if(!this.titleItem){
+                this.titleItem = this.create(opts);
+                this.append(this.titleItem,"center");     
+            }else{
+                this.titleItem.set("text",title);
+            } 
+        },
+
+        /**
+         * image需要特殊处理
+         * @param {object} options
+         */
+        _setImage: function(options){
+            var image = options.image,
+                opts = {
+                    image:image
+                };
+            if(!this.titleItem){
+                this.titleItem = this.create(opts);
+                this.append(this.titleItem,"center");     
+            }else{
+                this.titleItem.set("image",image);
+            } 
         }
     });
 
