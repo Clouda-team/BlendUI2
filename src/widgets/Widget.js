@@ -41,39 +41,28 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
 
         /**
          * 向items数组中添加item对象
-         * @param {Array} items
          * @param {object} item
+         * @param {object} type item的类型
          */
         append: function (item,type){
             var itemArr;
-            switch(type){
-                case "text":
-                    itemArr = this.config.text;
-                    if(!(itemArr instanceof Array)){
-                        this.config.text = [];
-                         item.appendTo(itemArr);
-                    }
-                    break;
-                case "left":
-                    itemArr = this.config.left;
-                    if(!(itemArr instanceof Array)){
-                        this.config.left = [];
-                         item.appendTo(itemArr);
-                    }
-                    break;
-                case "right":
-                    itemArr = this.config.right;
-                    if(!(itemArr instanceof Array)){
-                        this.config.right = [];
-                         item.appendTo(itemArr);
-                    }
-                    break;
-                default:
-                    itemArr = this.config.items;
-                    if(!(itemArr instanceof Array)){
-                        this.config.items = [];
-                         item.appendTo(itemArr);
-                    } 
+             if(!(itemArr instanceof Array)){
+                this.config[type] = [];
+            }
+            itemArr = this.config[type];
+            item.appendTo(itemArr);
+        },
+
+         // 暂时不支持set item
+        events: {
+            change: function (key) {
+                var 
+                if (typeof(this[key]) == 'function') {
+                    this[key](this.get(key));
+                } else {
+                    this.config[key] = this.get(key);
+                }
+                this.render();
             }
         },
 
@@ -85,7 +74,6 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             this.styleInstance.updte(this,options);
             return this;
         },
-
         /**
          * 初始化配置
          * @param {object} options
@@ -96,7 +84,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             this.style(options);
             for (name in options) {
                 if(config.hasOwnProperty(name)){
-                    config[name] = options[name];
+                    this.set(name,options[name]);
                 }
             }
         },
@@ -112,7 +100,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
                 Widget.render(configs);
             }
         },
-
+    
         /**
          * 销毁组件
          */
@@ -126,6 +114,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
                 Widget.render(configs);
             }
         },
+
         /**
          * 创建item
          * @param {object} options
