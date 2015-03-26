@@ -44,8 +44,37 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
          * @param {Array} items
          * @param {object} item
          */
-        append: function (item){
-           
+        append: function (item,type){
+            var itemArr;
+            switch(type){
+                case "text":
+                    itemArr = this.config.text;
+                    if(!(itemArr instanceof Array)){
+                        this.config.text = [];
+                         item.appendTo(itemArr);
+                    }
+                    break;
+                case "left":
+                    itemArr = this.config.left;
+                    if(!(itemArr instanceof Array)){
+                        this.config.left = [];
+                         item.appendTo(itemArr);
+                    }
+                    break;
+                case "right":
+                    itemArr = this.config.right;
+                    if(!(itemArr instanceof Array)){
+                        this.config.right = [];
+                         item.appendTo(itemArr);
+                    }
+                    break;
+                default:
+                    itemArr = this.config.items;
+                    if(!(itemArr instanceof Array)){
+                        this.config.items = [];
+                         item.appendTo(itemArr);
+                    } 
+            }
         },
 
         /**
@@ -65,7 +94,6 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             var config = this.config,
                 name, style;
             this.style(options);
-
             for (name in options) {
                 if(config.hasOwnProperty(name)){
                     config[name] = options[name];
