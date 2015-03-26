@@ -120,7 +120,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
          * @param {object} options
          */
         style: function(options){
-            this.styleInstance.update(options.style?options.style:{});
+            this.styleInstance.update(options);
             return this;
         },
        
