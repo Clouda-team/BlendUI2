@@ -98,7 +98,6 @@ define([
             options = options || {};
             var data = options.data || {};
             this.instance = options.instance;
-            this.config.action = 'UIEvent('+  +')';
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
                     if (typeof data[k] !== 'function') {
