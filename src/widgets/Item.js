@@ -36,19 +36,25 @@ define([
             //     listenerTap[id][i].call(Item.get(id), e);
             // }
         //}
-        Item.get(id).fire('tap');
+        Item.get(id).fire('ontap');
     });
 
     var Item = Class({
-        statics : {
-            instance : {},
+
+        // 添加 item 的静态方法和属性；
+        statics: {
+            instance: {},
             get: function (id) {
-                return Item.instance[id]
+                return Item.instance[id];
             },
             set: function (obj) {
                 Item.instance[obj.id] = obj;
+            },
+            remove: function (obj) {
+                delete Item.instance[obj.id];
             }
-        }
+        },
+
         /**
          * item对象 初始化方法
          * @param {Object} options 初始化设置
@@ -64,27 +70,29 @@ define([
          * }
          * @return {Object} style实例；
          */
+
         init: function (options) {
             this.config = {};
+            this.inited = false;
             this._setOptions(options);
-            this.inited = true;
             Item.set(this);
-            this.render();
         },
-        events:{
+
+        // 全局事件
+        events: {
             change: function (key) {
                 if (this['_parse' + lib.toPascal(key)]) {
                     this['_parse' + lib.toPascal(key)](key);
                 }
                 else {
                     this.config[key] = this.get(key);
-                    console.log('还不支持此属性');
                 }
                 this.render();
             }
         },
 
         // 序列号初始化参数;
+
         _setOptions: function (options) {
             options = options || {};
             var data = options.data || {};
@@ -105,29 +113,58 @@ define([
             }
         },
 
+        // 创建 style 实例
         _parseStyle: function () {
-            if (this.styleObj){
+            if (this.styleObj) {
                 this.styleObj = new Style({
                     instance: this
                 });
             }
             this.style();
         },
+
+        // 处理action
         _parseAction: function( key ){
             var action;
-            if ( key==='href') {
-                action = 'loadurl('+ this.get('href') +')';
+            if (key === 'href') {
+                action = 'loadurl(' + this.get('href') + ')';
             }
-            else if (key==='tab') {
-                action = 'UIEvent({id:'+ this.id +'})';
+            else if (key === 'tab') {
+                action = 'UIEvent({id:' + this.id + '})';
             }
 
             return action;
         },
+
+        // 处理 href
         _parseHref: function () {
-            var href = this.get('href');
             this.config.action = this._parseAction('href');
         },
+
+        // 修改item的索引
+        _parseIndex: function () {
+            var items = this.items;
+            var index = this.get('index');
+            if (this.inited) {
+                this.remove();
+            }
+            items.splice(index, 0, this.config);
+        },
+
+        /**
+         * 把 item放置于item容器中；
+         * @param {Array} itemsAry 要放置的容器；
+         * @param {number} index 要放置容器的索引；
+         * @return {Class} item对象；
+         */
+        appendTo: function (itemsAry, index) {
+            this.items = itemsAry;
+            this.index = index || itemsAry.length;
+            this.set('index', this.index);
+            this.inited = true;
+            return this;
+        },
+
         /**
          * 修改样式
          * @param {Object} data 可为空
@@ -147,27 +184,27 @@ define([
         // 绑定 action 事件;
         bind: function (fn) {
             fn = fn || lib.noop;
-            this.on('tap', fn);
+            this.on('ontap', fn);
             this.config.action = this._parseAction('tap');
+            return this;
         },
 
         // 解绑事件
         unbind: function (fn) {
             this.off('tap', fn);
+            return this;
         },
 
-        /**
-         * 删除
-         */
+        // 从父链中删除，并没有销毁组件;
         remove: function (){
-            this.instance.remove(this);
+            this.items.splice(this.index, 1);
+            this.fire('onremove');
+            return this;
         },
 
-        /**
-         * 渲染组件
-         */
+        // 渲染组件
         render: function () {
-            if(this.inited ){
+            if (this.inited) {
                 this.instance.render();
             }
             this.fire('render');
@@ -178,8 +215,10 @@ define([
          * 销毁组件
          */
         destroy: function () {
-            this.instance.remove(this);
+            this.remove();
+            Item.remove(this);
             this.fire('destroy');
+            this.off('all');
         }
     });
 

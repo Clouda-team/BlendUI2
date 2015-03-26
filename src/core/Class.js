@@ -76,15 +76,12 @@ define([
         // 处理attributes动态属性
         proto.attributes = extend({}, attributes);
 
-        // data中剩余属性或者方法
-        extend(proto, data);
-
         // 添加类中公共方法
         extend(proto, {
             set: function (key, val) {
                 if (this.attributes[key] !== val) {
                     this._previousAttributes = extend({}, this.attributes);
-                    if(typeof this.attributes[key] === 'object'){
+                    if (typeof this.attributes[key] === 'object') {
                         extend(this.attributes[key], val);
                     }
                     this.attributes[key] = val;
@@ -122,6 +119,11 @@ define([
             },
             off: function (type, callback) {
                 var events = this._listener[type];
+                // 如果 type=== all,删除类下面全部事件；
+                if (type === 'all') {
+                    this._listener = [];
+                    return;
+                }
                 if (!events) {
                     return;
                 }
@@ -136,6 +138,10 @@ define([
             }
 
         });
+
+        // data中剩余属性或者方法
+        extend(proto, data);
+
         return Constructor;
     };
 
