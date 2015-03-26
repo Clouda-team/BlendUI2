@@ -32,7 +32,7 @@ define([
         events:{
             'type':callback
         },生成对象事件,
-        attributes:{},动态属性
+        attributes:{},动态属性不可继承
         method: function(){}, 系统的动态方法
      }
      * @return {Function}
@@ -50,11 +50,12 @@ define([
         // 初始化函数
         function Constructor(options) {
             this._listener = [];
-            // 把事件复制到实例中；
-            for (var k in events) {
-                if (events.hasOwnProperty(k)) {
+
+            // 把原型链上的事件复制到实例中；
+            for (var k in this._events) {
+                if (this._events.hasOwnProperty(k)) {
                     this._listener[k] = [];
-                    this._listener[k].push(events[k]);
+                    this._listener[k].push(this._events[k]);
                 }
             }
             // 把基类的 attributes 复制到实例中；
@@ -68,6 +69,9 @@ define([
         proto.constructor = Constructor;
         proto.Super = Constructor.Super = parent.prototype;
         Constructor.Parent = parent;
+
+        // events可继承,必须放到原型链上；
+        proto._events = extend(proto._events || {}, events);
         // 添加类中公共方法
         extend(proto, {
             set: function (key, val) {

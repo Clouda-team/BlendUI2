@@ -32,7 +32,7 @@ define(['../../src/widgets/Item'],function(Item){
                 },
                 instance: titleBar
             });
-            console.log(itemObj);
+
             it('item实例', function () {
                 expect(itemObj).to.be.instanceof(Item);
                 expect(itemObj.get('text')).to.equal('AA');
