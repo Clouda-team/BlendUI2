@@ -40,7 +40,7 @@ define([
     var createClass = function (data) {
         var parent = data.extend || noop;
         var attributes = data.attributes || {};
-        var events = data.events || [];
+        var events = data.events || {};
         var statics = data.statics || {};
         delete data.attributes;
         delete data.events;
@@ -51,12 +51,10 @@ define([
         function Constructor(options) {
             this._listener = [];
             // 把事件复制到实例中；
-            if (events.length) {
-                for (var k in events) {
-                    if (events.hasOwnProperty(k)) {
-                        this._listener[k] = [];
-                        this._listener[k].push(events[k]);
-                    }
+            for (var k in events) {
+                if (events.hasOwnProperty(k)) {
+                    this._listener[k] = [];
+                    this._listener[k].push(events[k]);
                 }
             }
             // 把基类的 attributes 复制到实例中；

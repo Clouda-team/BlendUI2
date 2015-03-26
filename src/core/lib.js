@@ -1,5 +1,11 @@
-define(function(){
+/**
+ * @file lib.js
+ * @desc 工具性类库;
+ * @author clouda-team(https://github.com/clouda-team)
+ * @return {Object} 工具类库
+ */
 
+define(function () {
     var lib = {};
 
     /**
@@ -41,7 +47,7 @@ define(function(){
     // 把字符串中杠「-」转为驼峰abc-d转化为abcD;
     lib.toCamel = function (str) {
         str = str || '';
-        str = str.replace(/-([a-z])/g, function (a, s) {
+        str = str.replace(/-([a-z])/gi, function (a, s) {
             return s.toUpperCase();
         });
         return str;
@@ -56,31 +62,32 @@ define(function(){
 
     // 生成唯一的id
     var idCounter = 0;
-    lib.uniqueId = function(prefix) {
-         var id = '_' + (++idCounter);
-        return (prefix||'UNIQUEID') + id;
+    lib.uniqueId = function (prefix) {
+        var id = '_' + (++idCounter);
+        return (prefix || 'UNIQUEID') + id;
     };
 
     // 环境判断
     var ua = navigator.userAgent.toLowerCase();
-    var isAndroid = ua.indexOf("android") !== -1;
-    var isIphone = ua.indexOf("iphone")!== -1;
-    var isUix = function(){
+    lib.isAndroid = ua.indexOf('android') !== -1;
+    lib.isIphone = ua.indexOf('iphone') !== -1;
+    var isUix = lib.isUix = (function () {
         var v = ua.match(/uix\/(\d+\.\d+\.\d+\.\d+)/);
-        return v?v[1] : "";
-    }();
+        return v ? v[1] : '';
+    })();
 
-    lib.ready = function(fn) {
+    lib.ready = function (fn) {
         if (isUix) {
-            if(window.lc_bridge){
+            if (window.lc_bridge) {
                 fn();
-            }else{
+            }
+            else {
                 document.addEventListener('uixready', fn, false);
             }
         }
         else {
             fn();
-            console.log('非Naitve Uix环境');
+            console && console.warn('非Naitve Uix环境');
         }
     };
     lib.isUix = isUix;

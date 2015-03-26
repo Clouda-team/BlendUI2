@@ -8,7 +8,7 @@
 define([
     '../core/Class',
     '../core/lib'
-], function (Class, nativeApi, lib) {
+], function (Class, lib) {
 
     /**
      * 统一处理颜色值和透明度;
@@ -66,7 +66,7 @@ define([
             this._setOptions(options);
             return this;
         },
-
+        type: 'style',
         // 绑定事件
         events: {
             // data 属性改变会触发进行解析;
@@ -119,7 +119,7 @@ define([
          */
         update:function (data) {
             data = data || {};
-            for(var k in data){
+            for (var k in data){
                 if (data.hasOwnProperty(k)) {
                     this.set(k, data[k]);
                 }
@@ -132,7 +132,7 @@ define([
          */
         render: function () {
             // 触发实例的 render;
-            this.instance.render();
+            this.instance.render && this.instance.render();
             this.fire('render');
             return this;
         },
