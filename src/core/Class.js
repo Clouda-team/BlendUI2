@@ -79,7 +79,8 @@ define([
                     var opt ={};
                     opt[key] = val;
                     this["_set"+lib.toPascal(key)](opt);
-                } else if (this.attributes[key] !== val) {
+                }  
+                if (this.attributes[key] !== val) {
                     this._previousAttributes = extend({}, this.attributes);
                     if (typeof this.attributes[key] === 'object') {
                         extend(this.attributes[key], val);

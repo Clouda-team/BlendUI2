@@ -102,6 +102,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             item.appendTo(itemArr);
             this.itemList[type] = this.itemList[type]?this.itemList[type]:[];
             this.itemList[type].push(item);
+            return this;
         },
 
         /**
@@ -112,6 +113,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
            if(this.itemList[type]){
               this.itemList[type].splice(index,1).remove();  
            }
+           return this;
         },
 
 
