@@ -101,10 +101,11 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
          * @param {object} options
          */
         setConfig: function (options) {
+            console.log(options);
             var config = this.config,
                 name, style;
             for (name in options) {
-                if(config.hasOwnProperty(name)){
+                if(this.attributesList.indexOf(name)!=-1){
                     this.set(name,options[name]);
                 }
             }
