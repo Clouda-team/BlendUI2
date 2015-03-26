@@ -95,7 +95,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
         append: function (item,type){
             type = type?type:"items";
             var itemArr;
-             if(!(itemArr instanceof Array)){
+             if(!( this.config[type] instanceof Array)){
                 this.config[type] = [];
             }
             itemArr = this.config[type];
@@ -132,7 +132,6 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
         render: function () {
             var configs = Widget.configs,
                 config = this.config;
-            console.log(config);
             configs[this.type] = config;
             if(!Widget.renderReady){
                 Widget.render(configs);
