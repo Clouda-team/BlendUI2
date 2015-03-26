@@ -11,8 +11,6 @@ define(['../core/Class',
     Gallery = Class({
         config: {
             index: 0,
-            pre: '',
-            next: '',
             gallery: []
         },
 
@@ -31,6 +29,18 @@ define(['../core/Class',
 
         type: 'gallery',
 
+        events: {
+            change: function (key) {
+                if (this['_parse' + lib.toPascal(key)]) {
+                    this['_parse' + lib.toPascal(key)](key);
+                }
+                else {
+                    this.config[key] = this.get(key);
+                }
+                this.render();
+            }
+        },
+
         /**
          * 初始化gallery组件
          * @param {object} options 配置信息
@@ -41,38 +51,18 @@ define(['../core/Class',
             return this;
         },
 
-        onNext: function (callback) {
-            this.config.next = 'js(' + callback.toString() + ')()';
-            return this;
-        },
-
-        onPre: function (callback) {
-            this.config.pre = 'js(' + callback.toString() + ')()';
-            return this;
-        },
-
         /**
          * 添加图片元数据
          * @param {Array} options 图片元数据数组
          * @return {Gallery} gallery gallery对象
          */
-        addImages: function (options) {
+        updateImages: function (options) {
             var images;
             if (typeof options === 'object' && options.constructor === Array) {
                 images = options;
             }
             images = options.images || [];
             this.config.gallery = images;
-            return this;
-        },
-
-        /**
-         * 设置显示当前的图片位置信息
-         * @param {number} index
-         * @return {Gallery} gallery gallery对象
-         */
-        setIndex: function (index) {
-            this.config.index = index;
             return this;
         },
 
