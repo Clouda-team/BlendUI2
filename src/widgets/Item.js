@@ -77,6 +77,7 @@ define([
             this._setOptions(options);
             Item.set(this);
         },
+        type : 'item',
 
         // 全局事件
         events: {
@@ -115,7 +116,7 @@ define([
 
         // 创建 style 实例
         _parseStyle: function () {
-            if (this.styleObj) {
+            if (!this.styleObj) {
                 this.styleObj = new Style({
                     instance: this
                 });
@@ -129,8 +130,8 @@ define([
             if (key === 'href') {
                 action = 'loadurl(' + this.get('href') + ')';
             }
-            else if (key === 'tab') {
-                action = 'UIEvent({id:' + this.id + '})';
+            else if (key === 'tap') {
+                action = 'UIEvent({"id":"' + this.id + '"})';
             }
 
             return action;

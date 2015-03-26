@@ -1,6 +1,8 @@
 require([
     'autotest/lib.js',
     'autotest/Class.js',
+    'autotest/Style.js',
+    'autotest/Item.js'
 ],function(){
     if(window.lc_bridge){
         mocha.run();
