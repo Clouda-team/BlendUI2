@@ -7,12 +7,18 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
     
     var Widget = Class( {
         init: function (options) {
-            this.styleInstance = new Style(this,options);
+            this.config = {};
+            this.styleInstance = new Style({
+                instance:this,
+                data:options.style?options.style:{}
+            });
             if (options) {
                 this.setConfig(options);
             }
             this.render();
         },
+
+        itemList:{},
 
         type: '',
 
@@ -38,27 +44,16 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             }
         },
 
-
-        /**
-         * 向items数组中添加item对象
-         * @param {object} item
-         * @param {object} type item的类型
-         */
-        append: function (item,type){
-            var itemArr;
-             if(!(itemArr instanceof Array)){
-                this.config[type] = [];
-            }
-            itemArr = this.config[type];
-            item.appendTo(itemArr);
-        },
-
          // 暂时不支持set item
         events: {
             change: function (key) { 
+                var item;
                 if (typeof(this[key]) == 'function') {
                     this[key](this.get(key));
-                } else {
+                }else if(this.itemTypes && this.itemTypes.indexOf(key)!=-1){
+                    item = this.create(this.get(key));
+                    this.append(item,key);
+                }else if(this.attributesList && this.attributesList.indexOf(key)!=-1){
                     this.config[key] = this.get(key);
                 }
                 this.render();
@@ -66,11 +61,39 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
         },
 
         /**
+         * 向items数组中添加item对象
+         * @param {object} item
+         * @param {object} type item的类型
+         */
+        append: function (item,type){
+            type = type?type:"items";
+            var itemArr;
+             if(!(itemArr instanceof Array)){
+                this.config[type] = [];
+            }
+            itemArr = this.config[type];
+            item.appendTo(itemArr);
+            this.itemList[type] = this.itemList[type]?this.itemList[type]:[];
+            this.itemList[type].push(item);
+        },
+
+        /**
+         * 删除widget里的item
+         * @param index 整型
+         */
+        removeItem: function (type,index){
+           if(this.itemList[type]){
+              this.itemList[type].splice(index,1).remove();  
+           }
+        },
+
+
+        /**
          * 设置组件样式
          * @param {object} options
          */
         style: function(options){
-            this.styleInstance.updte(this,options);
+            this.styleInstance.update(options.style?options.style:{});
             return this;
         },
         /**
@@ -80,7 +103,6 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
         setConfig: function (options) {
             var config = this.config,
                 name, style;
-            this.style(options);
             for (name in options) {
                 if(config.hasOwnProperty(name)){
                     this.set(name,options[name]);
