@@ -16,40 +16,22 @@ define(["../core/Class","./Widget"], function(Class,Widget){
          */
         _init: function (options) {
             this.itemTypes = ['center','left','right'];
-        },
-
-
-         /**
-         * title需要特殊处理
-         * @param {object} options
-         */
-         _setTitle: function(options){
-             var title = options.title,
-                opts = {
-                    'text':title
-                };
-            if(!this.titleItem){
-                this.titleItem = this.create(opts);
-                this.append(this.titleItem,"center");     
-            }else{
-                this.titleItem.set("text",title);
-            } 
+            this['_setImage'] = this._setTitleItem;
+            this['_setTitle'] = this._setTitleItem;
         },
 
         /**
-         * image需要特殊处理
+         * title组件的title
          * @param {object} options
          */
-        _setImage: function(options){
-            var image = options.image,
-                opts = {
-                    image:image
-                };
+        _setTitleItem: function(key,value){
+            var opts = {};
+            opts[key]=value;
             if(!this.titleItem){
                 this.titleItem = this.create(opts);
                 this.append(this.titleItem,"center");     
             }else{
-                this.titleItem.set("image",image);
+                this.titleItem.set(key,title);
             } 
         }
     });
