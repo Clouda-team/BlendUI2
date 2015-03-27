@@ -102,6 +102,5 @@ define(['../core/Class',
             delete this.config;
         }
     });
-
     return Gallery;
 });
