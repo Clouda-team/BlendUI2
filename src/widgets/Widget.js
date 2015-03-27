@@ -50,13 +50,14 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
          // 暂时不支持set item
         events: {
             change: function (key) { 
-                var item;
+                var item,
+                    filterConfig = this.filterConfig;
                 if(this.itemTypes && this.itemTypes.indexOf(key)!=-1){
                     for(var i=0;i< this.get(key).length;i++) {
                         item = this.create(this.get(key)[i]);
                         this.append(item,key);
                     }
-                } else if(typeof (this[key]) != 'function'){
+                } else if(filterConfig && filterConfig.indexOf(key)!=-1){
                     this.config[key] = this.get(key);
                 }
                 this.render();

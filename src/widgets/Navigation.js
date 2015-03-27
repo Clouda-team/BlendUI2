@@ -16,6 +16,7 @@ define(["../core/Class","./Widget"], function(Class,Widget){
          */
         _init: function (options) {
             this.itemTypes = ['items'];
+            this.filterConfig = ['id','type'];
         }
 
     });

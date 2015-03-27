@@ -11,7 +11,8 @@ define(["../core/Class","./Widget"], function(Class,Widget){
         type: 'toolbar',
         
         _init:function(){
-             this.itemTypes = ['items'];  
+            this.itemTypes = ['items']; 
+            this.filterConfig = ['id'];
         }
         
 

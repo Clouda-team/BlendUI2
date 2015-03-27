@@ -16,6 +16,7 @@ define(["../core/Class","./Widget"], function(Class,Widget){
          */
         _init: function (options) {
             this.itemTypes = ['center','left','right'];
+            this.filterConfig = ['id'];
             this['_setImage'] = this._setTitleItem;
             this['_setTitle'] = this._setTitleItem;
         },
@@ -26,6 +27,7 @@ define(["../core/Class","./Widget"], function(Class,Widget){
          */
         _setTitleItem: function(key,value){
             var opts = {};
+            key = 'title'==key?'text':key;
             opts[key]=value;
             if(!this.titleItem){
                 this.titleItem = this.create(opts);
