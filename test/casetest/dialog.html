@@ -20,22 +20,25 @@
         baseUrl:"../../src/",
         urlArgs: "bust=" +  (new Date()).getTime()
     });
-    require(['blend'], function (blend) {
-        blend.dialog.alert({
-            'title':''
-        },function(){
+    // require(['blend'], function (blend) {
+    //     blend.dialog.alert({
+    //         'title':''
+    //     },function(){
 
-        });
-    });
+    //     });
+    // });
     var _eval = {
         "alert" : function(){
             alert('测试测试');
+            console.log('baidubaidubaidu');
         },
         "prompt" : function(){
             alert(prompt('测试测试prompt'));
+            console.log('baidubaidubaidu');
         },
         "confirm" : function(){
             alert(confirm('测试测试confirm'));
+            console.log('baidubaidubaidu');
         }
     }
     $('input[type=button],button').click(function(e){

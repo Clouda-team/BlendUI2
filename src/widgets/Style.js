@@ -82,6 +82,7 @@ define([
             }
         },
 
+        // 对用户设置的值初始化
         _setOptions: function (options) {
             options = options || {};
             var data = options.data;
@@ -89,6 +90,7 @@ define([
             this.parentConfig = this.instance.config;
             this.parentConfig.style = this.config;
             data && this.update(data);
+            return this;
         },
 
         /**
@@ -99,6 +101,7 @@ define([
         _parseOpacity: function () {
             this._parseColor();
             this._parseBackgroundColor();
+            return this;
         },
 
         /**
@@ -134,6 +137,7 @@ define([
                     this.set(k, data[k]);
                 }
             }
+            return this;
         },
 
         /**
