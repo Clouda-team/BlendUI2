@@ -29,7 +29,7 @@ define([
     // };
 
     document.addEventListener('UIXClick', function (e) {
-        var data = e.data;
+        var data = JSON.parse(e.data);
         var id = data.id;
         //if(listenerTap[id]){
             // for(var i=0, len=listenerTap[id].length; i< len; i++){
@@ -130,7 +130,7 @@ define([
                 action = 'loadurl(' + this.get('href') + ')';
             }
             else if (key === 'tap') {
-                action = 'UIEvent({"id":"' + this.id + '"})';
+                action = 'uievent({"id":"' + this.id + '"})';
             }
 
             return action;

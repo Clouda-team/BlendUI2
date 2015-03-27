@@ -92,6 +92,16 @@ define([
         },
 
         /**
+         * 解析配置中的opacity
+         * @private
+         */
+
+        _parseOpacity: function () {
+            this._parseColor();
+            this._parseBackgroundColor();
+        },
+
+        /**
          * 解析配置中的字体颜色
          * @private
          */
