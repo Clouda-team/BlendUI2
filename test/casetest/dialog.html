@@ -21,7 +21,11 @@
         urlArgs: "bust=" +  (new Date()).getTime()
     });
     require(['blend'], function (blend) {
-        
+        blend.dialog.alert({
+            'title':''
+        },function(){
+
+        });
     });
     var _eval = {
         "alert" : function(){

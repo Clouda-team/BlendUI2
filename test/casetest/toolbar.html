@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>case测试</title>
+    <link rel="stylesheet" href="" >
+    <style>
+        *{line-height: 180%;}
+    </style>
+    <script src="../../third_party/zepto.js"></script>
+    <script src="../../third_party/require.js"></script>
+</head>
+<body>
+<button type="button" id="create">创建toolbar</button><br/>
+<button type="button" id="show">隐藏toolbar</button><br/>
+<button type="button" id="hide">显示toolbar</button><br/>
+<button type="button" id="addItem">增加项</button><br/>
+<button type="button" id="removeItem">删除项</button><br/>
+<button type="button" id="updata">更新第二项</button><br/>
+<button type="button" id="destroy">更新某项</button><br/>
+<script>
+    require.config({
+        baseUrl:"../../src/",
+        urlArgs: "bust=" +  (new Date()).getTime()
+    });
+    require(['blend'], function (blend) {
+
+        var _eval = {
+            "create" : function(){
+                window.toolbar = blend.create('toolbar',{
+                    "id": "toolbar",
+                    "backgroundColor": "#324324",
+                    "opacity": 0.9,
+                    "color": "#ffffffff",
+                    "items": [
+                        {
+                            "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_zx.png",
+                            "text": "JS注入",
+                            "action": {
+                                callback: function(){
+                                    alert("获取页面cookie:" + document.cookie || '无');
+                                }
+                            }
+                        },
+                        {
+                            "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_dy.png",
+                            "text": "加载页面",
+                            "action": {
+                                url: "http://fedev.baidu.com/~gaotianyi/emeishan/ticket.html"
+                            }
+                        },
+                        {
+                            "style": {
+                                "backgroundColor": "#ff33cde7",
+                                "color": "#ffffffff"
+                            },
+                            "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_home.png",
+                            "action": {
+                                operator: "navi"
+                            }
+                        },
+                        {
+                            "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_pj.png",
+                            "text": "分享到微信",
+                            "badge": 99,
+                            "action": {
+                                share: "weixin_timeline"
+                            }
+                        },
+                        {
+                            "image": "http://fedev.baidu.com/~gaotianyi/emeishan/public/images/b_share.png",
+                            "text": "分享菜单",
+                            "action": {
+                                operator: "share"
+                            }
+                        }
+                    ]
+                });
+            },
+            "hide" : function(){
+                toolbar.hide();
+            },
+            "show" : function(){
+                toolbar.show();
+            },
+            "addItem" : function(){
+                toolbar.addItem({
+                    text:"测测"
+                },1).render();
+            },
+            "removeItem" : function(){
+                toolbar.removeItem(1).render();
+            },
+            "updata": function(){
+                toolbar.updateItem(1,{
+                    text:"百度一下"
+                }).render();
+            },
+            "destroy" : function(){
+                toolbar.destroy();
+            }
+        }
+        $('input[type=button],button').click(function(e){
+            var id = this.id;
+            console.log(id+"=============="+id);
+            if(_eval[id]){
+                _eval[id].call(_eval);
+            }else{
+                alert('没有此case')
+            }
+        });
+    });
+</script>
+</body>
+</html>

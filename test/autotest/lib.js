@@ -38,6 +38,17 @@ define(['../../src/core/lib'],function(lib){
             expect(lib.toPascal('aa-dd-cc-bb')).to.equal('AaDdCcBb');
         });
 
+        it('uniqueId', function(){
+            var a = lib.uniqueId();
+            var b = lib.uniqueId();
+            var c = lib.uniqueId();
+            var e = lib.uniqueId('PRE');
+            expect(a).to.not.equal(b);
+            expect(b).to.not.equal(c);
+            expect(b).to.not.equal(a);
+            expect(e.indexOf('PRE')>-1).to.true;
+        });
+
         // it('isUix', function(){
         //     expect(lib.isUix).to.equal('AaDdCcBb');
         // });

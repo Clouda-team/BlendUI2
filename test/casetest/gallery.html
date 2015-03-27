@@ -12,23 +12,32 @@
     <script src="../../third_party/require.js"></script>
 </head>
 <body>
-<button type="button" id="gallery">创建Gallery</button><br/>
+<button type="button" id="gallery">创建图集1</button><br/>
+<button type="button" id="gallery2">创建图集2</button><br/>
 
-<button type="button" id="index">显示第三张图片</button><br/>
+<button type="button" id="show1">显示图集1</button><br/>
+<button type="button" id="show2">显示图集2</button><br/>
+
+<button type="button" id="index">图集1显示第三张图片</button><br/>
+
+<button type="button" id="index2">图集2显示第三张图片</button><br/>
 <script>
     require.config({
         baseUrl:"../../src/",
         urlArgs: "bust=" +  (new Date()).getTime()
     });
     require(['blend'], function (blend) {
-        var gallery;
+        var gallery1;
+        var gallery2;
         var _eval = {
             "gallery" : function(){
-                gallery = blend.create('gallery', {
+                gallery1 = blend.create('gallery', {
+                     id:'gallery1',
+                     title:"sdfdsfds",
                     'images': [
                     {
                          'text': '标题1',
-                        'image': 'http://images.haiwainet.cn/2015/0319/20150319120344959.jpg',
+                        'image': 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=9e1a118f9452982205666a83b1f74ff9/a50f4bfbfbedab64db766088f336afc379311e75.jpg',
                         'description': '图片描述1'
                     },
                     {
@@ -47,8 +56,42 @@
                     alert('pre');
                 });
             },
+            "gallery2" : function(){
+                gallery2 = blend.create('gallery', {
+                    id:'gallery2',
+                    'images': [
+                    {
+                         'text': '图集2标题1',
+                        'image': 'http://images.haiwainet.cn/2015/0319/20150319120344959.jpg',
+                        'description': '图集2描述1'
+                    },
+                    {
+                         'text': '图集2标题3',
+                        'image': 'http://images.haiwainet.cn/2015/0319/20150319120344822.jpg',
+                        'description': '图集2描述2'
+                    },
+                    {
+                         'text': '图集2标题3',
+                        'image': 'http://images.china.cn/attachement/jpg/site1000/20150319/7427ea210c5416745d551d.jpg',
+                        'description': '图集2描述3'
+                    }]
+                }).onNext(function () {
+                    alert('next');
+                }).onPre(function () {
+                    alert('pre');
+                });
+            },
+            "show1" : function(){
+                gallery1.show();
+            },
+            "show2" : function(){
+                gallery2.show();
+            },
             "index" : function(){
-                gallery.setIndex(3).render();
+                gallery1.setIndex(3).render();
+            },
+            "index2" : function(){
+                gallery2.setIndex(2).render();
             }
         }
         $('input[type=button],button').click(function(e){

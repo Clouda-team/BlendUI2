@@ -17,6 +17,8 @@
 <button type="button" id="color">改变背景色和字体颜色</button><br/>
 <button type="button" id="left">增加左边按钮</button><br/>
 <button type="button" id="right">增加右边按钮</button><br/>
+<button type="button" id="href">增加右边带连接</button><br/>
+<button type="button" id="ontap">ontap 事件</button><br/>
 <button type="button" id="destory">销毁</button><br/>
 <script>
     require.config({
@@ -25,30 +27,57 @@
     });
     require(['blend'], function (blend) {
         var titleBar;
+        titleBar = blend.create('title',{
+            title:'测试测试',
+            style:{
+                "background-color":"#f00",
+                color:"#fff"
+            }
+        });
         var _eval = {
             "title" : function(){
                 titleBar = blend.create('title',{
-                    text:'标题标题标题'
+                    title:'标题标题标题',
+                    style:{
+                        "background-color":"#f00",
+                        color:"#fff"
+                    }
                 });
             },
             "color" : function(){
-                titleBar.setStyle({
+                titleBar.style({
                     backgroundColor:"#ff0000",
                     color:"#cccccc",
-                }).render();
+                    opcity:0.2
+                });
             },
             "left" : function(){
-                titleBar.addLeftItem({
-                    text: '444',
-                    action: {
-                        operator: 'back'
-                    }
-                }).render();
+                var btn = titleBar.create({
+                    text:'ddd'
+                })
+                titleBar.append(btn,'left');
             },
             "right" : function(){
-                titleBar.addRightItem({
-                    text:'菜單'
-                }).render();
+                var btn = titleBar.create({
+                    text:'CCCC'
+                })
+                titleBar.append(btn,'right');
+            },
+            "href" : function(){
+                var btn = titleBar.create({
+                    text:'网易',
+                    href:'http://m.163.com'
+                })
+                titleBar.append(btn,'right');
+            },
+            "ontap" : function(){
+                var btn = titleBar.create({
+                    text:'提醒我',
+                    ontap: function(){
+                        alert('hello world');
+                    }
+                })
+                titleBar.append(btn,'left');
             },
             "destory" : function(){
                 titleBar.destroy();
