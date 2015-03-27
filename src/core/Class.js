@@ -80,19 +80,25 @@ define([
                     if (typeof this.attributes[key] === 'object') {
                         extend(this.attributes[key], val);
                     }
+
                     this.attributes[key] = val;
+
+                    // 如果类中有_setKey 事件侧进入处理逻辑
+                    if (this['_set' + lib.toPascal(key)]) {
+                        this['_set' + lib.toPascal(key)](key, val);
+                    }
+
                     this.fire('change:' + key, [
-                        key
+                        key,
+                        val
                     ]);
+
                     this.fire('change', [
-                        key
+                        key,
+                        val
                     ]);
                 }
-                if(this["_set"+lib.toPascal(key)]){
-                    var opt ={};
-                    opt[key] = val;
-                    this["_set"+lib.toPascal(key)](opt);
-                }  
+
             },
             get: function (key) {
                 return this.attributes[key];
