@@ -9,14 +9,8 @@ define(['../core/Class',
 ], function (Class, lib, native) {
     var Gallery;
     Gallery = Class({
-        config: {
-            index: 0,
-            gallery: []
-        },
-
         statics: {
             ready: false,
-            configs: {},
             render: function (type, configs) {
                 var timer = setTimeout(function(){
                     native.widget(type, configs);
@@ -31,24 +25,47 @@ define(['../core/Class',
 
         events: {
             change: function (key) {
-                if (this['_parse' + lib.toPascal(key)]) {
-                    this['_parse' + lib.toPascal(key)](key);
-                }
-                else {
-                    this.config[key] = this.get(key);
-                }
-                this.render();
+                this.config[key] = this.get(key);
             }
         },
-
         /**
          * 初始化gallery组件
          * @param {object} options 配置信息
+         * {
+         *  id: 'xxx',
+         *  title: 'title',
+         *  images: [
+         *      {
+         *          text: 'xxxx',
+         *          image: 'imageurl',
+         *
+         *      }
+         *  ]
+         * }
+         * @return {Gallery} gallery
          */
         init: function (options) {
-            this.updateImages(options);
-            this.render();
+            this.config = {};
+            this._setConfig(options);
             return this;
+        },
+
+        /**
+         * 显示图集
+         */
+        show: function () {
+            this.render();
+        },
+
+        /**
+         * 初始化配置
+         * @param {object} options
+         */
+        _setConfig: function (options) {
+            var name;
+            for (name in options) {
+                this.set(name, options[name]);
+            }
         },
 
         /**
@@ -56,13 +73,16 @@ define(['../core/Class',
          * @param {Array} options 图片元数据数组
          * @return {Gallery} gallery gallery对象
          */
-        updateImages: function (options) {
-            var images;
+        _setImages: function (key, value) {
+            var options = value;
             if (typeof options === 'object' && options.constructor === Array) {
                 images = options;
             }
-            images = options.images || [];
-            this.config.gallery = images;
+            for(var i = 0,len = images.length;i<len;i++){
+                images[i].text = images[i].title;
+                delete images[i].title;
+            }
+            this.set('gallery', images);
             return this;
         },
 
@@ -70,14 +90,18 @@ define(['../core/Class',
          * 渲染gallery组件
          */
         render: function () {
-            var configs = Gallery.configs;
             var config = this.config;
             var type = this.type;
-            configs[this.id] = config;
+            console.log(config);
             if(!Gallery.ready){
                 Gallery.render(type, config);
             }
+        },
+        
+        destroy: function () {
+            delete this.config;
         }
     });
+
     return Gallery;
 });
