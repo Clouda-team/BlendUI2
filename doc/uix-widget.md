@@ -15,7 +15,7 @@ text和image同时存在，image优先；
 action如存表示操作此元素所产生的行为,如下：
 
 - loadurl(URL地址)：载入URL地址；
-- action(xxxx),naitve组件操作，暂时支持back, search, share;
+- action('xxxx'),naitve组件操作，暂时支持back, search, share;
 - uievent：向webview注入js数据，通过UIXClick事件接收；
 - js(js数据): 向webview注入原生js数据
 - share(分享项):weixin\_friend weixin_timeline qqfriend qqweibo sinaweibo qqdenglu baiduhi others
