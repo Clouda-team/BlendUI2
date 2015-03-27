@@ -131,8 +131,8 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
          * @param {object} options
         */
 
-        _setStyle: function(key,val){
-            this.styleInstance.update(val);
+        _setStyle: function(key,options){
+            this.styleInstance.update(options);
             return this;
         },
        
