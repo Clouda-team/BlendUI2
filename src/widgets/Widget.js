@@ -72,9 +72,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             var config = this.config,
                 name;
             for (name in options) {
-                if(this.attributesList.indexOf(name)!=-1){
-                    this.set(name,options[name]);
-                }
+                this.set(name,options[name]);
             }
         },
         /**
