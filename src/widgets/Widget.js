@@ -137,6 +137,26 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
             return this;
         },
        
+
+        /**
+         * 显示 show
+         */
+        show: function(){
+            this.config = this.configCache?this.configCache:this.config;
+            delete this.configCache;
+            this.render();
+        },
+
+        /**
+         * 隐藏 hide
+         */
+        hide: function(){
+             this.configCache = this.config;
+            delete this.config;
+            delete configs[this.type];
+            this.render();
+        },
+
         /**
          * 渲染组件
          */
