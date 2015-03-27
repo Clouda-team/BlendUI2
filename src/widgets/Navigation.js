@@ -1,5 +1,5 @@
 /**
- * @class TitleBar
+ * @class navigation
  * @singleton
  */
 define(["../core/Class","./Widget"], function(Class,Widget){
@@ -9,39 +9,13 @@ define(["../core/Class","./Widget"], function(Class,Widget){
         extend: Widget,
 
         type: 'navi',
-        
-        config: {
-            "id": {},
-            "items": []
-        },
 
-        setConfig: function(options){
-            var items = options.items || [],
-                i;
-            for(i in items){
-                this.addItem(items[i]);
-            }
-        },
-
-        addItem: function(item){
-            this.Super.addItem(this.config.items, item);
-            return this;
-        },
-
-        // @todo
-        removeItem: function(index) {
-            this.config.items.splice(index, 1);
-            return this;
-        },
-
-        // @todo
-        show: function(){
-            
-        },
-
-        // @todo
-        hide: function(){
-
+        /**
+         * _init 是个别组件需要单独初始化的事项
+         * @param {object} options
+         */
+        _init: function (options) {
+            this.itemTypes = ['items'];
         }
 
     });
