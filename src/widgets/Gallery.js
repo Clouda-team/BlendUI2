@@ -46,7 +46,7 @@ define(['../core/Class',
          * @param {object} options 配置信息
          */
         init: function (options) {
-            this.addImages(options);
+            this.updateImages(options);
             this.render();
             return this;
         },
