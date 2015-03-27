@@ -153,7 +153,6 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
         hide: function(){
              this.configCache = this.config;
             delete this.config;
-            delete configs[this.type];
             this.render();
         },
 

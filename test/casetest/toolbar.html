@@ -8,18 +8,19 @@
     <style>
         *{line-height: 180%;}
     </style>
-    <script src="../../third_party/zepto.js"></script>
-    <script src="../../third_party/require.js"></script>
+    <script src="/third_party/zepto.js"></script>
+    <script src="/third_party/require.js"></script>
 </head>
 <body>
 <button type="button" id="create">创建toolbar</button><br/>
-<button type="button" id="show">隐藏toolbar</button><br/>
-<button type="button" id="hide">显示toolbar</button><br/>
+<button type="button" id="hide">隐藏toolbar</button><br/>
+<button type="button" id="show">显示toolbar</button><br/>
 <button type="button" id="addItem">增加项</button><br/>
 <button type="button" id="removeItem">删除项</button><br/>
 <button type="button" id="updata">更新第二项</button><br/>
 <button type="button" id="destroy">更新某项</button><br/>
 <script>
+    var item;
     require.config({
         baseUrl:"../../src/",
         urlArgs: "bust=" +  (new Date()).getTime()
@@ -85,17 +86,16 @@
                 toolbar.show();
             },
             "addItem" : function(){
-                toolbar.addItem({
-                    text:"测测"
-                },1).render();
+                item = toolbar.create({
+                      text:"测测"
+                });
+                toolbar.append(item);
             },
             "removeItem" : function(){
-                toolbar.removeItem(1).render();
+                toolbar.removeItem(1);
             },
             "updata": function(){
-                toolbar.updateItem(1,{
-                    text:"百度一下"
-                }).render();
+                item.set('text','百度一下');
             },
             "destroy" : function(){
                 toolbar.destroy();
