@@ -29,7 +29,7 @@ define([
     // };
 
     document.addEventListener('UIXClick', function (e) {
-        var data = e.data;
+        var data = JSON.parse(e.data);
         var id = data.id;
         //if(listenerTap[id]){
             // for(var i=0, len=listenerTap[id].length; i< len; i++){
@@ -100,11 +100,11 @@ define([
             this.instance = options.instance;
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
-                    if (typeof data[k] !== 'function') {
-                        this.set(k, data[k]);
-                    }
-                    else if(k === 'ontap'){
+                    if(k === 'ontap'){
                         this.bind(data[k]);
+                    }
+                    else if (typeof data[k] !== 'function') {
+                        this.set(k, data[k]);
                     }
                     else {
                         this[k] = data[k];
@@ -130,7 +130,10 @@ define([
                 action = 'loadurl(' + this.get('href') + ')';
             }
             else if (key === 'tap') {
-                action = 'UIEvent({"id":"' + this.id + '"})';
+                action = 'uievent({"id":"' + this.id + '"})';
+            }
+            else if(key === 'back') {
+                action = 'action(back)';
             }
 
             return action;
@@ -181,11 +184,16 @@ define([
             return this;
         },
 
-        // 绑定 action 事件;
+        // 绑定item点击事件;
         bind: function (fn) {
             fn = fn || lib.noop;
-            this.on('ontap', fn);
-            this.config.action = this._parseAction('tap');
+            if (fn === 'back'){
+                this.config.action = this._parseAction('back');
+            }
+            else {
+                this.on('ontap', fn);
+                this.config.action = this._parseAction('tap');
+            }
             return this;
         },
 

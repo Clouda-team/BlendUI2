@@ -19,6 +19,7 @@
 <button type="button" id="right">增加右边按钮</button><br/>
 <button type="button" id="href">增加右边带连接</button><br/>
 <button type="button" id="ontap">ontap 事件</button><br/>
+<button type="button" id="back">back</button><br/>
 <button type="button" id="destory">销毁</button><br/>
 <script>
     require.config({
@@ -39,24 +40,47 @@
                 titleBar = blend.create('title',{
                     title:'标题标题标题',
                     style:{
-                        "background-color":"#f00",
-                        color:"#fff"
-                    }
+                        "background-color":"#000",
+                        color:"#000"
+                    },
+                    left:[
+                        {
+                            text:'左边按钮',
+                            style:{
+                                color:'#ddd'
+                            }
+                        }
+                    ],
+                    right:[
+                        {
+                            text:'右边按钮',
+                            style:{
+                                color:'#ddd'
+                            },
+                            ontap: function(){
+                                alert('点击我 ')
+                            }
+                        }
+                    ]
                 });
             },
+
             "color" : function(){
                 titleBar.style({
-                    backgroundColor:"#ff0000",
-                    color:"#cccccc",
-                    opcity:0.2
+                    'background-color':"#ccc",
+                    color:"#000",
+                    opacity:0.2
                 });
             },
+
             "left" : function(){
                 var btn = titleBar.create({
                     text:'ddd'
-                })
+                });
+
                 titleBar.append(btn,'left');
             },
+
             "right" : function(){
                 var btn = titleBar.create({
                     text:'CCCC'
@@ -76,8 +100,21 @@
                     ontap: function(){
                         alert('hello world');
                     }
-                })
+                });
+                btn.bind(function(){
+                    alert('又添加一个 hello world');
+                });
+                btn.style({
+                    "color":'#999'
+                });
                 titleBar.append(btn,'left');
+            },
+            "back" : function(){
+                var btn = titleBar.create({
+                    text:'返回',
+                    ontap: 'back'
+                });
+                titleBar.append(btn,'right');
             },
             "destory" : function(){
                 titleBar.destroy();
