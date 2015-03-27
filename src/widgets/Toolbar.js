@@ -1,5 +1,5 @@
 /**
- * @class TitleBar
+ * @class Toolbar
  * @singleton
  */
 define(["../core/Class","./Widget"], function(Class,Widget){
@@ -14,7 +14,8 @@ define(["../core/Class","./Widget"], function(Class,Widget){
             this.itemTypes = ['items']; 
             this.filterConfig = ['id'];
         }
-        
+
+
 
     });
 
