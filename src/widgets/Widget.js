@@ -56,7 +56,7 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
                         item = this.create(this.get(key)[i]);
                         this.append(item,key);
                     }
-                } else {
+                } else if(typeof (this[key]) != 'function'){
                     this.config[key] = this.get(key);
                 }
                 this.render();
