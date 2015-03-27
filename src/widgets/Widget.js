@@ -51,14 +51,12 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
         events: {
             change: function (key) { 
                 var item;
-                if (typeof(this[key]) == 'function') {
-                    this[key](this.get(key));
-                }else if(this.itemTypes && this.itemTypes.indexOf(key)!=-1){
+                if(this.itemTypes && this.itemTypes.indexOf(key)!=-1){
                     for(var i=0;i< this.get(key).length;i++) {
                         item = this.create(this.get(key)[i]);
                         this.append(item,key);
                     }
-                }else if(this.attributesList && this.attributesList.indexOf(key)!=-1){
+                } else {
                     this.config[key] = this.get(key);
                 }
                 this.render();
@@ -126,6 +124,16 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
          * @param {object} options
          */
         style: function(options){
+            this._setStyle(options);
+            return this;
+        },
+
+        /**
+         * 内部设置组件样式，支持set(style,{})
+         * @param {object} options
+        */
+
+        _setStyle: function(options){
             this.styleInstance.update(options);
             return this;
         },

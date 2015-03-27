@@ -16,7 +16,6 @@ define(["../core/Class","./Widget"], function(Class,Widget){
          */
         _init: function (options) {
             this.itemTypes = ['center','left','right'];
-            this.attributesList = ['center','left','right','title','image'];
         },
 
 
