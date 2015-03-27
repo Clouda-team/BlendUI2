@@ -9,6 +9,10 @@ define(['../core/Class', '../core/native', '../core/lib','./Style',"./Item"], fu
         init: function (options) {
             this.itemList = {};
             this.config = {};
+            /*当上层业务逻辑有需要初始化的业务时候帮其调用*/
+            if (typeof(this._init) == "function"){
+                this._init.apply(this,arguments);
+            }
             this.styleInstance = new Style({
                 instance:this,
                 data:options.style?options.style:{}

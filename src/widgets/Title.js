@@ -10,22 +10,15 @@ define(["../core/Class","./Widget"], function(Class,Widget){
 
         type: 'title',
 
-        itemTypes: ['center','left','right'],
-
-        attributesList:[],
-
-
-        /**
-         * 重写setConfig
+         /**
+         * _init 是个别组件需要单独初始化的事项
          * @param {object} options
          */
-        _setConfig: function (options) {
-            var config = this.config,
-                name;
-            for (name in options) {
-                this.set(name,options[name]);
-            }
+        _init: function (options) {
+            this.itemTypes = ['center','left','right'];
+            this.attributesList = ['center','left','right','title','image'];
         },
+
 
          /**
          * title需要特殊处理
