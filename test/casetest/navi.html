@@ -23,7 +23,7 @@
         urlArgs: "bust=" +  (new Date()).getTime()
     });
     require(['blend'], function (blend) {
-        var tab;
+        var navigation;
         var _eval = {
             "create" : function(){
                 navigation = blend.create('navigation',{
@@ -48,16 +48,16 @@
                 });
             },
             "hide" : function(){
-                
+                navigation.hide();
             },
             "show" : function(){
-                
+                navigation.show();
             },
             "addItem" : function(){
-                
+                navigation.addItem();
             },
             "destroy" : function(){
-                
+                navigation.destroy();
             }
         }
         $('input[type=button],button').click(function(e){

@@ -55,7 +55,7 @@ define(['../../src/core/Class'],function(Class){
                 expect(objClasA.get('title')).to.equal('11');
                 expect(objClasB.get('title')).to.not.equal('11');
                 objClasB.set('title','22');
-                console.log(objClasB);
+                // console.log(objClasB);
                 expect(objClasB.get('title')).to.equal('22');
                 objClasB.otherMethod1();
                 expect(objClasB.get('title')).to.equal('44');
