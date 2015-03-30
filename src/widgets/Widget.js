@@ -72,6 +72,7 @@ function (Class, nativeApi, lib, Style, Item) {
 
         /**
          * 初始化配置
+         * @private
          * @param {Object} options  是入参
          */
         _setConfig: function (options) {
@@ -139,6 +140,7 @@ function (Class, nativeApi, lib, Style, Item) {
 
         /**
          * 内部设置组件样式，支持set(style,{})
+         * @private
          * @param {Object} options 传入的style对象
          * @key {string} key "style"
          * @return {Object} this 自身实例
