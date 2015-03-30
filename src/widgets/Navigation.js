@@ -12,6 +12,7 @@ define(['../core/Class', './Widget'], function (Class, Widget) {
         type: 'navi',
         /**
          * _init 是个别组件需要单独初始化的事项
+         * @private
          * @param {Object} options 入参透传
          */
         _init: function (options) {
