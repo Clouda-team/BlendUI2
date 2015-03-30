@@ -1,25 +1,24 @@
 /**
- * @class navigation
- * @singleton
+ * @file Navigation.js
+ * @desc Navigation组件;
+ * @author clouda-team(https://github.com/clouda-team)
+ * @param {Object} Class 基类
+ * @param {Object} Widget widget的基类
+ * @return {Object} navigation组件对象
  */
-define(["../core/Class","./Widget"], function(Class,Widget){
-
+define(['../core/Class', './Widget'], function (Class, Widget) {
     var Navigation = Class({
-
         extend: Widget,
-
         type: 'navi',
-
         /**
          * _init 是个别组件需要单独初始化的事项
-         * @param {object} options
+         * @param {Object} options 入参透传
          */
         _init: function (options) {
             this.itemTypes = ['items'];
-            this.filterConfig = ['id','type'];
+            this.filterConfig = ['id', 'type'];
         }
 
     });
-
     return Navigation;
 });
