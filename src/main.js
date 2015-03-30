@@ -5,7 +5,7 @@
 * @author clouda-team(https://github.com/clouda-team)
 */
 require([
-    'src/widgets/Titlebar'
-], function(blend) {
-    
+    'src/blend'
+], function (blend) {
+
 }, null, true);

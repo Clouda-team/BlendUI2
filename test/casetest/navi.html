@@ -8,8 +8,8 @@
     <style>
         *{line-height: 180%;}
     </style>
-    <script src="../../third_party/zepto.js"></script>
-    <script src="../../third_party/require.js"></script>
+    <script src="/third_party/zepto.js"></script>
+    <script src="/third_party/require.js"></script>
 </head>
 <body>
 <button type="button" id="create">创建navigation</button><br/>
@@ -28,9 +28,12 @@
             "create" : function(){
                 navigation = blend.create('navigation',{
                     "id": "navigation",
-                    "backgroundColor": "#324324",
-                    "opacity": 0.9,
-                    "color": "#ffffffff",
+                    "type":"list",
+                    "style":{
+                        "backgroundColor": "#324324",
+                        "opacity": 0.9,
+                        "color": "#ffffffff"
+                    },
                     "items": [
                         {
                             text: "百度",
@@ -54,7 +57,13 @@
                 navigation.show();
             },
             "addItem" : function(){
-                navigation.addItem();
+                window.item = navigation.create({
+                            text: "百sdfdsfsd度",
+                            action: {
+                                url: "http://www.baidu.com"
+                            }
+                        });
+                navigation.append(item);
             },
             "destroy" : function(){
                 navigation.destroy();

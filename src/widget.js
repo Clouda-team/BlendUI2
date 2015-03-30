@@ -5,29 +5,29 @@
  * @return {Object} widget组件对象
  */
 define([
-    "./widgets/Title",
-    "./widgets/Tab",
-    "./widgets/Navigation",
-    "./widgets/Toolbar",
-    "./widgets/Gallery"
-], function(Title, Tab, Navigation, Toolbar, Gallery) {
+    './widgets/Title',
+    './widgets/Tab',
+    './widgets/Navigation',
+    './widgets/Toolbar',
+    './widgets/Gallery'
+], function (Title, Tab, Navigation, Toolbar, Gallery) {
     var widgets = {};
 
-    widgets['title'] = Title;
+    widgets.title = Title;
 
-    widgets['tab'] = Tab;
+    widgets.tab = Tab;
 
-    widgets['navigation'] = Navigation;
+    widgets.navigation = Navigation;
 
-    widgets['toolbar'] = Toolbar;
+    widgets.toolbar = Toolbar;
 
-    widgets['gallery'] = Gallery;
+    widgets.gallery = Gallery;
 
     /* @method widgets.extend
      * @args object
-     * @res You can extend Objects to widgets! 
+     * @res You can extend Objects to widgets!
     */
-    widgets.extend = function() {
+    widgets.extend = function () {
         var targets = arguments;
         var len = targets.length;
         var i = 0;
@@ -36,13 +36,15 @@ define([
             target = targets[i];
 
             /*If the argument is a object, link the key to widgets*/
-            if (typeof target == "object") {
+            if (typeof target === 'object') {
                 for (var o in target) {
-                    widgets[o] = target[o];
+                    if (target.hasOwnProperty(o)) {
+                        widgets[o] = target[o];
+                    }
                 }
             }
         }
-        // Return widgets 
+        // Return widgets
         return widgets;
     };
 
