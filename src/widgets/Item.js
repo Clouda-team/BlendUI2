@@ -4,57 +4,55 @@
  * @author clouda-team(https://github.com/clouda-team)
  * @return { Class } Item构造函数
  */
-
 define([
     '../core/Class',
     './Style',
     '../core/lib'
 ], function (Class, Style, lib) {
 
-    // var listenerTap = {};
+    /**
+     * 对Item实例进行存储或者删除，通过对实例的存储来封装action事件机制;
+     */
+    // 存储实例的对象
+    var instance = {};
 
-    // var listenerOn = function (item, fn) {
-    //     listenerTap[item.id] = listenerTap[item.id] || [];
-    //     listenerTap[item.id].push(fn);
-    // };
+    /**
+     * 获取item 实例 @inner;
+     * @param {string} id,实例 id
+     * @return {Item} Item实例
+     */
+    var getInstance = function (id) {
+        return instance[id];
+    };
 
-    // var listenerOff = function (item, fn) {
-    //     var events = listenerTap[item.id];
-    //     if (!fn) {
-    //         delete listenerTap[item.id];
-    //     }
-    //     else {
-    //         events.splice(events.indexOf(fn), 1);
-    //     }
-    // };
+    /**
+     * 存储item实例 @inner;
+     * @param {Object} obj,Item实例
+     */
+    var saveInstance = function (obj) {
+        instance[obj.id] = obj;
+    };
 
+    /**
+     * 删除存储的Item实例@inner;
+     * @param {Object} obj,实例
+     */
+    var removeInstance = function (obj) {
+        delete instance[obj.id];
+    };
+
+    // action触发的事件
     document.addEventListener('UIXClick', function (e) {
         var data = JSON.parse(e.data);
         var id = data.id;
-        //if(listenerTap[id]){
-            // for(var i=0, len=listenerTap[id].length; i< len; i++){
-            //     listenerTap[id][i].call(Item.get(id), e);
-            // }
-        //}
-        Item.get(id).fire('ontap');
+        getInstance(id).fire('ontap');
     });
 
+     /**
+     * @class
+     * @alias module:Item
+     */
     var Item = Class({
-
-        // 添加 item 的静态方法和属性；
-        statics: {
-            instance: {},
-            get: function (id) {
-                return Item.instance[id];
-            },
-            set: function (obj) {
-                Item.instance[obj.id] = obj;
-            },
-            remove: function (obj) {
-                delete Item.instance[obj.id];
-            }
-        },
-
         /**
          * item对象 初始化方法
          * @param {Object} options 初始化设置
@@ -68,19 +66,25 @@ define([
                 },
                 instance: widget|item 实例
          * }
-         * @return {Object} style实例；
+         * @return {Item} Item实例；
          */
-
         init: function (options) {
             this.config = {};
             this.inited = false;
             this._setOptions(options);
-            Item.set(this);
+            saveInstance(this);
+            return this;
         },
+        // 类型标识
         type : 'item',
 
-        // 全局事件
+        // 类绑定的事件
         events: {
+            /**
+             * 设置属性值时触发;
+             * @event Item set#change
+             * @param {key}  key 改变的属性；
+             */
             change: function (key) {
                 if (this['_parse' + lib.toPascal(key)]) {
                     this['_parse' + lib.toPascal(key)](key);
@@ -92,15 +96,19 @@ define([
             }
         },
 
-        // 序列号初始化参数;
-
+        /**
+         * 对用户初始化输入格式;
+         * @private
+         * @param {Object} options 用户输入的初始值；
+         * @return {Class} 原对象
+         */
         _setOptions: function (options) {
             options = options || {};
             var data = options.data || {};
             this.instance = options.instance;
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
-                    if(k === 'ontap'){
+                    if (k === 'ontap') {
                         this.bind(data[k]);
                     }
                     else if (typeof data[k] !== 'function') {
@@ -111,9 +119,14 @@ define([
                     }
                 }
             }
+            return this;
         },
 
-        // 创建 style 实例
+        /**
+         * 解析style属性;
+         * @private
+         * @return {Class} 原对象
+         */
         _parseStyle: function () {
             if (!this.styleObj) {
                 this.styleObj = new Style({
@@ -121,10 +134,16 @@ define([
                 });
             }
             this.style();
+            return this;
         },
 
-        // 处理action
-        _parseAction: function( key ){
+        /**
+         * 解析action属性;
+         * @private
+         * @param {string} key,要解析的action标识 href|tap|back；
+         * @return {string} 解析后的 action 字符串
+         */
+        _parseAction: function (key) {
             var action;
             if (key === 'href') {
                 action = 'loadurl(' + this.get('href') + ')';
@@ -132,19 +151,28 @@ define([
             else if (key === 'tap') {
                 action = 'uievent({"id":"' + this.id + '"})';
             }
-            else if(key === 'back') {
+            else if (key === 'back') {
                 action = 'action(back)';
             }
 
             return action;
         },
 
-        // 处理 href
+        /**
+         * 解析href属性;
+         * @private
+         * @return {Item} Item 对象
+         */
         _parseHref: function () {
             this.config.action = this._parseAction('href');
+            return this;
         },
 
-        // 修改item的索引
+        /**
+         * 解析index属性;
+         * @private
+         * @return {Item} Item 对象
+         */
         _parseIndex: function () {
             var items = this.items;
             var index = this.get('index');
@@ -152,6 +180,7 @@ define([
                 this.remove();
             }
             items.splice(index, 0, this.config);
+            return this;
         },
 
         /**
@@ -184,10 +213,14 @@ define([
             return this;
         },
 
-        // 绑定item点击事件;
+        /**
+         * 绑定 action 点击事件函数;
+         * @param {Function} fn 绑定的函数；
+         * @return {Item} Item 对象
+         */
         bind: function (fn) {
             fn = fn || lib.noop;
-            if (fn === 'back'){
+            if (fn === 'back') {
                 this.config.action = this._parseAction('back');
             }
             else {
@@ -197,20 +230,30 @@ define([
             return this;
         },
 
-        // 解绑事件
+        /**
+         * 解绑 action 点击事件函数;
+         * @param {Function} fn 绑定的函数；
+         * @return {Item} Item 对象
+         */
         unbind: function (fn) {
             this.off('tap', fn);
             return this;
         },
 
-        // 从父链中删除，并没有销毁组件;
-        remove: function (){
+        /**
+         * 删除 Item 对象从组件中;
+         * @return {Item} Item 对象
+         */
+        remove: function () {
             this.items.splice(this.index, 1);
             this.fire('onremove');
             return this;
         },
 
-        // 渲染组件
+        /**
+         * 重新渲染Item组件;
+         * @return {Item} Item 对象
+         */
         render: function () {
             if (this.inited) {
                 this.instance.render();
@@ -224,7 +267,7 @@ define([
          */
         destroy: function () {
             this.remove();
-            Item.remove(this);
+            removeInstance(this);
             this.fire('destroy');
             this.off('all');
         }
