@@ -133,7 +133,7 @@ define([
 
         /**
          * 解析用户输入的背景颜色
-         * @pravate
+         * @private
          * @return {Class} 原对象
          */
         _parseBackgroundColor: function () {
@@ -145,7 +145,8 @@ define([
 
         /**
          * 更新style对象的数据;
-         * @return {Class} 原对象
+         * @param {Object} data 样式数据
+         * @return {Style} style原对象
          */
         update: function (data) {
             data = data || {};
@@ -159,7 +160,7 @@ define([
 
         /**
          * 对象进行绑定到父层进行渲染;
-         * @return {Class} 原对象
+         * @return {Style} 原对象
          */
         render: function () {
             // 触发实例的 render;

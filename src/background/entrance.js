@@ -5,7 +5,7 @@
 (function () {
     // 系统原生事件,新activity创建的时候触发webview_register事件, activity销毁的时候触发webview_unregister事件
     // var _events = ['webview_register', 'webview_unregister'];
-    var bridge = lc_bridge;
+    var bridge = window.lc_bridge;
     var webViews = {};
     var status = {
         ACTIVE: 1,

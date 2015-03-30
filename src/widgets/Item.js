@@ -76,7 +76,7 @@ define([
             return this;
         },
         // 类型标识
-        type : 'item',
+        type: 'item',
 
         // 类绑定的事件
         events: {
