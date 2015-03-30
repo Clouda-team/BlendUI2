@@ -1,17 +1,21 @@
 /**
  * @file event.js
- * @author clouda-team
+ * @desc native通信事件封装
+ * @author gaotianyi
  */
-define(['./lib','./native'], function (lib, native) {
+define([
+    './lib',
+    './native'
+], function (lib, native) {
 
     /**
      * 事件机制
      * @module event
      */
     var event = {};
-    var handlers = {};
-    var _types = ['uixready', 'webview_register', 'webview_unregister', 'UIXClick'];
 
+    // 缓存事件
+    var handlers = {};
     /**
      * blend添加事件监听的方法
      * @param {string} type 事件类型

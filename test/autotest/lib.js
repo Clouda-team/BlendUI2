@@ -29,6 +29,8 @@ define(['../../src/core/lib'],function(lib){
             as = lib.toCamel(as);
             expect(as).to.equal('aaBb');
             expect(lib.toCamel('aa-dd-cc-bb')).to.equal('aaDdCcBb');
+            expect(lib.toCamel('backgroundColor')).to.equal('backgroundColor');
+            expect(lib.toCamel('background-color')).to.equal('backgroundColor');
         });
 
         it('toPascal', function(){

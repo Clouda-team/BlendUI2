@@ -39,7 +39,7 @@ define(['../../src/widgets/Item'],function(Item){
                 expect(itemObj.get('image')).to.equal('BB');
                 expect(itemObj.config.text).to.equal('AA');
                 expect(itemObj.config.image).to.equal('BB');
-                expect(itemObj.config.action).to.equal('UIEvent('+JSON.stringify({id:itemObj.id})+')');
+                expect(itemObj.config.action).to.equal('uievent('+JSON.stringify({id:itemObj.id})+')');
             });
         });
     });

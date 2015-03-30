@@ -2,7 +2,7 @@
  * @file lib.js
  * @desc 工具性类库;
  * @author clouda-team(https://github.com/clouda-team)
- * @return {Object} 工具类库
+ * @return {Object} lib 工具类库
  */
 
 define(function () {
@@ -28,7 +28,12 @@ define(function () {
     // 空函数
     lib.noop = function () {};
 
-    // each方法
+    /**
+     * 对象类型数据循环
+     * @param {Object} object,要循环的数据
+     * @param {Function} fn,循环回调回调参数依次为 key, valye, object本身，如果回调返回值为空侧停止；
+     * @param {Object} scope,函数命名空间，可为空
+     */
     lib.each = function (object, fn, scope) {
         for (var property in object) {
             if (object.hasOwnProperty(property)) {
@@ -39,12 +44,20 @@ define(function () {
         }
     };
 
-    // 判断是不是类函数
-    lib.isClass = function (o) {
-        return typeof o === 'function' && (o.prototype && o === o.prototype.constructor);
+    /**
+     * 判断函数是否是类结构体
+     * @param {Function} fn,判断的函数
+     * @return {boolean} 是否是函数结构体
+     */
+    lib.isClass = function (fn) {
+        return typeof fn === 'function' && (fn.prototype && fn === fn.prototype.constructor);
     };
 
-    // 把字符串中杠「-」转为驼峰abc-d转化为abcD;
+    /**
+     * 中杠形式的字符串转化为驼峰形式;
+     * @param {string} str 要转换的字符串
+     * @return {string} 转化后的字符串值
+     */
     lib.toCamel = function (str) {
         str = str || '';
         str = str.replace(/-([a-z])/gi, function (a, s) {
@@ -53,29 +66,47 @@ define(function () {
         return str;
     };
 
-    // 把字符串中杠「-」转为Pascal风格；
+    /**
+     * 字符串转化为pascal形式;
+     * @param {string} str 要转换的字符串
+     * @return {string} 转化后的字符串值
+     */
     lib.toPascal = function (str) {
         str = lib.toCamel(str);
         str = str.charAt(0).toUpperCase() + str.slice(1);
         return str;
     };
 
-    // 生成唯一的id
+    /**
+     * 生成唯一的id 标识;
+     * @param {string} prefix 标识前缀
+     * @return {string} 标识字符串值
+     */
     var idCounter = 0;
     lib.uniqueId = function (prefix) {
         var id = '_' + (++idCounter);
         return (prefix || 'UNIQUEID') + id;
     };
 
-    // 环境判断
+    // webview ua
     var ua = navigator.userAgent.toLowerCase();
+
+    // 是否是android
     lib.isAndroid = ua.indexOf('android') !== -1;
+
+    // 是否是iphone
     lib.isIphone = ua.indexOf('iphone') !== -1;
+
+    // 是否是uix环境，是的化返回uix的版本号
     var isUix = lib.isUix = (function () {
         var v = ua.match(/uix\/(\d+\.\d+\.\d+\.\d+)/);
         return v ? v[1] : '';
     })();
 
+    /**
+     * uix ready 事件, native环境的ready事件
+     * @param {Function} fn,ready 后触发的函数
+     */
     lib.ready = function (fn) {
         if (isUix) {
             if (window.lc_bridge) {
@@ -90,7 +121,5 @@ define(function () {
             console && console.warn('非Naitve Uix环境');
         }
     };
-    lib.isUix = isUix;
-
     return lib;
 });

@@ -34,7 +34,7 @@ define([
         }
     };
 
-    // uix ready事件
+
     var startTime = 1 * new Date();
     var _readyFn = [];
     lib.ready(function () {
@@ -58,8 +58,9 @@ define([
             _readyFn.push(callback);
         }
     };
-    // 判断是否是naitve环境
-    blend.isUix = lib.isUix;
+
+    // 是否是 uix 环境判断,
+    blend.isUIX = lib.isUix;
 
     lib.extend(blend, event);
 
