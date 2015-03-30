@@ -20,6 +20,15 @@ define(['../../src/core/lib'],function(lib){
             expect(s.dd).to.equal('ddd');
         });
 
+        it('each', function(){
+            var s = {"a":'b',"c":'d'};
+            lib.each({"a":'b',"c":'d'},function(k,v,o){
+                expect(o).to.be.an('object');
+                expect(o).to.eql(s);
+                expect(s[k]).to.be.equal(v);
+            });
+        });
+
         it('noop', function(){
             expect(lib.noop).to.be.a('function');
         });
@@ -51,9 +60,21 @@ define(['../../src/core/lib'],function(lib){
             expect(e.indexOf('PRE')>-1).to.true;
         });
 
-        // it('isUix', function(){
-        //     expect(lib.isUix).to.equal('AaDdCcBb');
-        // });
+        it('isUix', function(){
+            expect(lib.isUix).to.not.be.false;
+        });
+        it('isAndroid', function(){
+            expect(lib).to.include.keys('isAndroid');
+        });
+        it('isIphone', function(){
+            expect(lib).to.include.keys('isIphone');
+        });
 
+        it('ready', function(done){
+            lib.ready(function(){
+                expect(window.lc_bridge).to.not.be.false;
+                done();
+            });
+        });
     });
 });
