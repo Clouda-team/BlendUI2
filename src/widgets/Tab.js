@@ -13,7 +13,7 @@ define(['../core/Class', './Widget'], function (Class, Widget) {
         /**
          * _init 是个别组件需要单独初始化的事项
          * @private
-         * @param {Object} options tab自己的初始化
+         * @param {Object} options title自己的初始化
          */
         _init: function (options) {
             this.itemTypes = ['items'];

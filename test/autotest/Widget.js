@@ -1,21 +1,18 @@
 
 // src/core/Class 类工具函数
-define(['../../_src/core/Class'],function(Class){
+define(['../../_src/widgets/Widget'],function(Widget){
     var expect = chai.expect;
-    describe('Class类测试', function(){
-        describe('Class结构函数',function(){
-            it('Class函数', function () {
-                expect(Class).to.be.a('function');
-                expect(Class).to.be.instanceof(Function);
+    describe('Widget类测试', function(){
+        describe('Widget结构函数',function(){
+            it('Widget函数', function () {
+                expect(Widget).to.be.a('function');
+                expect(Widget).to.be.instanceof(Function);
             });
         });
         
-        describe('创建类',function(){
+        describe('创建widget',function(){
             var classA = Class({
-                config : {
-                    "title":"11",
-                    "doctitle":"22"
-                },
+                
                 statics:{
                     "sTitle":"aaa"
                 },
