@@ -14,7 +14,7 @@ define(['../core/Class', '../core/lib', '../core/native'],
                 ready: false,
                 render: function (type, configs) {
                     var timer = setTimeout(function () {
-                        native.widget(type, configs);
+                        native.show(type, configs);
                         clearTimeout(timer);
                         Gallery.ready = false;
                     });
