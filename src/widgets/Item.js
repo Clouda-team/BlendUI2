@@ -141,9 +141,10 @@ define([
          * 解析action属性;
          * @private
          * @param {string} key,要解析的action标识 href|tap|back；
+         * @param {string|null} nativeString, 显示native组件@todo remove
          * @return {string} 解析后的 action 字符串
          */
-        _parseAction: function (key) {
+        _parseAction: function (key, nativeString) {
             var action;
             if (key === 'href') {
                 action = 'loadurl(' + this.get('href') + ')';
@@ -151,8 +152,8 @@ define([
             else if (key === 'tap') {
                 action = 'uievent({"id":"' + this.id + '"})';
             }
-            else if (key === 'back') {
-                action = 'action(back)';
+            else if (key === 'native') {
+                action = 'action(' + nativeString + ')';
             }
 
             return action;
@@ -224,13 +225,12 @@ define([
         /**
          * 绑定 action 点击事件函数;
          * @param {string} type 事件类型;
-         * @param {Function} fn 绑定的函数；
+         * @param {Function|string} fn 绑定的函数或者固定常量；
          * @return {Item} Item 对象
          */
         bind: function (type, fn) {
-            fn = fn || lib.noop;
-            if (type === 'back') {
-                this.config.action = this._parseAction('back');
+            if (typeof fn === 'string') {
+                this.config.action = this._parseAction('native', fn);
             }
             else {
                 this.on(type, fn);
