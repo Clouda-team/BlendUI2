@@ -108,8 +108,8 @@ define([
             this.instance = options.instance;
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
-                    if (k === 'ontap') {
-                        this.bind(data[k]);
+                    if (k.indexOf('on') === 0 ) {
+                        this.bind(k, data[k]);
                     }
                     else if (typeof data[k] !== 'function') {
                         this.set(k, data[k]);
@@ -199,15 +199,23 @@ define([
 
         /**
          * 修改样式
-         * @param {Object} data 可为空
-         * @return {Class} 对象本身；
+         * @param {Object | string} data, 如 data为字符串侧获取样式;
+         * @return {string| Item} 对象本身或样式值；
          */
         style: function (data) {
-            if (!this.get('style')) {
+            if (arguments.length === 1 && typeof data === 'string') {
+                return this.styleObj.get(data);
+            }
+            else if (!this.get('style')) {
                 this.set('style', {});
             }
-            if (data) {
+            if (arguments.length === 1 && typeof data === 'Object') {
                 lib.extend(this.get('style'), data);
+            }
+            else if (arguments.length === 2) {
+                var objData = {};
+                objData[arguments[0]] =arguments[1];
+                this.style(objData);
             }
             this.styleObj.update(this.get('style'));
             return this;
@@ -215,16 +223,17 @@ define([
 
         /**
          * 绑定 action 点击事件函数;
+         * @param {string} type 事件类型;
          * @param {Function} fn 绑定的函数；
          * @return {Item} Item 对象
          */
-        bind: function (fn) {
+        bind: function (type, fn) {
             fn = fn || lib.noop;
-            if (fn === 'back') {
+            if (type === 'back') {
                 this.config.action = this._parseAction('back');
             }
             else {
-                this.on('ontap', fn);
+                this.on(type, fn);
                 this.config.action = this._parseAction('tap');
             }
             return this;
