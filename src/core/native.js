@@ -40,9 +40,8 @@ define(function () {
         if (typeof options !== 'string') {
             options = JSON.stringify(options);
         }
-        return _initApi('UIXSetDecoration', [
-            options,
-            false
+        return _initApi('UIXSetDecorationNoCache', [
+            options
         ]);
     };
 

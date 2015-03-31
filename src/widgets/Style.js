@@ -137,7 +137,7 @@ define([
          * @return {Class} 原对象
          */
         _parseBackgroundColor: function () {
-            var color = this.get('background-color');
+            var color = this.get('backgroundColor');
             var opacity = this.get('opacity');
             this.config.backgroundColor = _naitveColor(color, opacity);
             return this;
@@ -151,8 +151,8 @@ define([
         update: function (data) {
             data = data || {};
             for (var k in data) {
-                if (data.hasOwnProperty(k)) {
-                    this.set(k, data[k]);
+                if (data.hasOwnProperty(k) && typeof data[k] === 'string') {
+                    this.set(lib.toCamel(k), data[k]);
                 }
             }
             return this;

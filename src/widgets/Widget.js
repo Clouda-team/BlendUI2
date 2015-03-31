@@ -13,6 +13,7 @@ define(['../core/Class', '../core/native', '../core/lib', './Style', './Item'],
 function (Class, nativeApi, lib, Style, Item) {
     var Widget = Class({
         init: function (options) {
+            options = options || {};
             this.itemList = {};
             this.config = {};
             /*当上层业务逻辑有需要初始化的业务时候帮其调用*/
@@ -130,10 +131,18 @@ function (Class, nativeApi, lib, Style, Item) {
 
         /**
          * 设置组件样式
-         * @param {Object} options 样式的对象
-         * @return {Object} this 自身实例
+         * @param {Object|string} options 样式的对象，如为单字符串侧是获取样式;
+         * @return {Object} this自身或样式值
          */
         style: function (options) {
+            if (arguments.length === 1 && typeof options === 'string') {
+                return this.styleInstance.get(options);
+            }
+            if (arguments.length === 2 && typeof options === 'string') {
+                var objData = {};
+                objData[arguments[0]] = arguments[1];
+                this.style(objData);
+            }
             this._setStyle('style', options);
             return this;
         },

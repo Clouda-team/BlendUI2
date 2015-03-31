@@ -18,6 +18,11 @@ define([
      */
     var blend = {};
 
+    // 常量
+    blend.ACTIVEBACK = 'back';
+    blend.WIDGETNAVI = 'navi';
+    blend.WIDGETSHARE = 'share';
+
     /**
      * widget组件创建
      * @param {string} name 组件名称
