@@ -31,8 +31,8 @@ define([
      */
     blend.create = function (name, options) {
         var Widget = widgets[name];
-        if (widget) {
-            if (lib.isClass(widget)) {
+        if (Widget) {
+            if (lib.isClass(Widget)) {
                 return new Widget(options);
             }
             return Widget(options);
