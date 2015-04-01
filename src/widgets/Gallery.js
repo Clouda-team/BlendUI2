@@ -13,7 +13,7 @@ define(['../core/Class', '../core/lib', '../core/native'],
         /**
          * @desc 渲染uix组件
          * @param {Object} configs uix配置
-         * @return {} 没有
+         * @param {string} type 组件类型 
         */
         renderConfig = function (type, configs) {
             var timer = setTimeout(function () {

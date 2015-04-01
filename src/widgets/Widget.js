@@ -153,7 +153,7 @@ function (classFactory, nativeApi, lib, Style, Item) {
          * 内部设置组件样式，支持set(style,{})
          * @private
          * @param {Object} options 传入的style对象
-         * @key {string} key "style"
+         * @param {string} key "style"
          * @return {Object} this 自身实例
         */
         _setStyle: function (key, options) {
