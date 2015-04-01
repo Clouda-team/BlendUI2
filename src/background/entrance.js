@@ -25,7 +25,7 @@
     });
     // 监听activity webView销毁事件
     document.addEventListener('webview_unregister', function (event) {
-        if (event.origin in webViews) { 
+        if (event.origin in webViews) {
             delete webViews[event.origin];
         }
     });
@@ -36,7 +36,7 @@
         var type = data.type;
         var origin = event.origin;
         if (events[type]) {
-            if(events[type].indexOf(origin) >= 0) {
+            if (events[type].indexOf(origin) >= 0) {
                 events[type].push(origin);
             }
         }
