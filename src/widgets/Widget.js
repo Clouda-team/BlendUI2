@@ -156,7 +156,6 @@ function (classFactory, nativeApi, lib, Style, Item) {
          * @key {string} key "style"
          * @return {Object} this 自身实例
         */
-
         _setStyle: function (key, options) {
             this.styleInstance.update(options);
             return this;
@@ -187,10 +186,7 @@ function (classFactory, nativeApi, lib, Style, Item) {
             var config = this.config;
             configs[this.type] = config;
             if (!widget.renderReady) {
-                renderConfig
-
-
-                (configs);
+                renderConfig(configs);
             }
         },
 
