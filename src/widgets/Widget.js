@@ -2,7 +2,7 @@
  * @file widget.js
  * @desc 基础类库
  * @author clouda-team(https://github.com/clouda-team)
- * @param {Object} Class 基础类
+ * @param {Object} classFactory 基础类
  * @param {Object} nativeApi 操作native的类
  * @param {Object} lib 一些方法封装
  * @param {Object} Style 对样式操作的基础类

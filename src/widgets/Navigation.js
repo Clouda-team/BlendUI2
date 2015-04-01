@@ -2,7 +2,7 @@
  * @file Navigation.js
  * @desc Navigation组件;
  * @author clouda-team(https://github.com/clouda-team)
- * @param {Object} Class 基类
+ * @param {Object} classFactory 基类
  * @param {Object} Widget widget的基类
  * @return {Object} navigation组件对象
  */

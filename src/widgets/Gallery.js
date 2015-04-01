@@ -9,19 +9,6 @@
 define(['../core/Class', '../core/lib', '../core/native'],
     function (classFactory, lib, native) {
         /**
-         * @des 渲染uix组件
-         * @param {Object} configs uix配置
-        */
-        var renderConfig = function (type, configs) {
-            var timer = setTimeout(function () {
-                native.show(type, configs);
-                clearTimeout(timer);
-                gallery.ready = false;
-            });
-            gallery.ready = true;
-        };
-
-        /**
          * @des 创建一个类
          * @param {Object} options 配置信息
          * {
@@ -127,5 +114,19 @@ define(['../core/Class', '../core/lib', '../core/native'],
                 delete this.config;
             }
         });
+
+        /**
+         * @desc 渲染uix组件
+         * @param {Object} configs uix配置
+        */
+        var renderConfig = function (type, configs) {
+            var timer = setTimeout(function () {
+                native.show(type, configs);
+                clearTimeout(timer);
+                gallery.ready = false;
+            });
+            gallery.ready = true;
+        };
+
         return gallery;
     });

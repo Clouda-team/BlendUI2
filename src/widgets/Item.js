@@ -108,7 +108,7 @@ define([
             this.instance = options.instance;
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
-                    if (k.indexOf('on') === 0 ) {
+                    if (k.indexOf('on') === 0) {
                         this.bind(k, data[k]);
                     }
                     else if (typeof data[k] !== 'function') {
@@ -215,7 +215,7 @@ define([
             }
             else if (arguments.length === 2) {
                 var objData = {};
-                objData[arguments[0]] =arguments[1];
+                objData[arguments[0]] = arguments[1];
                 this.style(objData);
             }
             this.styleObj.update(this.get('style'));

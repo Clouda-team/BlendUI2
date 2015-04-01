@@ -2,7 +2,7 @@
  * @file Title.js
  * @desc Title组件;
  * @author clouda-team(https://github.com/clouda-team)
- * @param {Object} Class 基类
+ * @param {Object} classFactory 基类
  * @param {Object} Widget widget的基类
  * @return {Object} Title组件对象
  */
