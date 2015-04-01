@@ -11,11 +11,13 @@
  */
 define(['../core/Class', '../core/native', '../core/lib', './Style', './Item'],
 function (classFactory, nativeApi, lib, Style, Item) {
+    var renderConfig;
+    var widget;
     /**
      * @des 渲染uix组件
      * @param {Object} configs uix配置
     */
-    var renderConfig = function (configs) {
+    renderConfig = function (configs) {
         var timer = setTimeout(function () {
             nativeApi.render(configs);
             clearTimeout(timer);
@@ -24,7 +26,7 @@ function (classFactory, nativeApi, lib, Style, Item) {
         widget.renderReady = true;
     };
 
-    var widget = classFactory.create({
+    widget = classFactory.create({
         init: function (options) {
             options = options || {};
             this.itemList = {};
