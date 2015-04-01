@@ -15,15 +15,19 @@
     };
     // 监听activity webView创建事件
     document.addEventListener('webview_register', function (event) {
-        (event.origin in webViews) || (webViews[event.origin] = {
-            origin: event.origin,
-            status: status.ACTIVE,
-            data: event.data
-        });
+        if (!(event.origin in webViews)) {
+            webViews[event.origin] = {
+                origin: event.origin,
+                status: status.ACTIVE,
+                data: event.data
+            };
+        }
     });
     // 监听activity webView销毁事件
     document.addEventListener('webview_unregister', function (event) {
-        (event.origin in webViews) && (delete webViews[event.origin]);
+        if (event.origin in webViews) { 
+            delete webViews[event.origin];
+        }
     });
     // 注册页面要监听的事件
     var events = {};
@@ -32,7 +36,9 @@
         var type = data.type;
         var origin = event.origin;
         if (events[type]) {
-            events[type].indexOf(origin) < 0 || events[type].push(origin);
+            if(events[type].indexOf(origin) >= 0) {
+                events[type].push(origin);
+            }
         }
         else {
             events[type] = [origin];

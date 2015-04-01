@@ -9,7 +9,7 @@
  */
 define([
     './core/lib',
-    './widget',
+    './widgets',
     './core/event'
 ], function (lib, widgets, event) {
     /**
@@ -30,12 +30,12 @@ define([
      * @return {Object} 组件对象
      */
     blend.create = function (name, options) {
-        var widget = widgets[name];
+        var Widget = widgets[name];
         if (widget) {
             if (lib.isClass(widget)) {
-                return new widget(options);
+                return new Widget(options);
             }
-            return widget(options);
+            return Widget(options);
         }
     };
 
@@ -65,7 +65,7 @@ define([
     };
 
     // 是否是 uix 环境判断,
-    blend.isUIX = lib.isUix;
+    blend.UIX = lib.UIX;
 
     lib.extend(blend, event);
 

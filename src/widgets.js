@@ -1,6 +1,6 @@
 /**
- * @file widget.js
- * @desc 组件对象集合;
+ * @file widgets.js
+ * @desc 组件对象集合,对外抛出接口;
  * @author clouda-team(https://github.com/clouda-team)
  * @return {Object} widget组件对象
  */

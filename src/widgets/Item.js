@@ -8,7 +8,7 @@ define([
     '../core/Class',
     './Style',
     '../core/lib'
-], function (Class, Style, lib) {
+], function (classFactory, Style, lib) {
 
     /**
      * 对Item实例进行存储或者删除，通过对实例的存储来封装action事件机制;
@@ -52,7 +52,7 @@ define([
      * @class
      * @alias module:Item
      */
-    var item = Class.create({
+    var item = classFactory.create({
         /**
          * item对象 初始化方法
          * @param {Object} options 初始化设置
@@ -70,7 +70,7 @@ define([
          */
         init: function (options) {
             this.config = {};
-            this.inited = false;
+            this._inited = false;
             this._setOptions(options);
             saveInstance(this);
             return this;
@@ -175,9 +175,9 @@ define([
          * @return {Item} Item 对象
          */
         _parseIndex: function () {
-            var items = this.items;
+            var items = this._items;
             var index = this.get('index');
-            if (this.inited) {
+            if (this._inited) {
                 this.remove();
             }
             items.splice(index, 0, this.config);
@@ -191,8 +191,8 @@ define([
          * @return {Class} item对象；
          */
         appendTo: function (itemsAry, index) {
-            this.inited = true;
-            this.items = itemsAry;
+            this._inited = true;
+            this._items = itemsAry;
             this.index = index || itemsAry.length;
             this.set('index', this.index);
             return this;
@@ -254,7 +254,7 @@ define([
          * @return {Item} Item 对象
          */
         remove: function () {
-            this.items.splice(this.index, 1);
+            this._items.splice(this.index, 1);
             this.fire('onremove');
             return this;
         },
@@ -264,7 +264,7 @@ define([
          * @return {Item} Item 对象
          */
         render: function () {
-            if (this.inited) {
+            if (this._inited) {
                 this.instance.render();
             }
             this.fire('render');

@@ -6,8 +6,8 @@
  * @param {Object} Widget widget的基类
  * @return {Object} tab组件对象
  */
-define(['../core/Class', './Widget'], function (Class, Widget) {
-    var tab = Class.create({
+define(['../core/Class', './Widget'], function (classFactory, Widget) {
+    var tab = classFactory.create({
         extend: Widget,
         type: 'tab',
         /**

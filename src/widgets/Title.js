@@ -6,8 +6,8 @@
  * @param {Object} Widget widget的基类
  * @return {Object} Title组件对象
  */
-define(['../core/Class', './Widget'], function (Class, Widget) {
-    var title = Class.create({
+define(['../core/Class', './Widget'], function (classFactory, Widget) {
+    var title = classFactory.create({
         extend: Widget,
         type: 'title',
          /**

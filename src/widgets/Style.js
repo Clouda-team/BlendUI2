@@ -8,7 +8,7 @@
 define([
     '../core/Class',
     '../core/lib'
-], function (Class, lib) {
+], function (classFactory, lib) {
 
     /**
      * 统一处理颜色值和透明度,@inner;
@@ -48,7 +48,7 @@ define([
      * Style结构函数
      * @class
      */
-    var style = Class.create({
+    var style = classFactory.create({
 
         /**
          * style对象 初始化方法

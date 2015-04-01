@@ -10,8 +10,21 @@
  * @return {Object} widget对象
  */
 define(['../core/Class', '../core/native', '../core/lib', './Style', './Item'],
-function (Class, nativeApi, lib, Style, Item) {
-    var widget = Class.create({
+function (classFactory, nativeApi, lib, Style, Item) {
+    /**
+     * @des 渲染uix组件
+     * @param {Object} configs uix配置
+    */
+    var renderConfig = function (configs) {
+        var timer = setTimeout(function () {
+            nativeApi.render(configs);
+            clearTimeout(timer);
+            widget.renderReady = false;
+        });
+        widget.renderReady = true;
+    };
+
+    var widget = classFactory.create({
         init: function (options) {
             options = options || {};
             this.itemList = {};
@@ -36,20 +49,7 @@ function (Class, nativeApi, lib, Style, Item) {
                 debug: true
             },
             // 初始化组件渲染状态,保证所有组件一次性完成渲染
-            renderReady: false,
-
-            /**
-             * 渲染uix组件
-             * @param {Object} configs uix配置
-             */
-            render: function (configs) {
-                var timer = setTimeout(function () {
-                    nativeApi.render(configs);
-                    clearTimeout(timer);
-                    widget.renderReady = false;
-                });
-                widget.renderReady = true;
-            }
+            renderReady: false
         },
 
          // 暂时不支持set item
@@ -185,7 +185,10 @@ function (Class, nativeApi, lib, Style, Item) {
             var config = this.config;
             configs[this.type] = config;
             if (!widget.renderReady) {
-                widget.render(configs);
+                renderConfig
+
+
+                (configs);
             }
         },
 
@@ -197,7 +200,7 @@ function (Class, nativeApi, lib, Style, Item) {
             delete this.config;
             delete configs[this.type];
             if (!widget.renderReady) {
-                widget.render(configs);
+                renderConfig(configs);
             }
         }
     });

@@ -7,19 +7,39 @@
  * @return {Object} gallery组件对象
  */
 define(['../core/Class', '../core/lib', '../core/native'],
-    function (Class, lib, native) {
-        var gallery;
-        gallery = Class.create({
+    function (classFactory, lib, native) {
+        /**
+         * @des 渲染uix组件
+         * @param {Object} configs uix配置
+        */
+        var renderConfig = function (type, configs) {
+            var timer = setTimeout(function () {
+                native.show(type, configs);
+                clearTimeout(timer);
+                gallery.ready = false;
+            });
+            gallery.ready = true;
+        };
+
+        /**
+         * @des 创建一个类
+         * @param {Object} options 配置信息
+         * {
+         *  id: 'xxx',
+         *  title: 'title',
+         *  images: [
+         *      {
+         *          text: 'xxxx',
+         *          image: 'imageurl',
+         *
+         *      }
+         *  ]
+         * }
+         * @return {gallery} gallery
+         */
+        var gallery = classFactory.create({
             statics: {
-                ready: false,
-                render: function (type, configs) {
-                    var timer = setTimeout(function () {
-                        native.show(type, configs);
-                        clearTimeout(timer);
-                        Gallery.ready = false;
-                    });
-                    Gallery.ready = true;
-                }
+                ready: false
             },
 
             type: 'gallery',
@@ -99,8 +119,8 @@ define(['../core/Class', '../core/lib', '../core/native'],
             render: function () {
                 var config = this.config;
                 var type = this.type;
-                if (!Gallery.ready) {
-                    Gallery.render(type, config);
+                if (!gallery.ready) {
+                    renderConfig(type, config);
                 }
             },
             destroy: function () {
