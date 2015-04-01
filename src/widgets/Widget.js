@@ -11,7 +11,7 @@
  */
 define(['../core/Class', '../core/native', '../core/lib', './Style', './Item'],
 function (Class, nativeApi, lib, Style, Item) {
-    var Widget = Class({
+    var widget = Class.create({
         init: function (options) {
             options = options || {};
             this.itemList = {};
@@ -46,9 +46,9 @@ function (Class, nativeApi, lib, Style, Item) {
                 var timer = setTimeout(function () {
                     nativeApi.render(configs);
                     clearTimeout(timer);
-                    Widget.renderReady = false;
+                    widget.renderReady = false;
                 });
-                Widget.renderReady = true;
+                widget.renderReady = true;
             }
         },
 
@@ -181,11 +181,11 @@ function (Class, nativeApi, lib, Style, Item) {
          * 渲染组件
          */
         render: function () {
-            var configs = Widget.configs;
+            var configs = widget.configs;
             var config = this.config;
             configs[this.type] = config;
-            if (!Widget.renderReady) {
-                Widget.render(configs);
+            if (!widget.renderReady) {
+                widget.render(configs);
             }
         },
 
@@ -193,14 +193,14 @@ function (Class, nativeApi, lib, Style, Item) {
          * 销毁组件
          */
         destroy: function () {
-            var configs = Widget.configs;
+            var configs = widget.configs;
             delete this.config;
             delete configs[this.type];
-            if (!Widget.renderReady) {
-                Widget.render(configs);
+            if (!widget.renderReady) {
+                widget.render(configs);
             }
         }
     });
 
-    return Widget;
+    return widget;
 });

@@ -8,8 +8,8 @@
  */
 define(['../core/Class', '../core/lib', '../core/native'],
     function (Class, lib, native) {
-        var Gallery;
-        Gallery = Class({
+        var gallery;
+        gallery = Class.create({
             statics: {
                 ready: false,
                 render: function (type, configs) {
@@ -107,5 +107,5 @@ define(['../core/Class', '../core/lib', '../core/native'],
                 delete this.config;
             }
         });
-        return Gallery;
+        return gallery;
     });

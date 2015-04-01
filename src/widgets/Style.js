@@ -48,7 +48,7 @@ define([
      * Style结构函数
      * @class
      */
-    var Style = Class({
+    var style = Class.create({
 
         /**
          * style对象 初始化方法
@@ -183,5 +183,5 @@ define([
 
     });
 
-    return Style;
+    return style;
 });

@@ -7,18 +7,18 @@
  * @return {Object} tab组件对象
  */
 define(['../core/Class', './Widget'], function (Class, Widget) {
-    var ToolBar = Class({
+    var toolBar = Class.create({
         extend: Widget,
         type: 'toolbar',
         /**
          * _init 是个别组件需要单独初始化的事项
          * @private
-         * @param {Object} options Toolbar自己的初始化
+         * @param {Object} options toolBar自己的初始化
          */
         _init: function () {
             this.itemTypes = ['items'];
             this.filterConfig = ['id'];
         }
     });
-    return ToolBar;
+    return toolBar;
 });

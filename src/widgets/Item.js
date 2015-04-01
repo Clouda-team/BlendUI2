@@ -52,7 +52,7 @@ define([
      * @class
      * @alias module:Item
      */
-    var Item = Class({
+    var item = Class.create({
         /**
          * item对象 初始化方法
          * @param {Object} options 初始化设置
@@ -282,5 +282,5 @@ define([
         }
     });
 
-    return Item;
+    return item;
 });

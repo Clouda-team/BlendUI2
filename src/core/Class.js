@@ -10,7 +10,7 @@ define([
 ], function (lib) {
     var noop = lib.noop;
     var extend = lib.extend;
-
+    var classFactory = {};
     // Object.create
     if (!Object.create) {
         Object.create = function (o) {
@@ -23,7 +23,6 @@ define([
             return new F();
         };
     }
-
     /**
      * 类生成系统方法;
      * @param {Object} data 组件配置数据
@@ -37,7 +36,7 @@ define([
      }
      * @return {Function}
      */
-    var createClass = function (data) {
+    classFactory.create = function (data) {
         var parent = data.extend || noop;
         var attributes = data.attributes || {};
         var events = data.events || {};
@@ -154,5 +153,5 @@ define([
         return Constructor;
     };
 
-    return createClass;
+    return classFactory;
 });

@@ -7,7 +7,7 @@
  * @return {Object} tab组件对象
  */
 define(['../core/Class', './Widget'], function (Class, Widget) {
-    var Tab = Class({
+    var tab = Class.create({
         extend: Widget,
         type: 'tab',
         /**
@@ -21,5 +21,5 @@ define(['../core/Class', './Widget'], function (Class, Widget) {
         }
     });
 
-    return Tab;
+    return tab;
 });

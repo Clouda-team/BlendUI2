@@ -7,7 +7,7 @@
  * @return {Object} navigation组件对象
  */
 define(['../core/Class', './Widget'], function (Class, Widget) {
-    var Navigation = Class({
+    var navigation = Class.create({
         extend: Widget,
         type: 'navi',
         /**
@@ -21,5 +21,5 @@ define(['../core/Class', './Widget'], function (Class, Widget) {
         }
 
     });
-    return Navigation;
+    return navigation;
 });

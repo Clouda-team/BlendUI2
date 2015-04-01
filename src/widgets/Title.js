@@ -7,7 +7,7 @@
  * @return {Object} Title组件对象
  */
 define(['../core/Class', './Widget'], function (Class, Widget) {
-    var Title = Class({
+    var title = Class.create({
         extend: Widget,
         type: 'title',
          /**
@@ -41,5 +41,5 @@ define(['../core/Class', './Widget'], function (Class, Widget) {
             }
         }
     });
-    return Title;
+    return title;
 });
