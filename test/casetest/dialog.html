@@ -12,43 +12,95 @@
     <script src="../../third_party/require.js"></script>
 </head>
 <body>
-<button type="button" id="alert">警告框alert</button><br/>
-<button type="button" id="prompt">对话框prompt</button><br/>
-<button type="button" id="confirm">确认框confirm</button><br/>
+  <ul>
+            <li><button id="two">两个按钮的Dialog</button></li>
+            <li><button id="one">一个按钮的Dialog</button></li>
+            <li><button id="none">没有按钮的Dialog</button></li>
+            <li><button id="four">四个按钮的Dialog</button></li>
+
+ </ul>
 <script>
     require.config({
         baseUrl:"../../src/",
         urlArgs: "bust=" +  (new Date()).getTime()
     });
-    // require(['blend'], function (blend) {
-    //     blend.dialog.alert({
-    //         'title':''
-    //     },function(){
 
-    //     });
-    // });
-    var _eval = {
-        "alert" : function(){
-            alert('测试测试');
-            console.log('baidubaidubaidu');
-        },
-        "prompt" : function(){
-            alert(prompt('测试测试prompt'));
-            console.log('baidubaidubaidu');
-        },
-        "confirm" : function(){
-            alert(confirm('测试测试confirm'));
-            console.log('baidubaidubaidu');
-        }
-    }
-    $('input[type=button],button').click(function(e){
-        var id = this.id;
-        console.log(id+"=============="+id);
-        if(_eval[id]){
-            _eval[id].call(_eval);
-        }else{
-            alert('没有此case')
-        }
+    require(['blend'], function (blend) {
+        $("button").bind("click",function(e){
+            _eval[$(this).attr("id")]();
+        });
+
+        var _eval = {
+            "one": function () {
+                dialog = blend.create('dialog',{
+                    title:"alert的title",
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>",
+                    items:[
+                        {
+                            "text": "确定",
+                            "action": ''
+                        }
+                    ]
+                });
+                dialog.show();
+            },
+            "two": function(){
+                dialog = blend.create('dialog',{
+                    title:"alert的title",
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>",
+                    items:[
+                        {
+                            "text": "确定",
+                            "action":''
+                        },
+                        {
+                            "text": "取消",
+                            "action":''
+                        }
+                    ]
+                });
+                dialog.show();
+            },
+            "none": function(){
+                 dialog = blend.create('dialog',{
+                    title:"alert的title",
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>"
+                });
+                 dialog.show();
+            },
+            "four": function(){
+
+                 dialog = blend.create('dialog',{
+                    title:"alert的title",
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>"
+                });
+                var item = dialog.create({
+                    "text":"sfsdfsdf",
+                 });
+                item.bind("tap",function(){
+                    alert("sdfsdfsdf");
+                });
+                dialog.append(item);
+                 var item = dialog.create({
+                    "text":"等待",
+                 });
+                item.bind("tap",function(){
+                    alert("东方大厦");
+                });
+                dialog.append(item);
+                 var item = dialog.create({
+                    "text":"稍等",
+                 });
+                item.bind("tap",function(){
+                    alert("是对方的手");
+                });
+                dialog.append(item);
+                dialog.show();
+            },
+            "test": function(){
+                dialog.show();
+            }
+        };
     });
 </script>
 </body>
