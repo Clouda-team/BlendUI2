@@ -17,6 +17,7 @@
             <li><button id="one">一个按钮的Dialog</button></li>
             <li><button id="none">没有按钮的Dialog</button></li>
             <li><button id="four">四个按钮的Dialog</button></li>
+
  </ul>
 <script>
     require.config({
@@ -25,8 +26,8 @@
     });
 
     require(['blend'], function (blend) {
-        $("input").bind("click",function(e){
-            _eval[$(this).attr("id")].apply(this);
+        $("button").bind("click",function(e){
+            _eval[$(this).attr("id")]();
         });
 
         var _eval = {
@@ -37,10 +38,11 @@
                     items:[
                         {
                             "text": "确定",
-                            "action": 'back'
+                            "action": ''
                         }
                     ]
                 });
+                dialog.show();
             },
             "two": function(){
                 dialog = blend.create('dialog',{
@@ -49,44 +51,54 @@
                     items:[
                         {
                             "text": "确定",
-                            "action":'back'
+                            "action":''
                         },
                         {
                             "text": "取消",
-                            "action":'back'
+                            "action":''
                         }
                     ]
                 });
+                dialog.show();
             },
             "none": function(){
                  dialog = blend.create('dialog',{
                     title:"alert的title",
                     description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>"
                 });
+                 dialog.show();
             },
             "four": function(){
+
                  dialog = blend.create('dialog',{
                     title:"alert的title",
-                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>",
-                    items:[
-                        {
-                            "text": "确定",
-                            "action": 'back'
-                        },
-                        {
-                            "text": "确定1",
-                            "action": 'back'
-                        },
-                        {
-                            "text": "确定2",
-                            "action": 'back'
-                        },
-                        {
-                            "text": "确定3",
-                            "action": 'back'
-                        }
-                    ]
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>"
                 });
+                var item = dialog.create({
+                    "text":"sfsdfsdf",
+                 });
+                item.bind("tap",function(){
+                    alert("sdfsdfsdf");
+                });
+                dialog.append(item);
+                 var item = dialog.create({
+                    "text":"等待",
+                 });
+                item.bind("tap",function(){
+                    alert("东方大厦");
+                });
+                dialog.append(item);
+                 var item = dialog.create({
+                    "text":"稍等",
+                 });
+                item.bind("tap",function(){
+                    alert("是对方的手");
+                });
+                dialog.append(item);
+                dialog.show();
+            },
+            "test": function(){
+                dialog.show();
             }
         };
     });
