@@ -30,7 +30,7 @@ define([
                 color = color[0] + color[0] + color[1] + color[1] + color[2] + color[2];
             }
         }
-        else if ((colors = color.match(/^[\s]*rgb[a]?\(([\,|\d]+)\)/i))) {
+        else if ((colors = color.match(/^[\s]*rgb[a]?[\s]*\(([\,\d\s]+)\)/i))) {
             colors = colors[1].split(',');
             if (colors[3]) {
                 opacity = toX(colors[3]);
@@ -151,7 +151,7 @@ define([
         update: function (data) {
             data = data || {};
             for (var k in data) {
-                if (data.hasOwnProperty(k) && typeof data[k] === 'string') {
+                if (data.hasOwnProperty(k)) {
                     this.set(lib.toCamel(k), data[k]);
                 }
             }
@@ -165,7 +165,6 @@ define([
         render: function () {
             // 触发实例的 render;
             this.instance.render && this.instance.render();
-            this.fire('render');
             return this;
         },
 

@@ -1,5 +1,5 @@
 /**
- * @file widget.js
+ * @file Widget.js
  * @desc 基础类库
  * @author clouda-team(https://github.com/clouda-team)
  * @param {Object} classFactory 基础类
@@ -9,24 +9,19 @@
  * @param {Object} Item  基本单元的类
  * @return {Object} widget对象
  */
-define(['../core/Class', '../core/native', '../core/lib', './Style', './Item'],
-function (classFactory, nativeApi, lib, Style, Item) {
-    var renderConfig;
-    var widget;
-    /**
-     * @des 渲染uix组件
-     * @param {Object} configs uix配置
-    */
-    renderConfig = function (configs) {
-        var timer = setTimeout(function () {
-            nativeApi.render(configs);
-            clearTimeout(timer);
-            widget.renderReady = false;
-        });
-        widget.renderReady = true;
-    };
+define([
+    '../core/Class',
+    '../core/native',
+    '../core/lib',
+    './Style',
+    './Item'
+], function (classFactory, nativeApi, lib, Style, Item) {
 
-    widget = classFactory.create({
+    /**
+     * @class
+     * @alias module:Widget
+     */
+    var Widget = classFactory.create({
         init: function (options) {
             options = options || {};
             this.itemList = {};
@@ -44,18 +39,14 @@ function (classFactory, nativeApi, lib, Style, Item) {
             }
             this.render();
         },
-        type: '',
-        statics: {
-            // 全局组件配置文件
-            configs: {
-                debug: true
-            },
-            // 初始化组件渲染状态,保证所有组件一次性完成渲染
-            renderReady: false
-        },
 
          // 暂时不支持set item
         events: {
+            /**
+             * 属性改变时触发;
+             * @event Widget set#change
+             * @param {key}  key 改变的属性；
+             */
             change: function (key) {
                 var item;
                 var filterConfig = this.filterConfig;
@@ -72,7 +63,6 @@ function (classFactory, nativeApi, lib, Style, Item) {
             }
         },
 
-
         /**
          * 初始化配置
          * @private
@@ -81,11 +71,12 @@ function (classFactory, nativeApi, lib, Style, Item) {
         _setConfig: function (options) {
             var name;
             for (name in options) {
-                if (name) {
+                if (options.hasOwnProperty(name)) {
                     this.set(name, options[name]);
                 }
             }
         },
+
         /**
          * 创建item
          * @param {Object} options item的参数
@@ -130,7 +121,6 @@ function (classFactory, nativeApi, lib, Style, Item) {
             return this;
         },
 
-
         /**
          * 设置组件样式
          * @param {Object|string} options 样式的对象，如为单字符串侧是获取样式;
@@ -152,14 +142,15 @@ function (classFactory, nativeApi, lib, Style, Item) {
         /**
          * 内部设置组件样式，支持set(style,{})
          * @private
-         * @param {Object} options 传入的style对象
          * @param {string} key "style"
+         * @param {Object} options 传入的style对象
          * @return {Object} this 自身实例
-        */
+         */
         _setStyle: function (key, options) {
             this.styleInstance.update(options);
             return this;
         },
+
         /**
          * 显示 show
          */
@@ -182,26 +173,20 @@ function (classFactory, nativeApi, lib, Style, Item) {
          * 渲染组件
          */
         render: function () {
-            var configs = widget.configs;
-            var config = this.config;
-            configs[this.type] = config;
-            if (!widget.renderReady) {
-                renderConfig(configs);
-            }
+            this.fire('beforeRender');
+            nativeApi.render(this.type, this.config);
+            this.fire('render');
         },
 
         /**
          * 销毁组件
          */
         destroy: function () {
-            var configs = widget.configs;
             delete this.config;
-            delete configs[this.type];
-            if (!widget.renderReady) {
-                renderConfig(configs);
-            }
+            this.render();
+            this.off('all');
         }
     });
 
-    return widget;
+    return Widget;
 });

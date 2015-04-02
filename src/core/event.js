@@ -23,7 +23,7 @@ define([
      * @param {boolean} useCapture 是否捕获类型
      */
     var addEventListener = (function () {
-        if (lib.UIX) {
+        if (lib.isUIX) {
             return function (type, callback, useCapture) {
                 var data = {
                     type: type
@@ -38,7 +38,7 @@ define([
     })();
 
     var removeEventListener = (function () {
-        if (lib.UIX) {
+        if (lib.isUIX) {
             return function (type, callback, useCapture) {
                 var data = {
                     type: type
@@ -53,7 +53,7 @@ define([
     })();
 
     var fire = (function () {
-        if (lib.UIX) {
+        if (lib.isUIX) {
             return function (type, message) {
                 var data = {
                     type: type,

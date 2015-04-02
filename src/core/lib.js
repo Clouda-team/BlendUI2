@@ -98,7 +98,7 @@ define(function () {
     lib.isIphone = ua.indexOf('iphone') !== -1;
 
     // 是否是uix环境，是的化返回uix的版本号
-    var isUix = lib.UIX = (function () {
+    var isUIX = lib.isUIX = (function () {
         var v = ua.match(/uix\/(\d+\.\d+\.\d+\.\d+)/);
         return v ? v[1] : '';
     })();
@@ -108,7 +108,7 @@ define(function () {
      * @param {Function} fn,ready 后触发的函数
      */
     lib.ready = function (fn) {
-        if (isUix) {
+        if (isUIX) {
             if (window.lc_bridge) {
                 fn();
             }

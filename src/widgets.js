@@ -1,8 +1,8 @@
 /**
  * @file widgets.js
- * @desc 组件对象集合,对外抛出接口;
+ * @desc 组件对象集合,对外抛出接口进行调用, 主要用来把所有组件依次引人;
  * @author clouda-team(https://github.com/clouda-team)
- * @return {Object} widget组件对象
+ * @return {Object} widgets组件对象
  */
 define([
     './widgets/Title',
@@ -22,31 +22,6 @@ define([
     widgets.toolbar = Toolbar;
 
     widgets.gallery = Gallery;
-
-    /* @method widgets.extend
-     * @args object
-     * @res You can extend Objects to widgets!
-    */
-    widgets.extend = function () {
-        var targets = arguments;
-        var len = targets.length;
-        var i = 0;
-        var target;
-        for (; i < len; i++) {
-            target = targets[i];
-
-            /*If the argument is a object, link the key to widgets*/
-            if (typeof target === 'object') {
-                for (var o in target) {
-                    if (target.hasOwnProperty(o)) {
-                        widgets[o] = target[o];
-                    }
-                }
-            }
-        }
-        // Return widgets
-        return widgets;
-    };
 
     return widgets;
 });

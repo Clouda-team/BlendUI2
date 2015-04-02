@@ -6,23 +6,10 @@
  * @param {Object} Widget widget的基类
  * @return {Object} gallery组件对象
  */
-define(['../core/Class', '../core/lib', '../core/native'],
-    function (classFactory, lib, native) {
-        var renderConfig;
-        var gallery;
-        /**
-         * @desc 渲染uix组件
-         * @param {Object} configs uix配置
-         * @param {string} type 组件类型 
-        */
-        renderConfig = function (type, configs) {
-            var timer = setTimeout(function () {
-                native.show(type, configs);
-                clearTimeout(timer);
-                gallery.ready = false;
-            });
-            gallery.ready = true;
-        };
+define([
+    '../core/Class',
+    './Widget'
+], function (classFactory, Widget) {
         /**
          * @des 创建一个类
          * @param {Object} options 配置信息
@@ -40,19 +27,11 @@ define(['../core/Class', '../core/lib', '../core/native'],
          * @return {gallery} gallery
          */
         var gallery = classFactory.create({
-            statics: {
-                ready: false
-            },
-
+            extend: Widget,
             type: 'gallery',
-
-            events: {
-                change: function (key) {
-                    this.config[key] = this.get(key);
-                }
-            },
             /**
              * 初始化gallery组件
+             * @private
              * @param {Object} options 配置信息
              * {
              *  id: 'xxx',
@@ -67,9 +46,9 @@ define(['../core/Class', '../core/lib', '../core/native'],
              * }
              * @return {Gallery} gallery
              */
-            init: function (options) {
-                this.config = {};
-                this._setConfig(options);
+            _init: function (options) {
+                this.itemTypes = ['center', 'left', 'right'];
+                this.filterConfig = ['id', 'gallery', 'index'];
                 return this;
             },
 
@@ -78,20 +57,6 @@ define(['../core/Class', '../core/lib', '../core/native'],
              */
             show: function () {
                 this.render();
-            },
-
-            /**
-             * 初始化配置
-             * @private
-             * @param {Object} options 初始化配置选项
-             */
-            _setConfig: function (options) {
-                var name;
-                for (name in options) {
-                    if (name) {
-                        this.set(name, options[name]);
-                    }
-                }
             },
 
             /**
@@ -113,20 +78,6 @@ define(['../core/Class', '../core/lib', '../core/native'],
                 }
                 this.set('gallery', images);
                 return this;
-            },
-
-            /**
-             * 渲染gallery组件
-             */
-            render: function () {
-                var config = this.config;
-                var type = this.type;
-                if (!gallery.ready) {
-                    renderConfig(type, config);
-                }
-            },
-            destroy: function () {
-                delete this.config;
             }
         });
         return gallery;

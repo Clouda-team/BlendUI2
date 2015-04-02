@@ -9,7 +9,7 @@
 define(['../core/Class', './Widget'], function (classFactory, Widget) {
     var navigation = classFactory.create({
         extend: Widget,
-        type: 'navi',
+        type: 'navigation',
         /**
          * _init 是个别组件需要单独初始化的事项
          * @private

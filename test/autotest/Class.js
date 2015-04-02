@@ -1,6 +1,7 @@
 
 // src/core/Class 类工具函数
 define(['../../src/core/Class'],function(Class){
+    var Class = Class.create;
     var expect = chai.expect;
     describe('Class类测试', function(){
         describe('Class结构函数',function(){

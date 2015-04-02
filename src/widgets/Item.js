@@ -267,7 +267,6 @@ define([
             if (this._inited) {
                 this.instance.render();
             }
-            this.fire('render');
             return this;
         },
 

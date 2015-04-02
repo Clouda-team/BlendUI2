@@ -18,7 +18,7 @@ define([
      */
     var blend = {};
 
-    // 常量
+    // action常量 @todo remove
     blend.ACTIVEBACK = 'back';
     blend.WIDGETNAVI = 'navi';
     blend.WIDGETSHARE = 'share';
@@ -27,20 +27,20 @@ define([
      * widget组件创建
      * @param {string} name 组件名称
      * @param {Object} options 组件初始化参数
-     * @return {Object} 组件对象
+     * @return {Object|null} 组件对象如异常返回 null
      */
     blend.create = function (name, options) {
         var Widget = widgets[name];
-        if (Widget) {
-            if (lib.isClass(Widget)) {
-                return new Widget(options);
-            }
-            return Widget(options);
+        if (Widget && lib.isClass(Widget)) {
+            return new Widget(options);
         }
+        return null;
     };
 
-
+    // 计算ready触发时间blend.initTime;
     var startTime = 1 * new Date();
+    // 记录ready事件是否已经触发true||false;
+    blend.readyState = false;
     var _readyFn = [];
     lib.ready(function () {
         blend.readyState = true;
@@ -64,9 +64,10 @@ define([
         }
     };
 
-    // 是否是 uix 环境判断,
-    blend.UIX = lib.UIX;
+    // 判断是否是native uix环境;
+    blend.isUIX = lib.isUIX;
 
+    // webview的通信暴露到blend空间下
     lib.extend(blend, event);
 
     return blend;
