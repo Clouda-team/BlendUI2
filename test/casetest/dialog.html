@@ -12,43 +12,83 @@
     <script src="../../third_party/require.js"></script>
 </head>
 <body>
-<button type="button" id="alert">警告框alert</button><br/>
-<button type="button" id="prompt">对话框prompt</button><br/>
-<button type="button" id="confirm">确认框confirm</button><br/>
+  <ul>
+            <li><button id="two">两个按钮的Dialog</button></li>
+            <li><button id="one">一个按钮的Dialog</button></li>
+            <li><button id="none">没有按钮的Dialog</button></li>
+            <li><button id="four">四个按钮的Dialog</button></li>
+ </ul>
 <script>
     require.config({
         baseUrl:"../../src/",
         urlArgs: "bust=" +  (new Date()).getTime()
     });
-    // require(['blend'], function (blend) {
-    //     blend.dialog.alert({
-    //         'title':''
-    //     },function(){
 
-    //     });
-    // });
-    var _eval = {
-        "alert" : function(){
-            alert('测试测试');
-            console.log('baidubaidubaidu');
-        },
-        "prompt" : function(){
-            alert(prompt('测试测试prompt'));
-            console.log('baidubaidubaidu');
-        },
-        "confirm" : function(){
-            alert(confirm('测试测试confirm'));
-            console.log('baidubaidubaidu');
-        }
-    }
-    $('input[type=button],button').click(function(e){
-        var id = this.id;
-        console.log(id+"=============="+id);
-        if(_eval[id]){
-            _eval[id].call(_eval);
-        }else{
-            alert('没有此case')
-        }
+    require(['blend'], function (blend) {
+        $("input").bind("click",function(e){
+            _eval[$(this).attr("id")].apply(this);
+        });
+
+        var _eval = {
+            "one": function () {
+                dialog = blend.create('dialog',{
+                    title:"alert的title",
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>",
+                    items:[
+                        {
+                            "text": "确定",
+                            "action": 'back'
+                        }
+                    ]
+                });
+            },
+            "two": function(){
+                dialog = blend.create('dialog',{
+                    title:"alert的title",
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>",
+                    items:[
+                        {
+                            "text": "确定",
+                            "action":'back'
+                        },
+                        {
+                            "text": "取消",
+                            "action":'back'
+                        }
+                    ]
+                });
+            },
+            "none": function(){
+                 dialog = blend.create('dialog',{
+                    title:"alert的title",
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>"
+                });
+            },
+            "four": function(){
+                 dialog = blend.create('dialog',{
+                    title:"alert的title",
+                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>",
+                    items:[
+                        {
+                            "text": "确定",
+                            "action": 'back'
+                        },
+                        {
+                            "text": "确定1",
+                            "action": 'back'
+                        },
+                        {
+                            "text": "确定2",
+                            "action": 'back'
+                        },
+                        {
+                            "text": "确定3",
+                            "action": 'back'
+                        }
+                    ]
+                });
+            }
+        };
     });
 </script>
 </body>
