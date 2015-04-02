@@ -36,24 +36,20 @@
                      title:"sdfdsfds",
                     'images': [
                     {
-                         'text': '标题1',
+                        'title': '标题1',
                         'image': 'https://ss0.baidu.com/94o3dSag_xI4khGko9WTAnF6hhy/super/whfpf%3D425%2C260%2C50/sign=9e1a118f9452982205666a83b1f74ff9/a50f4bfbfbedab64db766088f336afc379311e75.jpg',
                         'description': '图片描述1'
                     },
                     {
-                         'text': '标题2',
+                        'title': '标题2',
                         'image': 'http://images.haiwainet.cn/2015/0319/20150319120344822.jpg',
                         'description': '图片描述2'
                     },
                     {
-                         'text': '标题3',
+                        'text': '标题3',
                         'image': 'http://images.china.cn/attachement/jpg/site1000/20150319/7427ea210c5416745d551d.jpg',
                         'description': '图片描述3'
                     }]
-                }).onNext(function () {
-                    alert('next');
-                }).onPre(function () {
-                    alert('pre');
                 });
             },
             "gallery2" : function(){
@@ -61,24 +57,20 @@
                     id:'gallery2',
                     'images': [
                     {
-                         'text': '图集2标题1',
+                        'title': '图集2标题1',
                         'image': 'http://images.haiwainet.cn/2015/0319/20150319120344959.jpg',
                         'description': '图集2描述1'
                     },
                     {
-                         'text': '图集2标题3',
+                        'title': '图集2标题3',
                         'image': 'http://images.haiwainet.cn/2015/0319/20150319120344822.jpg',
                         'description': '图集2描述2'
                     },
                     {
-                         'text': '图集2标题3',
+                         'title': '图集2标题3',
                         'image': 'http://images.china.cn/attachement/jpg/site1000/20150319/7427ea210c5416745d551d.jpg',
                         'description': '图集2描述3'
                     }]
-                }).onNext(function () {
-                    alert('next');
-                }).onPre(function () {
-                    alert('pre');
                 });
             },
             "show1" : function(){
@@ -88,10 +80,10 @@
                 gallery2.show();
             },
             "index" : function(){
-                gallery1.setIndex(3).render();
+                gallery1.set('index', 3);
             },
             "index2" : function(){
-                gallery2.setIndex(2).render();
+                gallery2.set('index',2);
             }
         }
         $('input[type=button],button').click(function(e){
