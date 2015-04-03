@@ -17,7 +17,7 @@ define(['../core/Class', './Widget','../core/native'], function (classFactory, W
          */
         _init: function (options) {
             this.itemTypes = ['items'];
-            this.filterConfig = ['title','description'];
+            this.filterConfig = ['title', 'description'];
         },
 
         /**
@@ -27,21 +27,21 @@ define(['../core/Class', './Widget','../core/native'], function (classFactory, W
          * @param {string} value 设置标题内容
          */
         _setTitle: function (key, value) {
-            this.config['text'] = value;
+            this.config.text = value;
         },
 
         /**
          * Dialog组件的show
          */
         show: function () {
-            nativeApi.show('dialog',this.config);
+            nativeApi.render('dialog', this.config);
         },
 
         /**
          * Dialog组件的show
          */
         hide: function () {
-            nativeApi.show('dialog',{});
+            nativeApi.render('dialog', {});
         }
 
     });
