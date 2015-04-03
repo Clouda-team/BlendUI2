@@ -60,6 +60,7 @@ define([
             // 把基类的 attributes 复制到实例中；
             this.attributes = extend({}, attributes);
             this.id = (options && options.id) || lib.uniqueId('CLASSID');
+            classFactory.register(this);
             this.init && this.init.apply(this, arguments);
         }
 
@@ -151,6 +152,36 @@ define([
         extend(proto, data);
 
         return Constructor;
+    };
+
+    /**
+     * 类实例集合
+     */
+    var classInstances = {};
+
+    /**
+     * 获取类实例
+     * @param {string} id 实例id;
+     * @return {Object} 类实例;
+     */
+    classFactory.get = function (id) {
+        return classInstances[id];
+    };
+
+    /**
+     * 注册类实例
+     * @param {Object} instance,类实例
+     */
+    classFactory.register = function (instance) {
+        classInstances[instance.id] = instance;
+    };
+
+    /**
+     * 销毁类实例
+     * @param {Object} instance,类实例
+     */
+    classFactory.cancel = function (instance) {
+        delete classInstances[instance.id];
     };
 
     return classFactory;

@@ -10,18 +10,37 @@ define(function () {
         // debug开关
         debug: true,
 
-        // 布局性widget列表，
-        widgetList: [
-            'title',
-            'tab',
-            'navigation',
-            'toolbar'
-        ],
-        // 展现性widget列表
-        componentList: [
-            'gallery',
-            'dialog'
-        ]
+        /**
+         * widgetList列表
+         * nativeName: 对应native的类型
+         * type:widget 类型，1代表布局,2组件主要用来区分调用naitve接口不一样
+         */
+        widgetList: {
+            title: {
+                nativeName: 'title',
+                type: 1
+            },
+            tab: {
+                nativeName: 'tab',
+                type: 1
+            },
+            navigation: {
+                nativeName: 'navi',
+                type: 1
+            },
+            toolbar: {
+                nativeName: 'toolbar',
+                type: 1
+            },
+            gallery: {
+                nativeName: 'gallery',
+                type: 2
+            },
+            dialog: {
+                nativeName: 'dialog',
+                type: 2
+            }
+        }
     };
 
     return config;

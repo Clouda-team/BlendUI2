@@ -20,7 +20,7 @@ define(['../../src/widgets/Style'],function(Style){
                     opacity : 1,
                     'background-color':'#ffffff'
                 },
-                instance: titleBar
+                superId: 'ttttt'
             });
 
             it('style实例', function () {

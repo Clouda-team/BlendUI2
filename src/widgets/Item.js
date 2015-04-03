@@ -10,42 +10,11 @@ define([
     '../core/lib'
 ], function (classFactory, Style, lib) {
 
-    /**
-     * 对Item实例进行存储或者删除，通过对实例的存储来封装action事件机制;
-     */
-    // 存储实例的对象
-    var instance = {};
-
-    /**
-     * 获取item 实例 @inner;
-     * @param {string} id,实例 id
-     * @return {Item} Item实例
-     */
-    var getInstance = function (id) {
-        return instance[id];
-    };
-
-    /**
-     * 存储item实例 @inner;
-     * @param {Object} obj,Item实例
-     */
-    var saveInstance = function (obj) {
-        instance[obj.id] = obj;
-    };
-
-    /**
-     * 删除存储的Item实例@inner;
-     * @param {Object} obj,实例
-     */
-    var removeInstance = function (obj) {
-        delete instance[obj.id];
-    };
-
     // action触发的事件
     document.addEventListener('UIXClick', function (e) {
         var data = JSON.parse(e.data);
         var id = data.id;
-        getInstance(id).fire('ontap');
+        classFactory.get(id).fire('ontap');
     });
 
      /**
@@ -57,14 +26,14 @@ define([
          * item对象 初始化方法
          * @param {Object} options 初始化设置
          * @param {Object} options.data 传人的初始化值；
-         * @param {Object} options.instance item的附属实例；
+         * @param {Object} options.superId item的附属实例的id；
          * {
                data:{
                     style:{},
                     text:'',
                     image:'xx',
                 },
-                instance: widget|item 实例
+                superId: widget实例id
          * }
          * @return {Item} Item实例；
          */
@@ -72,7 +41,7 @@ define([
             this.config = {};
             this._inited = false;
             this._setOptions(options);
-            saveInstance(this);
+            classFactory.register(this);
             return this;
         },
         // 类型标识
@@ -105,7 +74,7 @@ define([
         _setOptions: function (options) {
             options = options || {};
             var data = options.data || {};
-            this.instance = options.instance;
+            this.superId = options.superId;
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
                     if (k.indexOf('on') === 0) {
@@ -130,7 +99,7 @@ define([
         _parseStyle: function () {
             if (!this.styleObj) {
                 this.styleObj = new Style({
-                    instance: this
+                    superId: this.id
                 });
             }
             this.style();
@@ -265,7 +234,7 @@ define([
          */
         render: function () {
             if (this._inited) {
-                this.instance.render();
+                classFactory.get(this.superId).render();
             }
             return this;
         },
@@ -275,7 +244,7 @@ define([
          */
         destroy: function () {
             this.remove();
-            removeInstance(this);
+            classFactory.cancel(this);
             this.fire('destroy');
             this.off('all');
         }

@@ -12,11 +12,8 @@ define([
     // debug 开关
     var debug = config.debug;
 
-    // widgetList里的组件,调用UIXSetDecorationNoCache接口；
+    // widgetList里的组件；
     var widgetList = config.widgetList;
-
-    // componentList里的组件,调用UIXShow接口；
-    var componentList = config.componentList;
 
     var nativeApi = {};
     /**
@@ -26,7 +23,7 @@ define([
      * @param {Array} args 接口参数
      * @return {object|null} 接口调用返回值
      */
-    var _callApi = function (method, args) {
+    var _execute = function (method, args) {
         try {
             var api = window.lc_bridge;
             return api[method].apply(api, args);
@@ -38,67 +35,74 @@ define([
         }
     };
 
-    // 记录全局
-    var config = {};
+    // 记录全局config数据传输给native
+    var nativeData = {};
+    // 截流
     var timeVal = null;
     /**
      * 创建布局组件方法 @inner
      *
-     * @param {string} type 组件类型，此接口支持widgetList里的组件
+     * @param {string} name 组件类型，此接口支持widgetList里的组件
      * @param {Object} options 组件数据;
      * {
      *    style:{},
      *    items:{},
      * }
-     * @return {null} 接口返回值
      */
-    var setDecoration = function (type, options) {
-        var config = {};
+    var setDecoration = function (name, options) {
         if (options) {
-            type = type === 'navigation' ? 'navi' : type;
-            config[type] = options;
+            nativeData[name] = options;
         }
         else {
-            delete config[type];
+            delete nativeData[name];
         }
-
-        if (debug) {
-            console.log(config);
-        }
-        return _callApi('UIXSetDecorationNoCache', [
-            JSON.stringify(config)
-        ]);
-    };
-
-    /**
-     * 调用组件进行显示 @inner
-     * @param {string} type 组件类型,此接口支持componentList里的组件
-     * @param {Object} options 组件支持数据，详细见 doc/ui-widget.md文档
-     * @return {Object} 接口返回数据
-     */
-    var showComponent = function (type, options) {
-        if (debug) {
-            console.log(options);
-        }
-        return _callApi('UIXShow', [
-            type,
-            JSON.stringify(options)
-        ]);
-    };
-
-    // 组件调用接口的封装
-    nativeApi.render = function (type, options) {
         if (timeVal) {
             clearTimeout(timeVal);
         }
         timeVal = setTimeout(function () {
-            if (widgetList.indexOf(type) > -1) {
-                setDecoration(type, options);
+            if (debug) {
+                console.log(nativeData);
             }
-            else if (componentList.indexOf(type) > -1) {
-                showComponent(type, options);
-            }
+            _execute('UIXSetDecorationNoCache', [
+                JSON.stringify(nativeData)
+            ]);
         });
+    };
+
+    /**
+     * 调用组件进行显示 @inner
+     * @param {string} name 组件类型,此接口支持componentList里的组件
+     * @param {Object} options 组件支持数据，详细见 doc/ui-widget.md文档
+     */
+    var showComponent = function (name, options) {
+        if (timeVal) {
+            clearTimeout(timeVal);
+        }
+        timeVal = setTimeout(function () {
+            if (debug) {
+                console.log(options);
+            }
+            _execute('UIXShow', [
+                name,
+                JSON.stringify(options)
+            ]);
+        });
+    };
+
+    // 组件调用接口的封装
+    nativeApi.render = function (name, options) {
+        if (!widgetList[name]){
+            console.log('不支持:'+ name + '组件');
+            return;
+        }
+        var widgetType = widgetList[name].type;
+        var nativeName = widgetList[name].nativeName;
+        if (widgetType === 1) {
+            setDecoration(nativeName, options);
+        }
+        else if (widgetType === 2) {
+            showComponent(nativeName, options);
+        }
     };
 
     /**
@@ -111,7 +115,7 @@ define([
         if (typeof options !== 'string') {
             options = JSON.stringify(options);
         }
-        return _callApi('UIXSetProperty', [
+        return _execute('UIXSetProperty', [
             id,
             options
         ]);
@@ -128,13 +132,13 @@ define([
             message = type;
             type = webViewId;
             webViewId = null;
-            _callApi('postMessage', [
+            _execute('postMessage', [
                 type,
                 message
             ]);
         }
         else {
-            _callApi('postMessage', [
+            _execute('postMessage', [
                 webViewId,
                 type,
                 message
@@ -148,7 +152,7 @@ define([
      * @param {string} script js脚本
      */
     nativeApi.execScript = function (webViewId, script) {
-        _callApi('exeJsRemote', [
+        _execute('exeJsRemote', [
             webViewId,
             script
         ]);
@@ -161,7 +165,7 @@ define([
      */
     nativeApi.getWidgetList = function () {
         var api = window.lc_bridge;
-        var widgets = api.getWidgetList ? api.getWidgetList() : widgetList.concat(componentList);
+        var widgets = api.getWidgetList ? api.getWidgetList() : Object.keys(widgetList);
         return widgets;
     };
 

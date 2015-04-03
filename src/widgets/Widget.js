@@ -30,8 +30,9 @@ define([
             if (typeof this._init === 'function') {
                 this._init.apply(this, arguments);
             }
+
             this.styleInstance = new Style({
-                instance: this,
+                superId: this.id,
                 data: options.style ? options.style : {}
             });
             if (options) {
@@ -84,7 +85,7 @@ define([
          */
         create: function (options) {
             var opt = {
-                instance: this,
+                superId: this.id,
                 data: options
             };
             return new Item(opt);

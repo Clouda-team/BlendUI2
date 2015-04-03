@@ -54,14 +54,14 @@ define([
          * style对象 初始化方法
          * @param {Object} options 初始化设置
          * @param {Object} options.data 用户传人的值；
-         * @param {Object} options.instance style的附属实例；
+         * @param {Object} options.superId style的附属实例的id；
          * {
          *      data:{
                     color:'#xxxx',
                     opacity:0~1,背景透明度
                     background-color:'#xxxxxx'
                 },
-                instance: widget|item 实例
+                superId: widget|item 实例
          * }
          * @return {Class} style实例；
          */
@@ -101,9 +101,11 @@ define([
         _setOptions: function (options) {
             options = options || {};
             var data = options.data;
-            this.instance = options.instance;
-            this.parentConfig = this.instance.config;
-            this.parentConfig.style = this.config;
+            this.superId = options.superId;
+            if (classFactory.get(options.superId)) {
+                this.parentConfig = classFactory.get(options.superId).config;
+                this.parentConfig.style = this.config;
+            }
             data && this.update(data);
             return this;
         },
@@ -164,7 +166,9 @@ define([
          */
         render: function () {
             // 触发实例的 render;
-            this.instance.render && this.instance.render();
+            if (classFactory.get(this.superId)) {
+                classFactory.get(this.superId).render();
+            }
             return this;
         },
 
