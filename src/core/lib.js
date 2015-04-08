@@ -78,6 +78,18 @@ define(function () {
     };
 
     /**
+     * 事件type中常用，去除前面on并把 on后首字母变为大写
+     * @param {string} str,要处理的字符串
+     * @return {string} 转化后的字符串
+     */
+    lib.cutOn = function (str) {
+        if (str.indexOf('on') === 0) {
+            str = str.slice(2);
+            str = str.charAt(0).toLowerCase() + str.slice(1);
+        }
+        return str;
+    };
+    /**
      * 生成唯一的id 标识;
      * @param {string} prefix 标识前缀
      * @return {string} 标识字符串值

@@ -3,14 +3,14 @@
 define(['../../src/widgets/Style'],function(Style){
     var expect = chai.expect;
     describe('Style类测试', function(){
-        describe('Style结构函数',function(){
+        //describe('Style结构函数',function(){
             it('Style函数', function () {
                 expect(Style).to.be.a('function');
                 expect(Style).to.be.instanceof(Function);
             });
-        });
+        //});
 
-        describe('创建Style类',function(){
+        //describe('创建Style类',function(){
             var titleBar = {
                 config :  {}
             };
@@ -37,6 +37,6 @@ define(['../../src/widgets/Style'],function(Style){
                 expect(styleObj.get('color')).to.equal('rgba(255,255,255,0)');
                 expect(styleObj.config.color).to.equal('#00ffffff');
             });
-        });
+        //});
     });
 });

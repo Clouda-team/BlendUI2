@@ -4,14 +4,14 @@ define(['../../src/core/Class'],function(classFactory){
     var classCreate = classFactory.create;
     var expect = chai.expect;
     describe('classCreate类测试', function(){
-        describe('classCreate结构函数',function(){
+        //describe('classCreate结构函数',function(){
             it('classCreate函数', function () {
                 expect(classCreate).to.be.a('function');
                 expect(classCreate).to.be.instanceof(Function);
             });
-        });
+        //});
 
-        describe('创建类',function(){
+        //describe('创建类',function(){
             var classCreateA = classCreate({
                 attributes : {
                     "title":"11",
@@ -69,6 +69,6 @@ define(['../../src/core/Class'],function(classFactory){
                 objClasB.otherMethod1();
                 expect(objClasB.get('title')).to.equal('44');
             });
-        });
+        //});
     });
 });

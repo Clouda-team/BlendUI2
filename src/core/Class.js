@@ -10,6 +10,7 @@ define([
 ], function (lib) {
     var noop = lib.noop;
     var extend = lib.extend;
+    var cutOn = lib.cutOn;
     var classFactory = {};
     // Object.create
     if (!Object.create) {
@@ -105,12 +106,14 @@ define([
             },
             on: function (type, callback) {
                 var t = this;
+                type = cutOn(type);
                 if (!t._listener[type]) {
                     t._listener[type] = [];
                 }
                 t._listener[type].push(callback);
             },
             fire: function (type, argAry, context) {
+                type = cutOn(type);
                 var events = this._listener[type];
                 var i;
                 var len;
@@ -125,6 +128,7 @@ define([
                 }
             },
             off: function (type, callback) {
+                type = cutOn(type);
                 var events = this._listener[type];
                 // 如果 type=== all,删除类下面全部事件；
                 if (type === 'all') {

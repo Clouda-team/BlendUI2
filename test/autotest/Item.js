@@ -3,14 +3,14 @@
 define(['../../src/widgets/Item'],function(Item){
     var expect = chai.expect;
     describe('Item类测试', function(){
-        describe('Item结构函数',function(){
+        //describe('Item结构函数',function(){
             it('Item函数', function () {
                 expect(Item).to.be.a('function');
                 expect(Item).to.be.instanceof(Function);
             });
-        });
+        //});
 
-        describe('创建Item类',function(){
+        //describe('创建Item类',function(){
             var titleBar = {
                 config :  {
 
@@ -41,6 +41,6 @@ define(['../../src/widgets/Item'],function(Item){
                 expect(itemObj.config.image).to.equal('BB');
                 expect(itemObj.config.action).to.equal('uievent('+JSON.stringify({id:itemObj.id})+')');
             });
-        });
+        //});
     });
 });

@@ -9,12 +9,11 @@ define([
     './Style',
     '../core/lib'
 ], function (classFactory, Style, lib) {
-
     // action触发的事件
     document.addEventListener('UIXClick', function (e) {
         var data = JSON.parse(e.data);
         var id = data.id;
-        classFactory.get(id).fire('ontap');
+        classFactory.get(id).fire('tap');
     });
 
      /**
@@ -78,7 +77,7 @@ define([
             for (var k in data) {
                 if (data.hasOwnProperty(k)) {
                     if (k.indexOf('on') === 0) {
-                        this.bind(k, data[k]);
+                        this.bind(lib.cutOn(k), data[k]);
                     }
                     else if (typeof data[k] !== 'function') {
                         this.set(k, data[k]);

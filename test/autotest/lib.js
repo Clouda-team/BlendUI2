@@ -3,10 +3,6 @@
 define(['../../src/core/lib'],function(lib){
     var expect = chai.expect;
     describe('lib工具类', function(){
-        it('存在extend,noop', function () {
-            expect(lib.extend).to.be.a('function');
-            expect(lib.noop).to.be.a('function');
-        });
 
         it('extend', function () {
             var s = lib.extend({},{
@@ -47,6 +43,13 @@ define(['../../src/core/lib'],function(lib){
             as = lib.toPascal(as);
             expect(as).to.equal('AaBb');
             expect(lib.toPascal('aa-dd-cc-bb')).to.equal('AaDdCcBb');
+        });
+
+        it('cutOn', function(){
+            var as = "onbbb";
+            as = lib.cutOn(as);
+            expect(as).to.equal('bbb');
+            expect(lib.cutOn('onDbA')).to.equal('dbA');
         });
 
         it('uniqueId', function(){
