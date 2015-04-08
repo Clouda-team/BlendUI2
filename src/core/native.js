@@ -91,8 +91,8 @@ define([
 
     // 组件调用接口的封装
     nativeApi.render = function (name, options) {
-        if (!widgetList[name]){
-            console.log('不支持:'+ name + '组件');
+        if (!widgetList[name]) {
+            console.log('不支持:' + name + '组件');
             return;
         }
         var widgetType = widgetList[name].type;
@@ -167,6 +167,28 @@ define([
         var api = window.lc_bridge;
         var widgets = api.getWidgetList ? api.getWidgetList() : Object.keys(widgetList);
         return widgets;
+    };
+
+    /**
+     * 调用action接口UIXActionHub('navi')
+     * @param {string} ac,执行的动作暂仅仅支持 back:返回，navi:调起navigation,share:调起分享组件
+     */
+    nativeApi.execAction = function (ac) {
+        _execute('UIXActionHub', [
+            ac
+        ]);
+    };
+
+    /**
+     * 调用接口用新 active 打开
+     * @param {string} url,要打开的新url地址
+     */
+    nativeApi.open = function (url) {
+        //location.href = url;
+        // _execute('UIXOpenUrl', [
+        //     url
+        // ]);
+        window.open(url);
     };
 
     return nativeApi;

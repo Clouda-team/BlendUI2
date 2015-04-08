@@ -6,7 +6,7 @@
  * @param {Object} Widget widget的基类
  * @return {Object} navigation组件对象
  */
-define(['../core/Class', './Widget'], function (classFactory, Widget) {
+define(['../core/Class', './Widget', '../core/native'], function (classFactory, Widget, nativeApi) {
     var navigation = classFactory.create({
         extend: Widget,
         type: 'navigation',
@@ -18,6 +18,11 @@ define(['../core/Class', './Widget'], function (classFactory, Widget) {
         _init: function (options) {
             this.itemTypes = ['items'];
             this.filterConfig = ['id', 'type'];
+        },
+
+        // navi需要调用native的action方法
+        show: function () {
+            nativeApi.execAction('navi');
         }
 
     });

@@ -10,8 +10,9 @@
 define([
     './core/lib',
     './widgets',
-    './core/event'
-], function (lib, widgets, event) {
+    './core/event',
+    './core/native'
+], function (lib, widgets, event, nativeApi) {
     /**
      * Blend模块声明
      * @module blend
@@ -66,6 +67,19 @@ define([
 
     // 判断是否是native uix环境;
     blend.isUIX = lib.isUIX;
+
+    // active返回
+    blend.back = function () {
+        nativeApi.execAction('back');
+    };
+
+    /**
+     * 在新的active打开页面
+     * @param {string} url,打开页面的url
+     */
+    blend.open = function (url) {
+        nativeApi.open(url);
+    };
 
     // webview的通信暴露到blend空间下
     lib.extend(blend, event);

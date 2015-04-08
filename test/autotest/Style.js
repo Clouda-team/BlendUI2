@@ -16,7 +16,7 @@ define(['../../src/widgets/Style'],function(Style){
             };
             var styleObj = new Style({
                 data : {
-                    color: "rgb(255,255,0)",
+                    color: "rgb (255 ,  255, 0)",
                     opacity : 1,
                     'background-color':'#ffffff'
                 },
@@ -26,7 +26,7 @@ define(['../../src/widgets/Style'],function(Style){
             it('style实例', function () {
                 expect(styleObj).to.be.instanceof(Style);
                 expect(styleObj.get('opacity')).to.equal(1);
-                expect(styleObj.get('color')).to.equal('rgb(255,255,0)');
+                expect(styleObj.get('color')).to.equal('rgb (255 ,  255, 0)');
                 expect(styleObj.config.color).to.equal('#ffffff00');
                 styleObj.set('color','#f00');
                 expect(styleObj.get('color')).to.equal('#f00');

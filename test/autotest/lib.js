@@ -63,16 +63,22 @@ define(['../../src/core/lib'],function(lib){
         it('isUix', function(){
             expect(lib.isUix).to.not.be.false;
         });
+
         it('isAndroid', function(){
             expect(lib).to.include.keys('isAndroid');
         });
+
         it('isIphone', function(){
             expect(lib).to.include.keys('isIphone');
         });
 
         it('ready', function(done){
             lib.ready(function(){
-                expect(window.lc_bridge).to.not.be.false;
+                if(lib.isUix){
+                    expect(window.lc_bridge).not.to.be.undefined;
+                }else{
+                   expect(window.lc_bridge).to.be.undefined;
+                }
                 done();
             });
         });

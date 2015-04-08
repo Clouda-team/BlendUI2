@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>case测试</title>
+    <link rel="stylesheet" href="" >
+    <style>
+        *{line-height: 180%;}
+    </style>
+    <script src="/third_party/zepto.js"></script>
+    <script src="/third_party/require.js"></script>
+</head>
+<body>
+<button type="button" id="ready">ready事件</button><br/>
+<button type="button" id="open">打开新页面</button><br/>
+<button type="button" id="back">返回</button><br/>
+<script>
+    require.config({
+        baseUrl:"../../src/",
+        urlArgs: "bust=" +  (new Date()).getTime()
+    });
+    require(['blend'], function (blend) {
+        var navigation;
+        var _eval = {
+            "open" : function(){
+                blend.open('http://m.163.com');
+            },
+            "back" : function(){
+                blend.back();
+            },
+            "ready" : function(){
+                blend.ready(function(){
+                    alert("isUIX：" + blend.isUIX);
+                    alert("ready时间：" + blend.initTime)
+                });
+            }
+        }
+        $('input[type=button],button').click(function(e){
+            var id = this.id;
+            console.log(id+"=============="+id);
+            if(_eval[id]){
+                _eval[id].call(_eval);
+            }else{
+                alert('没有此case')
+            }
+        });
+    });
+</script>
+</body>
+</html>

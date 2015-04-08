@@ -1,12 +1,14 @@
 /**
  * @file Dialog.js
- * @desc Dialog组件;
+ * @desc Dialog 基类;
  * @author clouda-team(https://github.com/clouda-team)
- * @param {Object} classFactory 基类
- * @param {Object} Widget widget的基类
- * @return {Object} Dialog组件对象
+ * @return { Class } Dialog构造函数
  */
-define(['../core/Class', './Widget','../core/native'], function (classFactory, Widget,nativeApi) {
+define([
+    '../core/Class',
+    './Widget',
+    '../core/native'
+], function (classFactory, Widget, nativeApi) {
     var title = classFactory.create({
         extend: Widget,
         type: 'dialog',
