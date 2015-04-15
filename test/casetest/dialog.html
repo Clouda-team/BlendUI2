@@ -16,7 +16,7 @@
             <li><button id="two">两个按钮的Dialog</button></li>
             <li><button id="one">一个按钮的Dialog</button></li>
             <li><button id="none">没有按钮的Dialog</button></li>
-            <li><button id="four">四个按钮的Dialog</button></li>
+            <li><button id="four">3个按钮的Dialog</button></li>
 
  </ul>
 <script>
@@ -38,7 +38,9 @@
                     items:[
                         {
                             "text": "确定",
-                            "action": ''
+                            "ontap": function(){
+                                alert('点击了确定按钮')
+                            }
                         }
                     ]
                 });
@@ -51,11 +53,15 @@
                     items:[
                         {
                             "text": "确定",
-                            "action":''
+                            "ontap": function(){
+                                alert('点击了确定按钮')
+                            }
                         },
                         {
                             "text": "取消",
-                            "action":''
+                            "ontap": function(){
+                                alert('点击了取消按钮')
+                            }
                         }
                     ]
                 });
@@ -64,7 +70,7 @@
             "none": function(){
                  dialog = blend.create('dialog',{
                     title:"alert的title",
-                    description:"这是正文描述<a href='http://www.baidu.com'>点击这里打开页面</a>"
+                    description:"这\r是正\n文描述<a href='http://www.baidu.com'>点击这里打开页面</a>"
                 });
                  dialog.show();
             },

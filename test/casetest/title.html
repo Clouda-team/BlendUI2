@@ -32,29 +32,32 @@
             title:'测试测试',
             style:{
                 "background-color":"#f00",
+                "fontFamily":"glyphicons",
                 color:"#fff"
             }
         });
         var _eval = {
             "title" : function(){
                 titleBar = blend.create('title',{
-                    title:'标题标题标题',
                     style:{
                         "background-color":"#000",
                         color:"#000"
                     },
                     left:[
                         {
-                            text:'左边按钮',
+                            text:'&#xe257;bbbb',
                             style:{
+                                "fontFamily":"glyphicons",
                                 color:'#ddd'
                             }
                         }
                     ],
                     right:[
                         {
-                            text:'右边按钮',
+                            text:'aaaaa&#xe001;&#xe002;&#xe003;&#xe005;&#xe007;&#xe006;&#xe008;',
+                            image:'https://www.baidu.com/img/baidu_jgylogo3.gif?v=28036415.gif',
                             style:{
+                                "fontFamily":"glyphicons",
                                 color:'#ddd'
                             },
                             ontap: function(){
@@ -101,7 +104,7 @@
                         alert('hello world');
                     }
                 });
-                btn.bind(function(){
+                btn.bind('tap',function(){
                     alert('又添加一个 hello world');
                 });
                 btn.style({
@@ -112,6 +115,7 @@
             "back" : function(){
                 var btn = titleBar.create({
                     text:'返回',
+
                     ontap: 'back'
                 });
                 titleBar.append(btn,'right');
