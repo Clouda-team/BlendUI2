@@ -170,25 +170,45 @@ define([
     };
 
     /**
+     * 操作native接口如 action api, 数据修改等等；
+     * @param {string} type,要执行的操作类型，如button_action;
+     * @param {Object} options 操作传递的数据
+     */
+    nativeApi.dataHook = function (type, options) {
+        if (debug) {
+            console.log(type, options);
+        }
+        _execute('UIXEvent', [
+            type,
+            JSON.stringify(options)
+        ]);
+    };
+
+    /**
      * 调用action接口UIXActionHub('navi')
      * @param {string} ac,执行的动作暂仅仅支持 back:返回，navi:调起navigation,share:调起分享组件
      */
     nativeApi.execAction = function (ac) {
-        _execute('UIXActionHub', [
-            ac
-        ]);
+        nativeApi.dataHook('button_action', {
+            option: 'action(' + ac + ')'
+        });
     };
+
+
 
     /**
      * 调用接口用新 active 打开
      * @param {string} url,要打开的新url地址
      */
     nativeApi.open = function (url) {
-        //location.href = url;
-        // _execute('UIXOpenUrl', [
+        // location.href = url;
+        //  _execute('UIXOpenUrl', [
         //     url
         // ]);
-        window.open(url);
+        // window.open(url);
+        nativeApi.dataHook('button_action', {
+            option: 'loadurl(' + url + ')'
+        });
     };
 
     return nativeApi;
