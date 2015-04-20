@@ -1,7 +1,7 @@
 module.exports = function (grunt) {
      pkg = grunt.file.readJSON('package.json');
-     var distAll = "dist/"+ pkg.name + "-v.js";
-     var distMin = "dist/"+ pkg.name + "-v-min.js";
+     var distAll = "dist/"+ pkg.name + ".js";
+     var distMin = "dist/"+ pkg.name + "-min.js";
      grunt.initConfig({
         requirejs: {
             hybrid: {
