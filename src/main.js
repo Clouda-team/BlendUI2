@@ -6,5 +6,5 @@
 require([
     'src/blend'
 ], function (blend) {
-
+    window.Blend = window.blend = blend;
 }, null, true);

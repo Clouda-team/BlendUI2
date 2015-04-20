@@ -1,0 +1,18 @@
+{
+  "name": "blendui-naitve",
+  "description": "BlendUI Naitve API",
+  "version": "0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Clouda-team/BlendUI2.git"
+  },
+  "author": "Clouda+ team",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "^0.10.0",
+    "grunt-contrib-requirejs": "~0.4.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "gulp-replace": "^0.5.3"
+  }
+}
