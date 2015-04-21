@@ -10,8 +10,9 @@ define([
     './widgets/Navigation',
     './widgets/Toolbar',
     './widgets/Gallery',
-    './widgets/Dialog'
-], function (Title, Tab, Navigation, Toolbar, Gallery, Dialog) {
+    './widgets/Dialog',
+    './widgets/Loading'
+], function (Title, Tab, Navigation, Toolbar, Gallery, Dialog, Loading) {
     var widgets = {};
 
     widgets.title = Title;
@@ -25,6 +26,8 @@ define([
     widgets.gallery = Gallery;
 
     widgets.dialog = Dialog;
+
+    widgets.loading = Loading;
 
     return widgets;
 });

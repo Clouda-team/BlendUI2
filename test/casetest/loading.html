@@ -12,41 +12,23 @@
     <script src="/third_party/require.js"></script>
 </head>
 <body>
-<button type="button" id="ready">ready事件</button><br/>
-<button type="button" id="open">新窗口打开QQ</button><br/>
-<button type="button" id="open1">新窗口打开163</button><br/>
 <button type="button" id="oloading">打开loading</button><br/>
 <button type="button" id="cloading">隐藏loading</button><br/>
-<button type="button" id="back">返回</button><br/>
 <script>
     require.config({
         baseUrl:"../../src/",
         urlArgs: "bust=" +  (new Date()).getTime()
     });
     require(['blend'], function (blend) {
-        var navigation;
+        var loading = blend.create('loading');
         var _eval = {
-            "open" : function(){
-                blend.open('http://m.qq.com');
-            },
-            "open1" : function(){
-                blend.open('http://m.163.com');
-            },
-            "back" : function(){
-                blend.back();
-            },
             "oloading" : function(){
-                blend.back();
+                loading.show();
             },
             "cloading" : function(){
-                blend.back();
-            },
-            "ready" : function(){
-                blend.ready(function(){
-                    alert("isUIX：" + blend.isUIX);
-                    alert("ready时间：" + blend.initTime)
-                });
+                loading.hide();
             }
+
         }
         $('input[type=button],button').click(function(e){
             var id = this.id;

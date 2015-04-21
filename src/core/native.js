@@ -201,11 +201,6 @@ define([
      * @param {string} url,要打开的新url地址
      */
     nativeApi.open = function (url) {
-        // location.href = url;
-        //  _execute('UIXOpenUrl', [
-        //     url
-        // ]);
-        // window.open(url);
         nativeApi.dataHook('button_action', {
             option: 'loadurl(' + url + ')'
         });
