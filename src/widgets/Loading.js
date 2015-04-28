@@ -9,6 +9,17 @@ define([
     './Widget',
     '../core/native'
 ], function (classFactory, Widget, nativeApi) {
+
+    // loading显示隐藏封装
+    var loadingShowHide = function (isshow) {
+        nativeApi.dataHook('widget', {
+            type: 'loading',
+            options: {
+                display: isshow
+            }
+        });
+    };
+
     var Loading = classFactory.create({
         extend: Widget,
         type: 'loading',
@@ -16,18 +27,14 @@ define([
          * 显示Loading组件
          */
         show: function () {
-            nativeApi.dataHook('loading_status', {
-                loading: true
-            });
+            loadingShowHide(true);
         },
 
         /**
          * 隐藏loading组件
          */
         hide: function () {
-            nativeApi.dataHook('loading_status', {
-                loading: false
-            });
+            loadingShowHide(false);
         }
     });
     return Loading;

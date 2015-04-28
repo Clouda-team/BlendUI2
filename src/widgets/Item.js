@@ -40,7 +40,7 @@ define([
             this.config = {};
             this._inited = false;
             this._setOptions(options);
-            classFactory.register(this);
+            //classFactory.register(this);
             return this;
         },
         // 类型标识

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>case测试</title>
+    <link rel="stylesheet" href="" >
+    <style>
+        *{line-height: 180%;}
+    </style>
+    <script src="/third_party/zepto.js"></script>
+    <script src="/third_party/require.js"></script>
+</head>
+<body>
+<input type='text' id="dateInput" />
+<br/>
+<button type="button" id="show">显示日历</button><br/>
+<button type="button" id="hide">隐藏日历</button><br/>
+<script>
+    require.config({
+        baseUrl:"../../src/",
+        urlArgs: "bust=" +  (new Date()).getTime()
+    });
+    require(['blend'], function (blend) {
+        var calendar = blend.create('calendar',{
+            from: '2015-02-01',
+            to: '2015-10-01',
+            onselected: function(e, date){
+                document.getElementById('dateInput').value = date;
+            }
+        });
+        var _eval = {
+            "show" : function(){
+                calendar.show()
+            },
+            "hide" : function(){
+                calendar.hide()
+            }
+        }
+        $('input[type=button],button').click(function(e){
+            var id = this.id;
+            console.log(id+"=============="+id);
+            if(_eval[id]){
+                _eval[id].call(_eval);
+            }else{
+                alert('没有此case')
+            }
+        });
+    });
+</script>
+</body>
+</html>

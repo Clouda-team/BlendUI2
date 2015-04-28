@@ -171,7 +171,7 @@ define([
 
     /**
      * 操作native接口如 action api, 数据修改等等；
-     * @param {string} type,要执行的操作类型，如button_action;
+     * @param {string} type,要执行的操作类型，如button_action,widget;
      * @param {Object} options 操作传递的数据
      */
     nativeApi.dataHook = function (type, options) {

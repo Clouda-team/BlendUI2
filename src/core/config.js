@@ -13,7 +13,10 @@ define(function () {
         /**
          * widgetList列表
          * nativeName: 对应native的类型
-         * type:widget 类型，1代表布局,2组件主要用来区分调用naitve接口不一样
+         * type:widget 类型,主要用来区分调用接口不一致
+         * 1: 布局组件, UIXSetDecorationNoCache,
+         * 2: 全局显示组件, UIXShow,
+         * 3: 触发事件类组件,UIXEvent
          */
         widgetList: {
             title: {
@@ -39,7 +42,16 @@ define(function () {
             dialog: {
                 nativeName: 'dialog',
                 type: 2
+            },
+            loading: {
+                nativeName: 'loading',
+                type: 3
+            },
+            calendar: {
+                nativeName: 'calendar',
+                type: 3
             }
+
         }
     };
 

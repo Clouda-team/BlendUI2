@@ -11,8 +11,9 @@ define([
     './widgets/Toolbar',
     './widgets/Gallery',
     './widgets/Dialog',
-    './widgets/Loading'
-], function (Title, Tab, Navigation, Toolbar, Gallery, Dialog, Loading) {
+    './widgets/Loading',
+    './widgets/Calendar'
+], function (Title, Tab, Navigation, Toolbar, Gallery, Dialog, Loading, Calendar) {
     var widgets = {};
 
     widgets.title = Title;
@@ -28,6 +29,8 @@ define([
     widgets.dialog = Dialog;
 
     widgets.loading = Loading;
+
+    widgets.calendar = Calendar;
 
     return widgets;
 });

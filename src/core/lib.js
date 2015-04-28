@@ -78,7 +78,7 @@ define(function () {
     };
 
     /**
-     * 事件type中常用，去除前面on并把 on后首字母变为大写
+     * 事件type中常用，去除前面on并把 on后首字母变为小写
      * @param {string} str,要处理的字符串
      * @return {string} 转化后的字符串
      */
@@ -89,6 +89,39 @@ define(function () {
         }
         return str;
     };
+
+    /**
+     * 日期格式化
+     * @param {Date} date 要格式化的日期
+     * @param {string} fmt 格式化字符串
+     * @return {string} 转化后的日期
+     */
+    lib.dateFormat = function (date, fmt) {
+        var o = {
+            'M+': date.getMonth() + 1,
+            'd+': date.getDate(),
+            'h+': date.getHours(),
+            'm+': date.getMinutes(),
+            's+': date.getSeconds(),
+            'q+': Math.floor((date.getMonth() + 3) / 3),
+            'S': date.getMilliseconds()
+        };
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
+        }
+        for (var k in o) {
+            if (new RegExp('(' + k + ')').test(fmt)) {
+                if (RegExp.$1.length === 1) {
+                    fmt = fmt.replace(RegExp.$1, o[k]);
+                }
+                else {
+                    fmt = fmt.replace(RegExp.$1, ('00' + o[k]).substr(('' + o[k]).length));
+                }
+            }
+        }
+        return fmt;
+    };
+
     /**
      * 生成唯一的id 标识;
      * @param {string} prefix 标识前缀
