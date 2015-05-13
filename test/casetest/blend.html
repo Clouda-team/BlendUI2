@@ -67,30 +67,39 @@
                 });
             },
             "calendar" : function(){
-                nativeApi.dataHook('calendar',{
-                    display: true,
-                    option:{
-                        id:'cccccccccccc',
-                        date: (new Date()*1),
-                        from: (new Date('2015-04-07')*1),
-                        to: (new Date('2015-06-10')*1)
+                nativeApi.dataHook('widget',{
+                    type: 'calendar',
+                    options:{
+                        display: true,
+                        options:{
+                            id:'cccccccccccc',
+                            date: (new Date()*1),
+                            from: (new Date('2015-04-07')*1),
+                            to: (new Date('2015-06-10')*1)
+                        }
                     }
                 })
             },
             "calendar1" : function(){
-                nativeApi.dataHook('calendar',{
-                    display: true,
-                    option:{
-                        id:'111111',
-                        date: (new Date()*1),
-                        from: (new Date('2015-02-03')*1),
-                        to: (new Date('2015-08-10')*1)
+                nativeApi.dataHook('widget',{
+                    type: 'calendar',
+                    options:{
+                        display: true,
+                        options:{
+                            id:'cccccccccccc',
+                            date: (new Date()*1),
+                            from: (new Date('2015-02-07')*1),
+                            to: (new Date('2015-10-10')*1)
+                        }
                     }
                 })
             },
             'hideCal' : function(){
-                nativeApi.dataHook('calendar',{
-                    display: false
+                nativeApi.dataHook('widget',{
+                    type: 'calendar',
+                    options:{
+                        display: false
+                    }
                 })
             }
         }

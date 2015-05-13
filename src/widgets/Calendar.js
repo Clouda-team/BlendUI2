@@ -24,11 +24,12 @@ define([
 
     // Calendar显示隐藏封装
     var loadingShowHide = function (isshow, options) {
-        options = options || {};
-        options.display = isshow;
         nativeApi.dataHook('widget', {
             type: 'calendar',
-            options: options
+            options: {
+                display: isshow,
+                options: options || {}
+            }
         });
     };
 
