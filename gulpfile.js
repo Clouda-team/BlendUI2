@@ -55,3 +55,25 @@ gulp.task('build',function(){
         }))
         .pipe(gulp.dest('dist/'))
 });
+
+/**
+ * @des 为boost做的Blend2专属编译
+ * @method 执行gulp boost
+ * @result dist/blend2.js ,dist blend2.min.js 
+ */
+gulp.task('boost',function(){
+        return gulp.src([
+            'src/core/*.js',
+            'src/widgets/*.js',
+            'src/widgets.js',
+            'src/blend.js',
+            'src/main.js'
+        ])
+        .pipe(amdOptimize('src/main'))
+        .pipe(rename({ suffix: '.min' }))
+        .pipe(uglify({
+            preserveComments:'all'
+        }))
+        .pipe(concat("blend2.js"))
+        .pipe(gulp.dest('dist/'));
+});
