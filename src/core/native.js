@@ -25,7 +25,7 @@ define([
      */
     var _execute = function (method, args) {
         try {
-            var api = window.lc_bridge;
+            var api = window.uix_bridge;
             return api[method].apply(api, args);
         }
         catch (e) {
@@ -164,7 +164,7 @@ define([
      * @return {Array} 支持列表数组;
      */
     nativeApi.getWidgetList = function () {
-        var api = window.lc_bridge;
+        var api = window.uix_bridge;
         var widgets = api.getWidgetList ? api.getWidgetList() : Object.keys(widgetList);
         return widgets;
     };
